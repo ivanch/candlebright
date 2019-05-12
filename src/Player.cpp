@@ -7,9 +7,10 @@ Player::Player(sf::View& _view, float ground, string _name):
     player.setSize({20,60});
     player.setFillColor(sf::Color::Blue);
     setPos({50.0, ground});
-    moveSpeed = 0.1;
-    jumpHeight = 150;
-    maxVelocity = 15;
+    moveSpeed = 0.4;
+    jumpHeight = 100;
+    maxVelocityX = 15;
+    maxVelocityY = 100;
     isJumping = false;
 }
 Player::~Player(){}
@@ -36,34 +37,34 @@ void Player::moveLeft(){
 }
 
 void Player::jump(){
-    if(isJumping) return;
-    isJumping = true;
-    for(float i = 0.0; i < jumpHeight; i += 0.1){
-        move({0,-0.01});
-        cout << "jump" << endl;
-    }
-    for(float i = 0.0; i < jumpHeight; i += 0.1){
-        move({0,0.01});
-        cout << "jump2" << endl;
-    }
-    isJumping = false;
-}
 
+    acc.y -= 0.60;
+    move({0,-0.60});
+
+}
+void Player::jumpFall(){
+
+    isJumping = false;
+    if(player.getPosition().y < groundHeight && isJumping == false){
+        move({0,0.60});
+}
+}
 void Player::onUpdate(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if(acc.x < maxVelocity)
+        if(acc.x < maxVelocityX)
             acc.x += 10;
-        if(acc.x > maxVelocity) acc.x = maxVelocity;
+        if(acc.x > maxVelocityX) acc.x = maxVelocityX;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if(acc.x > -maxVelocity)
+        if(acc.x > -maxVelocityX)
             acc.x -= 10;
-        if(acc.x < -maxVelocity) acc.x = -maxVelocity;
+        if(acc.x < -maxVelocityX) acc.x = -maxVelocityX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && player.getPosition().y == groundHeight){
         if(!isJumping){
+        if(acc.y < maxVelocityY)
             acc.y += jumpHeight;
-            isJumping = true;
+        if(acc.y > maxVelocityY) acc.y = maxVelocityY;
         }
     }
 
@@ -74,14 +75,10 @@ void Player::onUpdate(){
         acc.x += 1 * abs(acc.x*0.09);
         moveLeft();
     }
-
     if(acc.y > 0.001){
-        acc.y -= 0.09;
-        move({0,-0.09});
-    }else isJumping = false;
-    if(player.getPosition().y < groundHeight && isJumping == false){
-        move({0,0.09});
+        jump();
     }
+    else jumpFall();
 }
 void Player::drawTo(sf::RenderWindow &window) {
     window.draw(player);
