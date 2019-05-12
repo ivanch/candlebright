@@ -1,6 +1,5 @@
 #pragma once
-#include "includes.h"
-#include "Listener.h"
+
 class Player: public Listener{
     private:
         string name;
@@ -11,7 +10,7 @@ class Player: public Listener{
         float groundHeight;
         float maxVelocityX;
         float maxVelocityY;
-        sf::Vector2f acc; // vetor de aceleração
+        sf::Vector2f acc; // vetor de aceleraï¿½ï¿½o
 
         sf::RectangleShape player;
         sf::View& view;

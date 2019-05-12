@@ -1,8 +1,8 @@
-#include "includes.h"
+#include "includes.hpp"
 
-#include "engine/Listener.h"
-#include "player/Player.h"
-#include "engine/Engine.h"
+#include "Listener.hpp"
+#include "Player.cpp"
+#include "Engine.cpp"
 
 int main(){
     sf::RenderWindow window;

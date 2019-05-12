@@ -1,5 +1,5 @@
-#include "Player.h"
-#include "Listener.h"
+#include "Player.hpp"
+
 Player::Player(sf::View& _view, float ground, string _name):
         Listener(),
         view(_view), groundHeight(ground), name(_name){

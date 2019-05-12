@@ -1,7 +1,5 @@
 #pragma once
-#include "includes.h"
-#include "Listener.h"
-#include "../src/player/Player.h"
+
 class Engine{
     private:
         sf::RenderWindow& window;
