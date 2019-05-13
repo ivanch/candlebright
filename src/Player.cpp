@@ -7,17 +7,20 @@ Player::Player(sf::View& _view, string _name):
     player.setSize({20,60});
     player.setFillColor(sf::Color::Blue);
     setPos({50.0, 600});
+    vida = 100;
     moveSpeed = 1.5;
     jumpHeight = 75;
-    maxVelocityX = 0.001;
-    maxVelocityY = 100;
+    maxSlideX = 0.001;
+    maxSlideY = 75;
     isJumping = false;
-    finalJumpHeight=0;
+    finalJumpHeight = 0;
     world = NULL;
+
 }
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
+
     player.setPosition({player.getPosition().x + vec.x,
                         player.getPosition().y + vec.y});
     if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
@@ -40,7 +43,7 @@ void Player::moveLeft(){
 
 void Player::jump(){
 
-    acc.y -= 2.50;
+    velocity.y -= 2.50;
     move({0,-2.50});
     isJumping=true;
 
@@ -48,40 +51,45 @@ void Player::jump(){
 
 void Player::onUpdate(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if(acc.x < maxVelocityX)
-            acc.x += 10;
-        if(acc.x > maxVelocityX) acc.x = maxVelocityX;
+        if(velocity.x < maxSlideX)
+            velocity.x += 10;
+        if(velocity.x > maxSlideX) velocity.x = maxSlideX;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if(acc.x > -maxVelocityX)
-            acc.x -= 10;
-        if(acc.x < -maxVelocityX) acc.x = -maxVelocityX;
+        if(velocity.x > -maxSlideX)
+            velocity.x -= 10;
+        if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && world->isColliding(player.getGlobalBounds()) == true){
         if(!isJumping){
-            if(acc.y < maxVelocityY)
-                acc.y += jumpHeight;
-            if(acc.y > maxVelocityY) acc.y = maxVelocityY;
-            finalJumpHeight = (player.getPosition().y) - jumpHeight;
+            if(velocity.y < maxSlideY)
+                velocity.y += jumpHeight;
+            if(velocity.y > maxSlideY) velocity.y = maxSlideY;
+            finalJumpHeight= (player.getPosition().y) - jumpHeight;
 
         }
     }
 
-    if(acc.x > 0.001){
-        acc.x -= 1 * abs(acc.x*0.09);
+    if(velocity.x > 0.001){
+        velocity.x -= 1 * abs(velocity.x*0.09);
         moveRight();
-    }else if(acc.x < -0.001){
-        acc.x += 1 * abs(acc.x*0.09);
+    }else if(velocity.x < -0.001){
+        velocity.x += 1 * abs(velocity.x*0.09);
         moveLeft();
     }
-    if(acc.y > 0.001){
+    if(velocity.y > 0.001){
         jump();
     }
-    cout<<player.getPosition().y<<','<<finalJumpHeight<<endl;
     if(player.getPosition().y < finalJumpHeight + 5)
         isJumping=false;
     if(player.getPosition().y > 800)
-        respawn();
+    {
+        vida -= 25;
+        sf::Vector2f RespawnPos({50.0,600.0});
+        setPos({RespawnPos.x,RespawnPos.y});
+        if(vida <= 0)
+            std::exit(0);
+    }
 }
 
 
@@ -95,8 +103,4 @@ void Player::fall(){
 
 sf::FloatRect Player::getRect(){
     return player.getGlobalBounds();
-}
-void Player::respawn(){
-
-    setPos({50.0, 600});
 }
