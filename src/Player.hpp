@@ -1,13 +1,12 @@
 #pragma once
 
-class Player: public Listener{
+class Player: public Listener, public Object{
     private:
         string name;
         int score;
         float moveSpeed;
         bool isJumping;
         float jumpHeight;
-        float groundHeight;
         float maxVelocityX;
         float maxVelocityY;
         sf::Vector2f acc; // vetor de acelera��o
@@ -15,9 +14,11 @@ class Player: public Listener{
         sf::RectangleShape player;
         sf::View& view;
 
+        World* world;
+
         void move(sf::Vector2f vec);
     public:
-        Player(sf::View& _view, float ground = 0, string _name = "");
+        Player(sf::View& _view, string _name = "");
         ~Player();
 
         void setPos(sf::Vector2f newPos);
@@ -27,4 +28,8 @@ class Player: public Listener{
         void jumpFall();
         void onUpdate();
         void drawTo(sf::RenderWindow &window);
+        void fall();
+        sf::FloatRect getRect();
+
+        void setWorld(World* _world){ world = _world; }
 };

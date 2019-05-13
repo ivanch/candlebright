@@ -7,6 +7,8 @@ class Engine{
 
         vector<Listener*> listeners;
         vector<sf::Sprite*> sprites;
+
+        World* world;
     public:
         Engine(sf::RenderWindow& _win,  sf::View& _view);
         ~Engine();
@@ -17,4 +19,6 @@ class Engine{
 
         const sf::View& getView() const{ return view; }
         const sf::RenderWindow& getWindow() const{ return window; }
+
+        void setWorld(World* _world){ world = _world; }
 };

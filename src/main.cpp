@@ -1,5 +1,8 @@
 #include "includes.hpp"
 
+#include "Plataform.cpp"
+#include "Object.hpp"
+#include "World.cpp"
 #include "Listener.hpp"
 #include "Player.cpp"
 #include "Engine.cpp"
@@ -10,14 +13,13 @@ int main(){
         x1            x2
 
         y1            y2
-    *///                        x1   y1     x2     y2
+    *///                        x1    y1     x2     y2
     sf::View view(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
 
-
-    float ground = 700;
+    World w1;
 
     Engine engine(window,view);
-    Player player(view, ground);
+    Player player(view);
 
     sf::Texture texture;
     if (!texture.loadFromFile("sprites/bg.png")){
@@ -29,6 +31,10 @@ int main(){
 
     engine.addSprite(&sprite);
     engine.addPlayer(&player);
+    engine.setWorld(&w1);
+    player.setWorld(&w1);
+
+    w1.addObject(dynamic_cast<Object*>(&player));
 
     engine.update();
     return 0;
