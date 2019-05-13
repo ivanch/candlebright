@@ -7,7 +7,6 @@ class Player: public Listener, public Object{
         float moveSpeed;
         bool isJumping;
         float jumpHeight;
-        float groundHeight;
         float maxVelocityX;
         float maxVelocityY;
         sf::Vector2f acc; // vetor de acelera��o
@@ -19,7 +18,7 @@ class Player: public Listener, public Object{
 
         void move(sf::Vector2f vec);
     public:
-        Player(sf::View& _view, float ground = 0, string _name = "");
+        Player(sf::View& _view, string _name = "");
         ~Player();
 
         void setPos(sf::Vector2f newPos);

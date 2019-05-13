@@ -1,12 +1,12 @@
 #include "Player.hpp"
 
-Player::Player(sf::View& _view, float ground, string _name):
+Player::Player(sf::View& _view, string _name):
         Listener(),
-        view(_view), groundHeight(ground), name(_name){
+        view(_view), name(_name){
 
     player.setSize({20,60});
     player.setFillColor(sf::Color::Blue);
-    setPos({50.0, ground});
+    setPos({50.0, 600});
     moveSpeed = 0.4;
     jumpHeight = 100;
     maxVelocityX = 20;

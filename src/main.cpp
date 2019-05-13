@@ -16,12 +16,10 @@ int main(){
     *///                        x1    y1     x2     y2
     sf::View view(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
 
-    float ground = 600;
-
     World w1;
 
     Engine engine(window,view);
-    Player player(view, ground);
+    Player player(view);
 
     sf::Texture texture;
     if (!texture.loadFromFile("sprites/bg.png")){
