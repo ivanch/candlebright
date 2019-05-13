@@ -1,5 +1,8 @@
 #pragma once
-
+#include "includes.hpp"
+#include "Listener.hpp"
+#include "World.hpp"
+#include "Character.hpp"
 class Player: public Listener, public Object, public Character {
     private:
         sf::RectangleShape player;
