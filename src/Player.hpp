@@ -1,21 +1,12 @@
 #pragma once
-#include "includes.hpp"
-#include "Listener.hpp"
-#include "World.hpp"
-class Player: public Listener, public Object{
+
+class Player: public Listener, public Object, public Character {
     private:
-        string name;
-        int score;
-        float moveSpeed;
-        bool isJumping;
-        float jumpHeight;
-        float finalJumpHeight;
-        float maxVelocityX;
-        float maxVelocityY;
-        sf::Vector2f acc; // vetor de aceleração
         sf::RectangleShape player;
         sf::View& view;
-
+        sf::Vector2f RespawnPos;
+        string name;
+        Character info;
         World* world;
 
         void move(sf::Vector2f vec);
@@ -30,7 +21,6 @@ class Player: public Listener, public Object{
         void onUpdate();
         void drawTo(sf::RenderWindow &window);
         void fall();
-        void respawn();
         sf::FloatRect getRect();
 
         void setWorld(World* _world){ world = _world; }
