@@ -6,6 +6,7 @@ Engine::Engine(sf::RenderWindow& _win,  sf::View& _view):
     window.create(sf::VideoMode(600, 400), "Joguinho!", sf::Style::Titlebar | sf::Style::Close);
     window.setPosition(centerWindow);
     window.setKeyRepeatEnabled(true);
+    world = NULL;
 }
 Engine::~Engine(){}
 
@@ -30,6 +31,9 @@ void Engine::update(){
         for(auto itr = sprites.begin(); itr != sprites.end(); ++itr){
             window.draw(*(*itr));
         }
+
+        world->draw(window);
+        world->gravity();
 
         for(auto itr = listeners.begin(); itr != listeners.end(); ++itr){
             (*itr)->onUpdate();

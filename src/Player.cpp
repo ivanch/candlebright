@@ -9,9 +9,10 @@ Player::Player(sf::View& _view, float ground, string _name):
     setPos({50.0, ground});
     moveSpeed = 0.4;
     jumpHeight = 100;
-    maxVelocityX = 15;
+    maxVelocityX = 20;
     maxVelocityY = 100;
     isJumping = false;
+    world = NULL;
 }
 Player::~Player(){}
 
@@ -37,18 +38,11 @@ void Player::moveLeft(){
 }
 
 void Player::jump(){
-
     acc.y -= 0.60;
     move({0,-0.60});
 
 }
-void Player::jumpFall(){
 
-    isJumping = false;
-    if(player.getPosition().y < groundHeight && isJumping == false){
-        move({0,0.60});
-}
-}
 void Player::onUpdate(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         if(acc.x < maxVelocityX)
@@ -60,11 +54,11 @@ void Player::onUpdate(){
             acc.x -= 10;
         if(acc.x < -maxVelocityX) acc.x = -maxVelocityX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && player.getPosition().y == groundHeight){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && world->isColliding(player.getGlobalBounds()) == true){
         if(!isJumping){
-        if(acc.y < maxVelocityY)
-            acc.y += jumpHeight;
-        if(acc.y > maxVelocityY) acc.y = maxVelocityY;
+            if(acc.y < maxVelocityY)
+                acc.y += jumpHeight;
+            if(acc.y > maxVelocityY) acc.y = maxVelocityY;
         }
     }
 
@@ -78,8 +72,16 @@ void Player::onUpdate(){
     if(acc.y > 0.001){
         jump();
     }
-    else jumpFall();
 }
+
 void Player::drawTo(sf::RenderWindow &window) {
     window.draw(player);
+}
+
+void Player::fall(){
+    move({0,0.09});
+}
+
+sf::FloatRect Player::getRect(){
+    return player.getGlobalBounds();
 }
