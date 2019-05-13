@@ -5,7 +5,7 @@ class World{
 
     public:
         World();
-        ~World(){}
+        ~World();
 
         void draw(sf::RenderWindow& window);
         void addObject(Object* o);

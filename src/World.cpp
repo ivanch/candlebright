@@ -2,7 +2,7 @@
 
 World::World(){
     Plataform p1({0,700},{1280,720}, sf::Color::Green);
-    p1.setTexture("sprites/pedra.png");
+    p1.setTexture("sprites/grass_side.png");
     plataforms.push_back(p1);
 }
 World::~World(){}
