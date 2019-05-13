@@ -1,5 +1,4 @@
 #pragma once
-#include "includes.hpp"
 
 class Plataform{
     private:

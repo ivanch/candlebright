@@ -1,11 +1,12 @@
 #include "includes.hpp"
 
-#include "Plataform.hpp"
-#include "Object.hpp"
-#include "World.hpp"
+#include "Plataform.cpp"
+#include "Object.cpp"
+#include "World.cpp"
 #include "Listener.hpp"
-#include "Player.hpp"
-#include "Engine.hpp"
+#include "Character.cpp"
+#include "Player.cpp"
+#include "Engine.cpp"
 
 int main(){
     sf::RenderWindow window;
