@@ -1,3 +1,6 @@
+#pragma once
+#include "includes.hpp"
+
 class Plataform{
     private:
         /* start
@@ -13,6 +16,7 @@ class Plataform{
         sf::Color color;
         sf::RectangleShape rect;
         sf::Texture texture;
+        sf::Sprite sprite;
 
     public:
         Plataform(sf::Vector2f _start, sf::Vector2f _end,
@@ -22,4 +26,5 @@ class Plataform{
         void draw(sf::RenderWindow& window);
         sf::FloatRect getRect();
         void setTexture(string filename);
+
 };
