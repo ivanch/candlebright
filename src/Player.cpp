@@ -7,11 +7,12 @@ Player::Player(sf::View& _view, string _name):
     player.setSize({20,60});
     player.setFillColor(sf::Color::Blue);
     setPos({50.0, 600});
-    moveSpeed = 0.4;
-    jumpHeight = 100;
-    maxVelocityX = 20;
+    moveSpeed = 1.5;
+    jumpHeight = 75;
+    maxVelocityX = 0.001;
     maxVelocityY = 100;
     isJumping = false;
+    finalJumpHeight=0;
     world = NULL;
 }
 Player::~Player(){}
@@ -38,8 +39,10 @@ void Player::moveLeft(){
 }
 
 void Player::jump(){
-    acc.y -= 0.60;
-    move({0,-0.60});
+
+    acc.y -= 2.50;
+    move({0,-2.50});
+    isJumping=true;
 
 }
 
@@ -59,6 +62,8 @@ void Player::onUpdate(){
             if(acc.y < maxVelocityY)
                 acc.y += jumpHeight;
             if(acc.y > maxVelocityY) acc.y = maxVelocityY;
+            finalJumpHeight = (player.getPosition().y) - jumpHeight;
+
         }
     }
 
@@ -72,16 +77,26 @@ void Player::onUpdate(){
     if(acc.y > 0.001){
         jump();
     }
+    cout<<player.getPosition().y<<','<<finalJumpHeight<<endl;
+    if(player.getPosition().y < finalJumpHeight + 5)
+        isJumping=false;
+    if(player.getPosition().y > 800)
+        respawn();
 }
+
 
 void Player::drawTo(sf::RenderWindow &window) {
     window.draw(player);
 }
-
 void Player::fall(){
-    move({0,0.09});
+    if(!isJumping)
+        move({0,2.50});
 }
 
 sf::FloatRect Player::getRect(){
     return player.getGlobalBounds();
+}
+void Player::respawn(){
+
+    setPos({50.0, 600});
 }

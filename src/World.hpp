@@ -1,3 +1,7 @@
+#pragma once
+#include "includes.hpp"
+#include "Plataform.hpp"
+#include "Object.hpp"
 class World{
     private:
         vector<Plataform> plataforms;
@@ -5,7 +9,7 @@ class World{
 
     public:
         World();
-        ~World(){}
+        ~World();
 
         void draw(sf::RenderWindow& window);
         void addObject(Object* o);

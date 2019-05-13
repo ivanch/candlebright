@@ -1,17 +1,16 @@
 #include "includes.hpp"
 
-#include "Plataform.cpp"
+#include "Plataform.hpp"
 #include "Object.hpp"
-#include "World.cpp"
+#include "World.hpp"
 #include "Listener.hpp"
-#include "Player.cpp"
-#include "Engine.cpp"
+#include "Player.hpp"
+#include "Engine.hpp"
 
 int main(){
     sf::RenderWindow window;
     /* view
         x1            x2
-
         y1            y2
     *///                        x1    y1     x2     y2
     sf::View view(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
