@@ -2,6 +2,7 @@
 #include "includes.hpp"
 #include "Plataform.hpp"
 #include "Object.hpp"
+
 class World{
     private:
         vector<Plataform> plataforms;
