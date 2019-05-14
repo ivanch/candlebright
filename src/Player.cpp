@@ -1,7 +1,6 @@
 #include "Player.hpp"
 
 Player::Player(sf::View& _view, string _name):
-        Listener(),
         view(_view), name(_name){
 
     player.setSize({20,60});
@@ -64,7 +63,7 @@ void Player::onUpdate(){
             if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
         }
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && world->isColliding(getRect()) == true){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && world->intersectsDown(getRect()) == true){
         if(!isJumping && !world->intersectsUp(getRect())){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;

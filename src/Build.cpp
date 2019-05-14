@@ -23,3 +23,7 @@ void Build::draw(sf::RenderWindow& window){
 sf::FloatRect Build::getRect(){
     return rect.getGlobalBounds();
 }
+
+void Build::fall(){
+    //rect.move({0,0.5});
+}

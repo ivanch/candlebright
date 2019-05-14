@@ -27,8 +27,6 @@ int main(){
     engine.setWorld(&w1);
     player.setWorld(&w1);
 
-    w1.addObject(dynamic_cast<Object*>(&player));
-
     engine.update();
     return 0;
 }
