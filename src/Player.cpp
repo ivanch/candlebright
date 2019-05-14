@@ -51,17 +51,21 @@ void Player::jump(){
 
 void Player::onUpdate(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if(velocity.x < maxSlideX)
-            velocity.x += 10;
-        if(velocity.x > maxSlideX) velocity.x = maxSlideX;
+        if(!world->intersectsRight(getRect())){
+            if(velocity.x < maxSlideX)
+                velocity.x += 10;
+            if(velocity.x > maxSlideX) velocity.x = maxSlideX;
+        }
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if(velocity.x > -maxSlideX)
-            velocity.x -= 10;
-        if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
+        if(!world->intersectsLeft(getRect())){
+            if(velocity.x > -maxSlideX)
+                velocity.x -= 10;
+            if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
+        }
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && world->isColliding(player.getGlobalBounds()) == true){
-        if(!isJumping){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && world->isColliding(getRect()) == true){
+        if(!isJumping && !world->intersectsUp(getRect())){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
             if(velocity.y > maxSlideY) velocity.y = maxSlideY;
@@ -89,6 +93,11 @@ void Player::onUpdate(){
         setPos({RespawnPos.x,RespawnPos.y});
         if(vida <= 0)
             std::exit(0);
+    }
+
+    if(isJumping && world->intersectsUp(getRect())){
+        velocity.y = 0;
+        isJumping = false;
     }
 }
 
