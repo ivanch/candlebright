@@ -3,51 +3,23 @@
 #include "Object.hpp"
 
 World::World(){
-    addPlataform({0,700,1280,720}, TextureManager::grass);
-    addPlataform({200,650,1280,660});
-    addPlataform({250,580,1280,590}, sf::Color::Red);
+    new Plataform({1280,30},{0,720}, TextureManager::grass);
+    new Plataform({1280,10},{150,650});
+    new Plataform({1280,5},{200,580}, sf::Color::Red);
 
-    addBuild({10,50},{100,650}, sf::Color::Cyan);
-    addBuild({20,50},{50,500}, sf::Color::Cyan);
-    addBuild({20,50},{125,500}, sf::Color::Cyan);
+    new Build({10,50},{100,650}, sf::Color::Cyan);
+    new Build({20,50},{50,500}, sf::Color::Cyan);
+    new Build({20,50},{125,500}, sf::Color::Cyan);
 }
 World::~World(){}
 
-void World::addPlataform(sf::FloatRect rect){
-    addPlataform(rect, sf::Color::White);
-}
-void World::addPlataform(sf::FloatRect rect, sf::Color color){
-    Plataform p1({rect.left, rect.top, rect.width-rect.left, rect.height-rect.top}, color);
-    plataforms.push_back(p1);
-}
-void World::addPlataform(sf::FloatRect rect, sf::Texture* texture){
-    Plataform p1({rect.left, rect.top, rect.width-rect.left, rect.height-rect.top}, texture);
-    plataforms.push_back(p1);
-}
-
-void World::addBuild(sf::Vector2f size, sf::Vector2f pos){
-    addBuild(size,pos,sf::Color::White);
-}
-void World::addBuild(sf::Vector2f size, sf::Vector2f pos, sf::Color color){
-    Build* b = new Build(size,pos,color);
-    builds.push_back(b);
-}
-void World::addBuild(sf::Vector2f size, sf::Vector2f pos, sf::Texture* texture){
-    Build* b = new Build(size,pos,texture);
-    builds.push_back(b);
-}
-
 void World::draw(sf::RenderWindow& window){
-    for(auto itr = plataforms.begin(); itr != plataforms.end(); ++itr){
-        itr->draw(window);
-    }
-    for(auto itr = builds.begin(); itr != builds.end(); ++itr){
+    for(auto itr = Plataform::plataforms.begin(); itr != Plataform::plataforms.end(); ++itr){
         (*itr)->draw(window);
     }
-}
-
-void World::addObject(Object* o){
-    objects.push_back(o);
+    for(auto itr = Build::builds.begin(); itr != Build::builds.end(); ++itr){
+        (*itr)->draw(window);
+    }
 }
 
 void World::gravity(){
@@ -58,73 +30,74 @@ void World::gravity(){
     }
 }
 
-bool World::intersectsDown(sf::FloatRect player){
-    for(auto itr = plataforms.begin(); itr != plataforms.end(); ++itr){
-        sf::FloatRect p_rect = itr->getRect();
+bool World::intersectsDown(sf::FloatRect obj){
+    for(auto itr = Plataform::plataforms.begin(); itr != Plataform::plataforms.end(); ++itr){
+        sf::FloatRect p_rect = (*itr)->getRect();
         // Debug
         /*
-        cout << "Player: " << player.left << ", " << player.top << ", " << player.width << ", " << player.height << endl;
+        cout << "Player: " << obj.left << ", " << obj.top << ", " << obj.width << ", " << obj.height << endl;
         cout << "Plataforma: " << p_rect.left << ", " << p_rect.top << ", " << p_rect.width << ", " << p_rect.height << endl;
         cout << intersectsDown(rect,p_rect) << endl;
         */
-        if(intersectsDown(player,p_rect)) return true;
+        if(intersectsDown(obj,p_rect)) return true;
     }
-    for(auto itr = builds.begin(); itr != builds.end(); ++itr){
+    for(auto itr = Build::builds.begin(); itr != Build::builds.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
-        if(intersectsDown(player,p_rect)) return true;
+        if(p_rect == obj) continue;
+        if(intersectsDown(obj,p_rect)) return true;
     }
     return false;
 }
 
-bool World::intersectsDown(sf::FloatRect player, sf::FloatRect obj){
-    if( player.top+player.height == obj.top &&
-        player.top+player.height <= obj.top+obj.height &&
-        player.left+player.width > obj.left &&
-        player.left < obj.left+obj.width ) return true;
+bool World::intersectsDown(sf::FloatRect obj1, sf::FloatRect obj2){
+    if( obj1.top+obj1.height >= obj2.top &&
+        obj1.top+obj1.height <= obj2.top+obj2.height &&
+        obj1.left+obj1.width > obj2.left &&
+        obj1.left < obj2.left+obj2.width ) return true;
     else return false;
 }
 
-bool World::intersectsUp(sf::FloatRect player){
-    for(auto itr = plataforms.begin(); itr != plataforms.end(); ++itr){
-        sf::FloatRect p_rect = itr->getRect();
-        if(intersectsUp(player,p_rect)) return true;
+bool World::intersectsUp(sf::FloatRect obj){
+    for(auto itr = Plataform::plataforms.begin(); itr != Plataform::plataforms.end(); ++itr){
+        sf::FloatRect p_rect = (*itr)->getRect();
+        if(intersectsUp(obj,p_rect)) return true;
     }
     return false;
 }
 
-bool World::intersectsUp(sf::FloatRect player, sf::FloatRect plataform){
-    if( player.top == plataform.top+plataform.height &&
-        player.left+player.width > plataform.left &&
-        player.left < plataform.left+plataform.width ) return true;
+bool World::intersectsUp(sf::FloatRect obj, sf::FloatRect obj2){
+    if( obj.top == obj2.top+obj2.height &&
+        obj.left+obj.width > obj2.left &&
+        obj.left < obj2.left+obj2.width ) return true;
     else return false;
 }
 
-bool World::intersectsRight(sf::FloatRect player){
-    for(auto itr = builds.begin(); itr != builds.end(); ++itr){
+bool World::intersectsRight(sf::FloatRect obj2){
+    for(auto itr = Build::builds.begin(); itr != Build::builds.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
-        if(intersectsRight(player,p_rect)) return true;
+        if(intersectsRight(obj2,p_rect)) return true;
     }
     return false;
 }
-bool World::intersectsRight(sf::FloatRect player, sf::FloatRect obj){
-    if( player.left+player.width >= obj.left &&
-        player.left+player.width <= obj.left+obj.width &&
-        player.top+player.height > obj.top &&
-        player.top < obj.top+obj.height ) return true;
+bool World::intersectsRight(sf::FloatRect obj1, sf::FloatRect obj2){
+    if( obj1.left+obj1.width >= obj2.left &&
+        obj1.left+obj1.width <= obj2.left+obj2.width &&
+        obj1.top+obj1.height > obj2.top &&
+        obj1.top < obj2.top+obj2.height ) return true;
     else return false;
 }
 
-bool World::intersectsLeft(sf::FloatRect player){
-    for(auto itr = builds.begin(); itr != builds.end(); ++itr){
+bool World::intersectsLeft(sf::FloatRect obj2){
+    for(auto itr = Build::builds.begin(); itr != Build::builds.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
-        if(intersectsLeft(player,p_rect)) return true;
+        if(intersectsLeft(obj2,p_rect)) return true;
     }
     return false;
 }
-bool World::intersectsLeft(sf::FloatRect player, sf::FloatRect obj){
-    if( player.left <= obj.left+obj.width &&
-        player.left >= obj.left &&
-        player.top+player.height > obj.top &&
-        player.top < obj.top+obj.height ) return true;
+bool World::intersectsLeft(sf::FloatRect obj1, sf::FloatRect obj2){
+    if( obj1.left <= obj2.left+obj2.width &&
+        obj1.left >= obj2.left &&
+        obj1.top+obj1.height > obj2.top &&
+        obj1.top < obj2.top+obj2.height ) return true;
     else return false;
 }

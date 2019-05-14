@@ -10,6 +10,7 @@ class Build: public Object {
         sf::Vector2f position;
 
     public:
+        static vector<Build*> builds;
         Build(sf::Vector2f size, sf::Vector2f pos, sf::Color _col);
         Build(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Build();

@@ -1,10 +1,13 @@
 #include "Build.hpp"
 
+vector<Build*> Build::builds;
+
 Build::Build(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
     rect = sf::RectangleShape(size);
     rect.setFillColor(_col);
     rect.setPosition(pos);
     position = pos;
+    builds.push_back(this);
 }
 Build::Build(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
     rect = sf::RectangleShape(size);

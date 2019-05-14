@@ -1,15 +1,19 @@
 #include "Plataform.hpp"
 
-Plataform::Plataform(sf::FloatRect shape, sf::Color _col){
-    rect = sf::RectangleShape({shape.width,shape.height});
+vector<Plataform*> Plataform::plataforms;
+
+Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
+    rect = sf::RectangleShape(size);
     rect.setFillColor(_col);
-    rect.setPosition({shape.left,shape.top});
+    rect.setPosition(pos);
+    plataforms.push_back(this);
 }
-Plataform::Plataform(sf::FloatRect shape, sf::Texture* _tex){
-    rect = sf::RectangleShape({shape.width,shape.height});
+Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
+    rect = sf::RectangleShape(size);
     rect.setTexture(_tex);
     texture = _tex;
-    rect.setPosition({shape.left,shape.top});
+    rect.setPosition(pos);
+    plataforms.push_back(this);
 }
 Plataform::~Plataform(){}
 

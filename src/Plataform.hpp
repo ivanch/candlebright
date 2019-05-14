@@ -8,8 +8,9 @@ class Plataform{
         sf::Texture* texture;
 
     public:
-        Plataform(sf::FloatRect shape, sf::Color _col);
-        Plataform(sf::FloatRect shape, sf::Texture* _tex);
+        static vector<Plataform*> plataforms;
+        Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col = sf::Color::White);
+        Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Plataform();
 
         void draw(sf::RenderWindow& window);

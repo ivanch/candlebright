@@ -6,9 +6,6 @@
 
 class World{
     private:
-        vector<Plataform> plataforms;
-        vector<Build*> builds;
-        vector<Object*> objects;
 
     public:
         World();
