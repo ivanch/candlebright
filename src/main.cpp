@@ -1,22 +1,25 @@
 #include "includes.hpp"
-
 #include "Object.hpp"
 #include "World.hpp"
 #include "Player.hpp"
 #include "Engine.hpp"
 
 int main(){
+
     sf::RenderWindow window;
     sf::View view(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
 
+
     World w1;
+
 
     Engine engine(window,view);
     Player player(view);
 
+
     sf::Texture texture;
     if (!texture.loadFromFile("sprites/bg.png")){
-        cout << "Erro ao ler arquivo..." << endl;
+        cerr << "Erro ao ler arquivo..." << endl;
     }
     texture.setSmooth(true);
     sf::Sprite sprite;

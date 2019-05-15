@@ -20,12 +20,46 @@ void Engine::addSprite(sf::Sprite* spr){
 
 void Engine::update(){
     while (window.isOpen()){
+        Menu menu(window.getSize().x,window.getSize().y);
         sf::Event event;
         while (window.pollEvent(event)){
-            if (event.type == sf::Event::Closed)
-                window.close();
+            switch(event.type)
+            {
+
+                case sf::Event::KeyReleased:
+                    switch(event.key.code)
+                    {
+                        case sf::Keyboard::Up:
+                            menu.moveUp();
+                        case sf::Keyboard::Down:
+                            menu.moveDown();
+                        break;
+                        case sf::Keyboard::Return:
+                            switch(menu.getEnter())
+                            {
+                                case 0:
+                                    cout<<"Jogar pressionado"<<endl;
+                                break;
+                                case 1:
+                                    cout<<"Opcao pressionado"<<endl;
+                                break;
+                                case 2:
+                                    window.close();
+                                break;
+                                default: break;
+
+                            }
+
+                    }
+                    break;
+                case sf::Event::Closed:
+                    window.close();
+                default: break;
+                break;
+            }
         }
-        window.clear();
+        menu.draw(window);
+      //  window.clear();
         window.setView(view);
 
         for(auto itr = sprites.begin(); itr != sprites.end(); ++itr){

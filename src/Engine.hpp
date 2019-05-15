@@ -2,12 +2,12 @@
 #include "includes.hpp"
 #include "World.hpp"
 #include "Player.hpp"
+#include "Menu.hpp"
 
 class Engine{
     private:
         sf::RenderWindow& window;
         sf::View& view;
-
         vector<Listener*> listeners;
         vector<sf::Sprite*> sprites;
 
