@@ -12,6 +12,9 @@ class Engine{
         vector<sf::Sprite*> sprites;
 
         World* world;
+
+        Menu menu;
+        bool menuEnabled;
     public:
         Engine(sf::RenderWindow& _win,  sf::View& _view);
         ~Engine();
