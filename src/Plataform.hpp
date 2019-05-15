@@ -1,7 +1,8 @@
 #pragma once
 #include "includes.hpp"
+#include "Object.hpp"
 
-class Plataform{
+class Plataform: public Object{
     private:
         sf::RectangleShape rect;
         sf::Color color;
