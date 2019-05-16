@@ -7,13 +7,9 @@ Engine::Engine(sf::RenderWindow& _win,  sf::View& _view):
     window.setPosition(centerWindow);
     window.setKeyRepeatEnabled(true);
     window.setFramerateLimit(60);
-    menuEnabled = true;
+    menuEnabled = false;
 }
 Engine::~Engine(){}
-
-void Engine::addPlayer(Player* p){
-    listeners.push_back(dynamic_cast<Listener*>(p));
-}
 
 void Engine::addSprite(sf::Sprite* spr){
     sprites.push_back(spr);
@@ -69,7 +65,7 @@ void Engine::update(){
             world->draw(window);
             world->gravity();
 
-            for(auto itr = listeners.begin(); itr != listeners.end(); ++itr){
+            for(auto itr = Listener::listeners.begin(); itr != Listener::listeners.end(); ++itr){
                 (*itr)->onUpdate();
                 (*itr)->drawTo(window);
             }

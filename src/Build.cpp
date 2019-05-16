@@ -18,7 +18,7 @@ Build::Build(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
 }
 Build::~Build(){}
 
-void Build::draw(sf::RenderWindow& window){
+void Build::drawTo(sf::RenderWindow& window){
     //rect.setTexture(texture);
     window.draw(rect);
 }

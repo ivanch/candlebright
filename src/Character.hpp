@@ -6,6 +6,9 @@ class Character
     public:
         Character();
         ~Character();
+        static vector<Character*> characters;
+        virtual sf::FloatRect getRect() = 0;
+        virtual void move(sf::Vector2f _move) = 0;
 
     protected:
     int vida;

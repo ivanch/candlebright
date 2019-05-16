@@ -26,7 +26,6 @@ int main(){
     sprite.setTexture(texture);
 
     engine.addSprite(&sprite);
-    engine.addPlayer(&player);
     engine.setWorld(&w1);
     player.setWorld(&w1);
 

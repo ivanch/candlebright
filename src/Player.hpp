@@ -4,16 +4,15 @@
 #include "World.hpp"
 #include "Character.hpp"
 
-class Player: public Listener, public Object, public Character {
+class Player: private Listener, public Object, public Character {
     private:
         sf::RectangleShape player;
         sf::View& view;
         sf::Vector2f RespawnPos;
         string name;
-        Character info;
+        //Character info;
         World* world;
 
-        void move(sf::Vector2f vec);
     public:
         Player(sf::View& _view, string _name = "");
         ~Player();
@@ -26,6 +25,7 @@ class Player: public Listener, public Object, public Character {
         void drawTo(sf::RenderWindow &window);
         void fall();
         sf::FloatRect getRect();
+        void move(sf::Vector2f vec);
 
         void setWorld(World* _world){ world = _world; }
 };

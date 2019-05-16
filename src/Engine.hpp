@@ -8,7 +8,6 @@ class Engine{
     private:
         sf::RenderWindow& window;
         sf::View& view;
-        vector<Listener*> listeners;
         vector<sf::Sprite*> sprites;
 
         World* world;

@@ -14,14 +14,15 @@ Player::Player(sf::View& _view, string _name):
     isJumping = false;
     finalJumpHeight = 0;
     world = NULL;
+    Listener::listeners.push_back(dynamic_cast<Listener*>(this));
 
 }
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
-
-    player.setPosition({player.getPosition().x + vec.x,
-                        player.getPosition().y + vec.y});
+    player.move(vec);
+    //player.setPosition({player.getPosition().x + vec.x,
+    //                    player.getPosition().y + vec.y});
     if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
         view.move({vec.x,0});
     if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)

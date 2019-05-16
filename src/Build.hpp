@@ -15,7 +15,7 @@ class Build: public Object {
         Build(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Build();
 
-        void draw(sf::RenderWindow& window);
+        void drawTo(sf::RenderWindow& window);
         sf::FloatRect getRect();
         void fall();
 };
