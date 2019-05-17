@@ -6,7 +6,7 @@ Player::Player(sf::View& _view, string _name):
     player.setSize({20,60});
     player.setFillColor(sf::Color::Blue);
     setPos({50.0, 600});
-    vida = 100000000;
+    vida = 100;
     moveSpeed = 1.5;
     jumpHeight = 80;
     maxSlideX = 0.001;
@@ -20,8 +20,7 @@ Player::Player(sf::View& _view, string _name):
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
-    player.setPosition({player.getPosition().x + vec.x,
-                        player.getPosition().y + vec.y});
+    player.move(vec);
     if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
         view.move({vec.x,0});
     if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
@@ -95,7 +94,7 @@ void Player::onUpdate(){
             std::exit(0);
     }
 
-    if(isJumping && world->intersectsUp(getRect())){
+    if(world->intersectsUp(getRect())){
         velocity.y = 0;
         isJumping = false;
     }
@@ -106,8 +105,9 @@ void Player::drawTo(sf::RenderWindow &window) {
     window.draw(player);
 }
 void Player::fall(){
-    if(!isJumping)
+    if(!isJumping){
         move({0,2.50});
+    }
 }
 
 sf::FloatRect Player::getRect(){
@@ -115,5 +115,7 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::debug(){
-    cout << world->intersectsUp(getRect()) << ", " << world->intersectsDown(getRect()) << ", " << world->intersectsLeft(getRect()) << ", " << world->intersectsRight(getRect()) << endl;
+    cout << world->intersectsUp(getRect()) << ", " << world->intersectsDown(getRect()) << ", "
+         << world->intersectsLeft(getRect()) << ", " << world->intersectsRight(getRect()) << ", "
+         << isJumping << ", " << endl;
 }

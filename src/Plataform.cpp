@@ -12,6 +12,7 @@ Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
     plataforms.push_back(this);
     mRight = false;
     mUp = false;
+    texture = NULL;
 }
 Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     originalPos(pos){
@@ -24,9 +25,6 @@ Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
 Plataform::~Plataform(){}
 
 void Plataform::drawTo(sf::RenderWindow& window){
-    if(moving){
-        fmove();
-    }
     window.draw(rect);
 }
 
@@ -34,7 +32,7 @@ void Plataform::onUpdate(){
     if(moving){
         fmove();
     }
-    rect.setTexture(texture);
+    if(texture != NULL) rect.setTexture(texture);
 }
 
 sf::FloatRect Plataform::getRect(){
