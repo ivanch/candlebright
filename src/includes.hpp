@@ -6,5 +6,3 @@
 #include <vector>
 
 using namespace std;
-
-#include "utils.hpp"

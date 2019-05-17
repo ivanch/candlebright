@@ -2,6 +2,8 @@
 #include "includes.hpp"
 #include "Object.hpp"
 #include "Listener.hpp"
+#include "Character.hpp"
+#include "utils.hpp"
 
 class Plataform: public Object, private Listener{
     private:

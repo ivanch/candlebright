@@ -1,6 +1,4 @@
 #include "World.hpp"
-#include "TextureManager.hpp"
-#include "Object.hpp"
 
 World::World(){
     new Plataform({1280,30},{0,720}, TextureManager::grass); // Chão
@@ -9,7 +7,7 @@ World::World(){
     p->setMoving(true);
     p->setMove({100,0});
     p->setMoveSpeed({0.1,0});
-    
+
     p = new Plataform({25,2},{-25,700}, sf::Color::Magenta); // Plataforma vermelha
     p->setMoving(true);
     p->setMove({0,100});
