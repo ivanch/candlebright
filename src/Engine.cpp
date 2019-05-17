@@ -29,6 +29,7 @@ void Engine::update(){
                         {
                             case sf::Keyboard::Up:
                                 menu.moveUp();
+                            break;
                             case sf::Keyboard::Down:
                                 menu.moveDown();
                             break;
@@ -36,7 +37,10 @@ void Engine::update(){
                                 switch(menu.getEnter())
                                 {
                                     case 0:
-                                        cout<<"Jogar pressionado"<<endl;
+                                        {
+                                            cout<<"Jogar pressionado"<<endl;
+                                            menuEnabled=false;
+                                        }
                                     break;
                                     case 1:
                                         cout<<"Opcao pressionado"<<endl;
