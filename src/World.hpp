@@ -2,7 +2,6 @@
 #include "includes.hpp"
 #include "Plataform.hpp"
 #include "Build.hpp"
-#include "TextureManager.hpp"
 #include "Object.hpp"
 
 class World{

@@ -1,6 +1,4 @@
 #include "Plataform.hpp"
-#include "Listener.hpp"
-
 
 vector<Plataform*> Plataform::plataforms;
 
