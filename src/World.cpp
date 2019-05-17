@@ -38,37 +38,41 @@ void World::gravity(){
     }
 }
 
+/* Verfica se algum objeto intersecta com a parte de baixo do obj1 */
 bool World::intersectsDown(sf::FloatRect obj){
     for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
         if(p_rect == obj) continue;
-        if(Intersects::intersectsDown(obj,p_rect)) return true;
+        if(Intersect::intersectsDown(obj,p_rect)) return true;
     }
     return false;
 }
+/* Verfica se algum objeto intersecta com a parte de cima do obj1 */
 bool World::intersectsUp(sf::FloatRect obj1){
     for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
         if(p_rect == obj1) continue;
-        if(Intersects::intersectsUp(obj1,p_rect)) return true;
+        if(Intersect::intersectsUp(obj1,p_rect)) return true;
     }
     return false;
 }
 
+/* Verfica se algum objeto intersecta com a parte direita do obj1 */
 bool World::intersectsRight(sf::FloatRect obj1){
     for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
         if(p_rect == obj1) continue;
-        if(Intersects::intersectsRight(obj1,p_rect)) return true;
+        if(Intersect::intersectsRight(obj1,p_rect)) return true;
     }
     return false;
 }
 
+/* Verfica se algum objeto intersecta com a parte esquerda do obj1 */
 bool World::intersectsLeft(sf::FloatRect obj1){
     for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
         sf::FloatRect p_rect = (*itr)->getRect();
         if(p_rect == obj1) continue;
-        if(Intersects::intersectsLeft(obj1,p_rect)) return true;
+        if(Intersect::intersectsLeft(obj1,p_rect)) return true;
     }
     return false;
 }

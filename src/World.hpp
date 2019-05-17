@@ -15,7 +15,7 @@ class World{
         void addObject(Object* o);
         void gravity();
 
-        bool intersectsDown(sf::FloatRect obj1); // Verifica se o obj1 intersecta com algum outro objeto na parte de baixo do obj1
+        bool intersectsDown(sf::FloatRect obj1); // Verifica se a parte de baixo do obj1 intersecta com algum outro objeto na parte de cima
         bool intersectsUp(sf::FloatRect obj1);
         bool intersectsRight(sf::FloatRect obj1);
         bool intersectsLeft(sf::FloatRect obj1);

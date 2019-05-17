@@ -5,6 +5,6 @@
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
-
 using namespace std;
+
+#include "utils.hpp"

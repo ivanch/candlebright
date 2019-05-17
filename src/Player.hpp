@@ -28,4 +28,6 @@ class Player: private Listener, public Object, public Character {
         void move(sf::Vector2f vec);
 
         void setWorld(World* _world){ world = _world; }
+
+        void debug();
 };

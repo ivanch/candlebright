@@ -83,7 +83,7 @@ void Plataform::fmove(){
 
 void Plataform::moveChars(sf::Vector2f _move){
     for(auto itr = Character::characters.begin(); itr != Character::characters.end(); ++itr){
-        if(Intersects::intersectsDown(getRect(), (*itr)->getRect())){
+        if(Intersect::intersectsUp(getRect(), (*itr)->getRect())){
             (*itr)->move(_move);
         }
     }
