@@ -9,7 +9,6 @@ class Engine{
     private:
         sf::RenderWindow& window;
         sf::View& view;
-        vector<sf::Sprite*> sprites;
 
         World* world;
 
@@ -20,12 +19,24 @@ class Engine{
         ~Engine();
         void update();
 
+<<<<<<< HEAD
         void addPlayer(Player* p);
         void addEnemy(Enemy* p);
         void addSprite(sf::Sprite* spr);
 
+=======
+>>>>>>> 61d677c6e43d27cdb3f7ee19925af9767dc84340
         const sf::View& getView() const{ return view; }
         const sf::RenderWindow& getWindow() const{ return window; }
 
         void setWorld(World* _world){ world = _world; }
+
+        void draw(sf::RenderWindow& window);
+        void addObject(Object* o);
+        void gravity();
+
+        static bool intersectsDown(sf::FloatRect obj1); // Verifica se a parte de baixo do obj1 intersecta com algum outro objeto na parte de cima
+        static bool intersectsUp(sf::FloatRect obj1);
+        static bool intersectsRight(sf::FloatRect obj1);
+        static bool intersectsLeft(sf::FloatRect obj1);
 };

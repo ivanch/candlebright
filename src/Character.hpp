@@ -11,7 +11,7 @@ class Character
         virtual void move(sf::Vector2f _move) = 0;
 
     protected:
-    int vida;
+    int health;
     int score;
     float moveSpeed;
     bool isJumping;
@@ -19,6 +19,7 @@ class Character
     float finalJumpHeight;
     float maxSlideX;
     float maxSlideY;
+    float damage;
     sf::Vector2f velocity;
 
     private:
