@@ -4,7 +4,7 @@
 #include "World.hpp"
 #include "Character.hpp"
 
-class Player: private Listener, public Object, public Character {
+class Player : private Listener, public Object, public Character {
     private:
         sf::RectangleShape player;
         sf::View& view;

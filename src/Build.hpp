@@ -2,7 +2,7 @@
 #include "includes.hpp"
 #include "Object.hpp"
 
-class Build: public Object {
+class Build : public Object {
     private:
         sf::RectangleShape rect;
         sf::Color color;

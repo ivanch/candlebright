@@ -2,6 +2,7 @@
 #include "includes.hpp"
 #include "World.hpp"
 #include "Player.hpp"
+#include "Enemy.hpp"
 #include "Menu.hpp"
 
 class Engine{
@@ -20,6 +21,7 @@ class Engine{
         void update();
 
         void addPlayer(Player* p);
+        void addEnemy(Enemy* p);
         void addSprite(sf::Sprite* spr);
 
         const sf::View& getView() const{ return view; }

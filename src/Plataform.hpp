@@ -5,7 +5,7 @@
 #include "Character.hpp"
 #include "utils.hpp"
 
-class Plataform: public Object, private Listener{
+class Plataform : public Object, private Listener{
     private:
         sf::RectangleShape rect;
         sf::Color color;

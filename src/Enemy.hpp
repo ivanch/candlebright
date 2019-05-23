@@ -15,6 +15,8 @@ class Enemy: private Listener, public Object, public Character {
     void setWorld(World* _world){ world = _world; }
     void debug();
     void move(sf::Vector2f vec);
+    void moveRight();
+    void moveLeft();
     void onUpdate();
     void fall();
 
@@ -27,4 +29,10 @@ class Enemy: private Listener, public Object, public Character {
     sf::Vector2f RespawnPos;
     string name;
     World* world;
+    bool mRight;
+    bool mLeft;
+    sf::Vector2f originalPos;
+    sf::Vector2f moving;
+
+
 };

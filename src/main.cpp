@@ -3,6 +3,7 @@
 #include "World.hpp"
 #include "Player.hpp"
 #include "Engine.hpp"
+#include "Enemy.hpp"
 
 int main(){
 
@@ -15,7 +16,7 @@ int main(){
 
     Engine engine(window,view);
     Player player(view);
-
+    Enemy enemy(view);
 
     sf::Texture texture;
     if (!texture.loadFromFile("sprites/bg.png")){
@@ -28,6 +29,7 @@ int main(){
     engine.addSprite(&sprite);
     engine.setWorld(&w1);
     player.setWorld(&w1);
+    enemy.setWorld(&w1);
 
     engine.update();
     return 0;

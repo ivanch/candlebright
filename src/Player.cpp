@@ -99,8 +99,6 @@ void Player::onUpdate(){
         isJumping = false;
     }
 }
-
-
 void Player::drawTo(sf::RenderWindow &window) {
     window.draw(player);
 }
