@@ -16,7 +16,10 @@ Build::Build(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
     texture = _tex;
     position = pos;
 }
-Build::~Build(){}
+Build::~Build(){
+    for(int i = 0; i < builds.size(); i++)
+        if(builds[i] == this) builds.erase(builds.begin()+i);
+}
 
 void Build::drawTo(sf::RenderWindow& window){
     //rect.setTexture(texture);

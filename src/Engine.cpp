@@ -12,10 +12,6 @@ Engine::Engine(sf::RenderWindow& _win,  sf::View& _view):
 }
 Engine::~Engine(){}
 
-void Engine::addSprite(sf::Sprite* spr){
-    sprites.push_back(spr);
-}
-
 void Engine::update(){
     while (window.isOpen()){
         window.clear();
@@ -63,12 +59,13 @@ void Engine::update(){
         }else{
             window.setView(view);
 
-            for(auto itr = sprites.begin(); itr != sprites.end(); ++itr){
-                window.draw(*(*itr));
-            }
+            //for(auto itr = sprites.begin(); itr != sprites.end(); ++itr){
+            //    window.draw(*(*itr));
+            //}
+            window.draw(*world->getBackground());
 
-            world->draw(window);
-            world->gravity();
+            draw(window);
+            gravity();
 
             for(auto itr = Listener::listeners.begin(); itr != Listener::listeners.end(); ++itr){
                 (*itr)->onUpdate();
@@ -77,4 +74,60 @@ void Engine::update(){
         }
         window.display();
     }
+}
+
+void Engine::draw(sf::RenderWindow& window){
+    for(auto itr = Plataform::plataforms.begin(); itr != Plataform::plataforms.end(); ++itr){
+        (*itr)->drawTo(window);
+    }
+    for(auto itr = Build::builds.begin(); itr != Build::builds.end(); ++itr){
+        (*itr)->drawTo(window);
+    }
+}
+
+void Engine::gravity(){
+    for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
+        if(!intersectsDown((*itr)->getRect())){
+            (*itr)->fall();
+        }
+    }
+}
+
+/* Verfica se algum objeto intersecta com a parte de baixo do obj1 */
+bool Engine::intersectsDown(sf::FloatRect obj){
+    for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
+        sf::FloatRect p_rect = (*itr)->getRect();
+        if(p_rect == obj) continue;
+        if(Intersect::intersectsDown(obj,p_rect)) return true;
+    }
+    return false;
+}
+/* Verfica se algum objeto intersecta com a parte de cima do obj1 */
+bool Engine::intersectsUp(sf::FloatRect obj1){
+    for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
+        sf::FloatRect p_rect = (*itr)->getRect();
+        if(p_rect == obj1) continue;
+        if(Intersect::intersectsUp(obj1,p_rect)) return true;
+    }
+    return false;
+}
+
+/* Verfica se algum objeto intersecta com a parte direita do obj1 */
+bool Engine::intersectsRight(sf::FloatRect obj1){
+    for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
+        sf::FloatRect p_rect = (*itr)->getRect();
+        if(p_rect == obj1) continue;
+        if(Intersect::intersectsRight(obj1,p_rect)) return true;
+    }
+    return false;
+}
+
+/* Verfica se algum objeto intersecta com a parte esquerda do obj1 */
+bool Engine::intersectsLeft(sf::FloatRect obj1){
+    for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
+        sf::FloatRect p_rect = (*itr)->getRect();
+        if(p_rect == obj1) continue;
+        if(Intersect::intersectsLeft(obj1,p_rect)) return true;
+    }
+    return false;
 }

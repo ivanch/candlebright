@@ -6,16 +6,15 @@ Player::Player(sf::View& _view, string _name):
     player.setSize({20,60});
     player.setFillColor(sf::Color::Blue);
     setPos({50.0, 600});
-    vida = 100;
+    health = 100;
     moveSpeed = 1.5;
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
+    damage = 25.0;
     isJumping = false;
     finalJumpHeight = 0;
     world = NULL;
-    Listener::listeners.push_back(dynamic_cast<Listener*>(this));
-
 }
 Player::~Player(){}
 
@@ -49,20 +48,20 @@ void Player::jump(){
 
 void Player::onUpdate(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if(!world->intersectsRight(getRect())){
+        if(!Engine::intersectsRight(getRect())){
             if(velocity.x < maxSlideX)
                 velocity.x += 10;
             if(velocity.x > maxSlideX) velocity.x = maxSlideX;
         }
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if(!world->intersectsLeft(getRect())){
+        if(!Engine::intersectsLeft(getRect())){
             if(velocity.x > -maxSlideX)
                 velocity.x -= 10;
             if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
         }
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !world->intersectsUp(getRect()) && world->intersectsDown((getRect()))){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !Engine::intersectsUp(getRect()) && Engine::intersectsDown((getRect()))){
         if(!isJumping){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
@@ -72,6 +71,9 @@ void Player::onUpdate(){
         }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) debug();
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+        attack();
+    }
 
     if(velocity.x > 0.001){
         velocity.x -= 1 * abs(velocity.x*0.09);
@@ -87,14 +89,14 @@ void Player::onUpdate(){
         isJumping=false;
     if(player.getPosition().y > 800)
     {
-        vida -= 25;
+        health -= 25;
         sf::Vector2f RespawnPos({50.0,600.0});
         setPos({RespawnPos.x,RespawnPos.y});
-        if(vida <= 0)
+        if(health <= 0)
             std::exit(0);
     }
 
-    if(world->intersectsUp(getRect())){
+    if(Engine::intersectsUp(getRect())){
         velocity.y = 0;
         isJumping = false;
     }
@@ -115,7 +117,15 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::debug(){
-    cout << world->intersectsUp(getRect()) << ", " << world->intersectsDown(getRect()) << ", "
-         << world->intersectsLeft(getRect()) << ", " << world->intersectsRight(getRect()) << ", "
+    cout << Engine::intersectsUp(getRect()) << ", " << Engine::intersectsDown(getRect()) << ", "
+         << Engine::intersectsLeft(getRect()) << ", " << Engine::intersectsRight(getRect()) << ", "
          << isJumping << ", " << endl;
+}
+
+void Player::attack(){
+    for(int i = 0; i < Enemy::enemies.size(); i++){
+        if(Distance::getDistance(player.getPosition(),Enemy::enemies[i]->getPos()) <= 50.0){
+            Enemy::enemies[i]->takeDamage(damage);
+        }
+    }
 }

@@ -1,7 +1,7 @@
 #pragma once
+
 #ifndef Intersect
 #define Intersect
-
 namespace Intersect{
     #define LIMIT   1
 
@@ -41,6 +41,15 @@ namespace Intersect{
             obj1.top+obj1.height > obj2.top &&
             obj1.top < obj2.top+obj2.height ) return true;
         else return false;
+    }
+}
+#endif
+
+#ifndef Distance
+#define Distance
+namespace Distance{
+    float getDistance(sf::Vector2f p1, sf::Vector2f p2){
+        return sqrt(pow(p1.x-p2.x,2.0) + pow(p1.y-p2.y,2.0));
     }
 }
 #endif
