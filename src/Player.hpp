@@ -1,19 +1,24 @@
 #pragma once
 #include "includes.hpp"
 #include "Listener.hpp"
-//#include "World.hpp"
 #include "Engine.hpp"
 #include "Character.hpp"
 #include "Enemy.hpp"
+#include "TextureManager.hpp"
 
 class Player : private Listener, public Object, public Character {
     private:
         sf::View& view;
         sf::Vector2f RespawnPos;
         string name;
-        //Character info;
-        sf::Texture pTexture;
         sf::Sprite pSprite;
+
+        sf::IntRect runRect;
+        sf::IntRect standRect;
+        sf::Clock spriteClock;
+        bool isMoving;
+        bool movingRight;
+        bool animationBack;
 
     public:
         Player(sf::View& _view, string _name = "");
@@ -29,8 +34,4 @@ class Player : private Listener, public Object, public Character {
         sf::FloatRect getRect();
         void move(sf::Vector2f vec);
         void attack();
-
-
-
-        void debug();
 };

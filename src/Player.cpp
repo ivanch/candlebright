@@ -13,11 +13,18 @@ Player::Player(sf::View& _view, string _name):
     isJumping = false;
     finalJumpHeight = 0;
 
-    if (!pTexture.loadFromFile(_name)){
-    cerr << "Erro ao ler arquivo..." << endl;
-    }
-
-    pSprite.setTexture(pTexture);
+    movingRight = true;
+    isMoving = false;
+    pSprite.setTexture(*TextureManager::playerStand);
+    runRect.left = 128;
+    runRect.top = 0;
+    runRect.width = 32;
+    runRect.height = 60;
+    standRect.left = 0;
+    standRect.top = 0;
+    standRect.width = 36;
+    standRect.height = 60;
+    animationBack = false;
 }
 Player::~Player(){}
 
@@ -27,6 +34,7 @@ void Player::move(sf::Vector2f vec){
         view.move({vec.x,0});
     if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
         view.move({vec.x,0});
+    isMoving = true;
 }
 
 void Player::setPos(sf::Vector2f newPos) {
@@ -35,21 +43,22 @@ void Player::setPos(sf::Vector2f newPos) {
 
 void Player::moveRight(){
     move({moveSpeed,0});
+    movingRight = true;
 }
 
 void Player::moveLeft(){
     Player::move({-moveSpeed,0});
+    movingRight = false;
 }
 
 void Player::jump(){
-
     velocity.y -= 2.50;
     move({0,-2.50});
     isJumping=true;
-
 }
 
 void Player::onUpdate(){
+    isMoving = false;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         if(!Engine::intersectsRight(getRect())){
             if(velocity.x < maxSlideX)
@@ -73,7 +82,6 @@ void Player::onUpdate(){
 
         }
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)) debug();
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
         attack();
     }
@@ -103,6 +111,43 @@ void Player::onUpdate(){
         velocity.y = 0;
         isJumping = false;
     }
+    
+    if(isMoving){
+        pSprite.setTexture(*TextureManager::playerRun);
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 250){
+            if(runRect.left+runRect.width >= 320){
+                animationBack = true;
+            }
+            if(animationBack){
+                runRect.left -= runRect.width;
+                if(runRect.left <= 0){
+                    animationBack = false;
+                }
+            }else runRect.left += runRect.width;
+            pSprite.setTextureRect(runRect);
+            spriteClock.restart();
+        }
+        if(!movingRight){
+            pSprite.setScale({-1,1});
+        }else{
+            pSprite.setScale({1,1});
+        }
+    }else{
+        pSprite.setTexture(*TextureManager::playerStand);
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 250){
+            if(standRect.left+standRect.width >= 216){
+                animationBack = true;
+            }
+            if(animationBack){
+                standRect.left -= standRect.width;
+                if(standRect.left <= 0){
+                    animationBack = false;
+                }
+            }else standRect.left += standRect.width;
+            pSprite.setTextureRect(standRect);
+            spriteClock.restart();
+        }
+    }
 }
 void Player::drawTo(sf::RenderWindow &window) {
     window.draw(pSprite);
@@ -115,12 +160,6 @@ void Player::fall(){
 
 sf::FloatRect Player::getRect(){
     return pSprite.getGlobalBounds();
-}
-
-void Player::debug(){
-    cout << Engine::intersectsUp(getRect()) << ", " << Engine::intersectsDown(getRect()) << ", "
-         << Engine::intersectsLeft(getRect()) << ", " << Engine::intersectsRight(getRect()) << ", "
-         << isJumping << ", " << endl;
 }
 
 void Player::attack(){
