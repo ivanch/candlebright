@@ -14,7 +14,6 @@ Player::Player(sf::View& _view, string _name):
     damage = 25.0;
     isJumping = false;
     finalJumpHeight = 0;
-    world = NULL;
 }
 Player::~Player(){}
 

@@ -58,10 +58,7 @@ void Engine::update(){
             }
         }else{
             window.setView(view);
-
-            //for(auto itr = sprites.begin(); itr != sprites.end(); ++itr){
-            //    window.draw(*(*itr));
-            //}
+            
             window.draw(*world->getBackground());
 
             draw(window);

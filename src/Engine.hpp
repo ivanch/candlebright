@@ -19,13 +19,6 @@ class Engine{
         ~Engine();
         void update();
 
-<<<<<<< HEAD
-        void addPlayer(Player* p);
-        void addEnemy(Enemy* p);
-        void addSprite(sf::Sprite* spr);
-
-=======
->>>>>>> 61d677c6e43d27cdb3f7ee19925af9767dc84340
         const sf::View& getView() const{ return view; }
         const sf::RenderWindow& getWindow() const{ return window; }
 
