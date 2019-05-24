@@ -3,8 +3,6 @@
 Player::Player(sf::View& _view, string _name):
         view(_view), name(_name){
 
-    player.setSize({20,60});
-    player.setFillColor(sf::Color::Blue);
     setPos({50.0, 600});
     health = 100;
     moveSpeed = 1.5;
@@ -14,19 +12,25 @@ Player::Player(sf::View& _view, string _name):
     damage = 25.0;
     isJumping = false;
     finalJumpHeight = 0;
+
+    if (!pTexture.loadFromFile(_name)){
+    cerr << "Erro ao ler arquivo..." << endl;
+    }
+
+    pSprite.setTexture(pTexture);
 }
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
-    player.move(vec);
-    if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
+    pSprite.move(vec);
+    if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
         view.move({vec.x,0});
-    if(player.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
+    if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
         view.move({vec.x,0});
 }
 
 void Player::setPos(sf::Vector2f newPos) {
-    player.setPosition(newPos);
+    pSprite.setPosition(newPos);
 }
 
 void Player::moveRight(){
@@ -65,7 +69,7 @@ void Player::onUpdate(){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
             if(velocity.y > maxSlideY) velocity.y = maxSlideY;
-            finalJumpHeight= (player.getPosition().y) - jumpHeight;
+            finalJumpHeight= (pSprite.getPosition().y) - jumpHeight;
 
         }
     }
@@ -84,9 +88,9 @@ void Player::onUpdate(){
     if(velocity.y > 0.001){
         jump();
     }
-    if(player.getPosition().y < finalJumpHeight + 5)
+    if(pSprite.getPosition().y < finalJumpHeight + 5)
         isJumping=false;
-    if(player.getPosition().y > 800)
+    if(pSprite.getPosition().y > 800)
     {
         health -= 25;
         sf::Vector2f RespawnPos({50.0,600.0});
@@ -101,7 +105,7 @@ void Player::onUpdate(){
     }
 }
 void Player::drawTo(sf::RenderWindow &window) {
-    window.draw(player);
+    window.draw(pSprite);
 }
 void Player::fall(){
     if(!isJumping){
@@ -110,7 +114,7 @@ void Player::fall(){
 }
 
 sf::FloatRect Player::getRect(){
-    return player.getGlobalBounds();
+    return pSprite.getGlobalBounds();
 }
 
 void Player::debug(){
@@ -121,7 +125,7 @@ void Player::debug(){
 
 void Player::attack(){
     for(int i = 0; i < Enemy::enemies.size(); i++){
-        if(Distance::getDistance(player.getPosition(),Enemy::enemies[i]->getPos()) <= 50.0){
+        if(Distance::getDistance(pSprite.getPosition(),Enemy::enemies[i]->getPos()) <= 50.0){
             Enemy::enemies[i]->takeDamage(damage);
         }
     }

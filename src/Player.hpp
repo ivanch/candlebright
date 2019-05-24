@@ -8,11 +8,12 @@
 
 class Player : private Listener, public Object, public Character {
     private:
-        sf::RectangleShape player;
         sf::View& view;
         sf::Vector2f RespawnPos;
         string name;
         //Character info;
+        sf::Texture pTexture;
+        sf::Sprite pSprite;
 
     public:
         Player(sf::View& _view, string _name = "");
@@ -28,6 +29,8 @@ class Player : private Listener, public Object, public Character {
         sf::FloatRect getRect();
         void move(sf::Vector2f vec);
         void attack();
+
+
 
         void debug();
 };

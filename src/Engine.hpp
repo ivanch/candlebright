@@ -1,9 +1,11 @@
 #pragma once
 #include "includes.hpp"
 #include "World.hpp"
-#include "Player.hpp"
 #include "Enemy.hpp"
 #include "Menu.hpp"
+#include "Player.hpp"
+
+class Player;
 
 class Engine{
     private:
@@ -11,6 +13,7 @@ class Engine{
         sf::View& view;
 
         World* world;
+
 
         Menu menu;
         bool menuEnabled;

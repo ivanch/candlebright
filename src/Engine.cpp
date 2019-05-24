@@ -58,7 +58,7 @@ void Engine::update(){
             }
         }else{
             window.setView(view);
-            
+
             window.draw(*world->getBackground());
 
             draw(window);

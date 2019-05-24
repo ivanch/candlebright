@@ -15,15 +15,16 @@ int main(){
 
 
     Engine engine(window,view);
-    Player player(view);
+    Player player(view,"sprites/StandSprite00.png");
+
 
     new Enemy({150,650});
-
 
     sf::Texture texture;
     if (!texture.loadFromFile("sprites/bg.png")){
         cerr << "Erro ao ler arquivo..." << endl;
     }
+
     texture.setSmooth(true);
     sf::Sprite sprite;
     sprite.setTexture(texture);
