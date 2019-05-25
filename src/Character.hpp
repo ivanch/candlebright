@@ -3,7 +3,7 @@
 #include "Listener.hpp"
 #include "Object.hpp"
 
-class Character : private Listener, public Object{
+class Character : private Listener{
     public:
         Character();
         ~Character();
@@ -13,6 +13,9 @@ class Character : private Listener, public Object{
         virtual void move(sf::Vector2f _move) = 0;
         virtual void drawTo(sf::RenderWindow& window) = 0;
         virtual void takeDamage(float damage) = 0;
+        virtual void fall(){}
+
+
 
     protected:
         sf::Vector2f velocity;
