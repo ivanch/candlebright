@@ -110,7 +110,7 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    if(attackTimer.getElapsedTime().asSeconds() < attackSpeed) return;
+    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     for(int i = 0; i < Character::characters.size(); i++){
         if(Character::characters[i] == this) continue;
         if(Distance::getDistance(pRect.getPosition(),Character::characters[i]->getPos()) <= 50.0){

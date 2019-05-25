@@ -8,6 +8,7 @@ class Character : private Listener, public Object{
         Character();
         ~Character();
         static vector<Character*> characters;
+        
         virtual sf::FloatRect getRect() = 0;
         virtual sf::Vector2f getPos() = 0;
         virtual void move(sf::Vector2f _move) = 0;

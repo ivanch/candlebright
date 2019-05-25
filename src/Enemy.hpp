@@ -3,7 +3,6 @@
 #include "ColisionManager.hpp"
 #include "Engine.hpp"
 #include "Character.hpp"
-#include "Object.hpp"
 
 class Enemy : public Character {
 
@@ -13,7 +12,7 @@ class Enemy : public Character {
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();
-        
+
         virtual sf::Vector2f getPos();
         virtual sf::FloatRect getRect();
         virtual void takeDamage(float damage);

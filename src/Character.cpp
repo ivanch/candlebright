@@ -7,9 +7,9 @@ Character::Character(){
 }
 
 Character::~Character(){
-    for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-        if(*itr == this){
-            characters.erase(itr);
+    for(int i = 0; i < Character::characters.size(); i++){
+        if(Character::characters[i] == this){
+            Character::characters.erase(characters.begin()+i);
         }
     }
 }

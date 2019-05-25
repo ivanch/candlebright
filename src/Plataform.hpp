@@ -1,6 +1,7 @@
 #pragma once
 #include "includes.hpp"
-#include "Character.hpp"
+#include "Object.hpp"
+#include "Listener.hpp"
 #include "ColisionManager.hpp"
 #include "utils.hpp"
 
@@ -23,11 +24,11 @@ class Plataform : public Object, private Listener{
         Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Plataform();
 
-        void drawTo(sf::RenderWindow& window);
-        void onUpdate();
         void setMoveSpeed(sf::Vector2f _vel);
         void setMove(sf::Vector2f _move);
         void setMoving(bool _moving);
-        sf::FloatRect getRect();
+        virtual sf::FloatRect getRect();
+        virtual void drawTo(sf::RenderWindow& window);
+        virtual void onUpdate();
 
 };

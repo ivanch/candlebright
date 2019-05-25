@@ -4,8 +4,6 @@
 #include "utils.hpp"
 
 class ColisionManager{
-    private:
-        
     public:
         ColisionManager();
         ~ColisionManager();

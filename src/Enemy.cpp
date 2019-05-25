@@ -72,11 +72,7 @@ void Enemy::takeDamage(float damage){
     health -= damage;
     move({15,0});
     if(health <= 0){
-        for(int i = 0; i < Object::objects.size(); i++){
-            if(Object::objects[i] == this){
-                Object::objects.erase(objects.begin()+i);
-                cout << "Morreu" << endl;
-            }
-        }
+        cout << "Morreu" << endl;
+        this->~Enemy();
     }
 }
