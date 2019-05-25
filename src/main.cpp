@@ -15,7 +15,7 @@ int main(){
 
 
     Engine engine(window,view);
-    Player player(view,"sprites/StandSprite00.png");
+    Player player(view);
 
 
     new Enemy({150,650});

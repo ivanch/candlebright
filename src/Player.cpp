@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player(sf::View& _view, string _name):
-        view(_view), name(_name), pRect({30,60}){
+Player::Player(sf::View& _view):
+        view(_view),pRect({30,60}){
 
     pRect.setFillColor(sf::Color(255, 63, 63));
     setPos({50.0, 600});
@@ -11,12 +11,15 @@ Player::Player(sf::View& _view, string _name):
     maxSlideX = 0.001;
     maxSlideY = 80;
     damage = 25.0;
+    attackSpeed = 2;
     isJumping = false;
     finalJumpHeight = 0;
 }
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
+    if(vec.x > 0 && ColisionManager::intersectsRight(getRect())) return;
+    if(vec.x < 0 && ColisionManager::intersectsLeft(getRect())) return;
     pRect.move(vec);
     if(pRect.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
         view.move({vec.x,0});
@@ -44,26 +47,21 @@ void Player::jump(){
 
 void Player::onUpdate(){
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        if(!Engine::intersectsRight(getRect())){
-            if(velocity.x < maxSlideX)
-                velocity.x += 10;
-            if(velocity.x > maxSlideX) velocity.x = maxSlideX;
-        }
+        if(velocity.x < maxSlideX)
+            velocity.x += 10;
+        if(velocity.x > maxSlideX) velocity.x = maxSlideX;
     }
     else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        if(!Engine::intersectsLeft(getRect())){
-            if(velocity.x > -maxSlideX)
-                velocity.x -= 10;
-            if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
-        }
+        if(velocity.x > -maxSlideX)
+            velocity.x -= 10;
+        if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !Engine::intersectsUp(getRect()) && Engine::intersectsDown((getRect()))){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !ColisionManager::intersectsUp(getRect()) && ColisionManager::intersectsDown((getRect()))){
         if(!isJumping){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
             if(velocity.y > maxSlideY) velocity.y = maxSlideY;
             finalJumpHeight= (pRect.getPosition().y) - jumpHeight;
-
         }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
@@ -91,14 +89,16 @@ void Player::onUpdate(){
             std::exit(0);
     }
 
-    if(Engine::intersectsUp(getRect())){
+    if(ColisionManager::intersectsUp(getRect())){
         velocity.y = 0;
         isJumping = false;
     }
 }
+
 void Player::drawTo(sf::RenderWindow &window) {
     window.draw(pRect);
 }
+
 void Player::fall(){
     if(!isJumping){
         move({0,2.50});
@@ -110,9 +110,20 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    for(int i = 0; i < Enemy::enemies.size(); i++){
-        if(Distance::getDistance(pRect.getPosition(),Enemy::enemies[i]->getPos()) <= 50.0){
-            Enemy::enemies[i]->takeDamage(damage);
+    if(attackTimer.getElapsedTime().asSeconds() < attackSpeed) return;
+    for(int i = 0; i < Character::characters.size(); i++){
+        if(Character::characters[i] == this) continue;
+        if(Distance::getDistance(pRect.getPosition(),Character::characters[i]->getPos()) <= 50.0){
+            Character::characters[i]->takeDamage(damage);
         }
     }
+    attackTimer.restart();
+}
+
+sf::Vector2f Player::getPos(){
+    return pRect.getPosition();
+}
+
+void Player::takeDamage(float damage){
+    health -= damage;
 }

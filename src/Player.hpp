@@ -1,30 +1,31 @@
 #pragma once
 #include "includes.hpp"
-#include "Listener.hpp"
-#include "Engine.hpp"
 #include "Character.hpp"
+#include "ColisionManager.hpp"
 #include "Enemy.hpp"
 #include "TextureManager.hpp"
 
-class Player : private Listener, public Object, public Character {
+class Player : public Character {
     private:
         sf::View& view;
         sf::Vector2f RespawnPos;
-        string name;
         sf::RectangleShape pRect;
 
     public:
-        Player(sf::View& _view, string _name = "");
+        Player(sf::View& _view);
         ~Player();
 
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();
         void jump();
-        void onUpdate();
-        void drawTo(sf::RenderWindow &window);
-        void fall();
-        sf::FloatRect getRect();
-        void move(sf::Vector2f vec);
-        void attack();
+
+        virtual sf::Vector2f getPos();
+        virtual sf::FloatRect getRect();
+        virtual void onUpdate();
+        virtual void drawTo(sf::RenderWindow &window);
+        virtual void move(sf::Vector2f vec);
+        virtual void attack();
+        virtual void fall();
+        virtual void takeDamage(float damage);
 };

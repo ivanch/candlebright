@@ -1,41 +1,35 @@
 #pragma once
 #include "includes.hpp"
-#include "Listener.hpp"
+#include "ColisionManager.hpp"
 #include "Engine.hpp"
 #include "Character.hpp"
 #include "Object.hpp"
 
-class Enemy: private Listener, public Object, public Character {
+class Enemy : public Character {
 
     public:
-    static vector<Enemy*> enemies;
-
-    Enemy(sf::Vector2f pos = {500,0}, string _name = "");
-    ~Enemy();
-    void setPos(sf::Vector2f newPos);
-    void drawTo(sf::RenderWindow &window);
-    sf::FloatRect getRect();
-    void setWorld(World* _world){ world = _world; }
-    void move(sf::Vector2f vec);
-    void moveRight();
-    void moveLeft();
-    void onUpdate();
-    void fall();
-    sf::Vector2f getPos();
-    void takeDamage(float damage);
-
+        Enemy(sf::Vector2f pos = {0,0}, string _name = "");
+        ~Enemy();
+        void setPos(sf::Vector2f newPos);
+        void moveRight();
+        void moveLeft();
+        
+        virtual sf::Vector2f getPos();
+        virtual sf::FloatRect getRect();
+        virtual void takeDamage(float damage);
+        virtual void fall();
+        virtual void onUpdate();
+        virtual void drawTo(sf::RenderWindow &window);
+        virtual void move(sf::Vector2f vec);
 
     protected:
-
-    private:
-    sf::RectangleShape enemy;
-    sf::Vector2f RespawnPos;
-    string name;
-    World* world;
-    bool mRight;
-    bool mLeft;
-    sf::Vector2f originalPos;
-    sf::Vector2f moving;
+        sf::RectangleShape enemy;
+        sf::Vector2f RespawnPos;
+        string name;
+        bool mRight;
+        bool mLeft;
+        sf::Vector2f originalPos;
+        sf::Vector2f moving;
 
 
 };

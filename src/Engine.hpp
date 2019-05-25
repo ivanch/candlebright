@@ -3,9 +3,8 @@
 #include "World.hpp"
 #include "Enemy.hpp"
 #include "Menu.hpp"
-#include "Player.hpp"
-
-class Player;
+#include "Listener.hpp"
+#include "ColisionManager.hpp"
 
 class Engine{
     private:
@@ -30,9 +29,4 @@ class Engine{
         void draw(sf::RenderWindow& window);
         void addObject(Object* o);
         void gravity();
-
-        static bool intersectsDown(sf::FloatRect obj1); // Verifica se a parte de baixo do obj1 intersecta com algum outro objeto na parte de cima
-        static bool intersectsUp(sf::FloatRect obj1);
-        static bool intersectsRight(sf::FloatRect obj1);
-        static bool intersectsLeft(sf::FloatRect obj1);
 };

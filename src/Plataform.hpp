@@ -1,8 +1,7 @@
 #pragma once
 #include "includes.hpp"
-#include "Object.hpp"
-#include "Listener.hpp"
 #include "Character.hpp"
+#include "ColisionManager.hpp"
 #include "utils.hpp"
 
 class Plataform : public Object, private Listener{
@@ -18,10 +17,8 @@ class Plataform : public Object, private Listener{
         const sf::Vector2f originalPos;
         bool mRight, mUp;
         void fmove();
-        void moveChars(sf::Vector2f _move);
 
     public:
-        static vector<Plataform*> plataforms;
         Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col = sf::Color::White);
         Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Plataform();
