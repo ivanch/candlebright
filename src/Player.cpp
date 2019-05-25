@@ -11,15 +11,15 @@ Player::Player(sf::View& _view):
     maxSlideX = 0.001;
     maxSlideY = 80;
     damage = 25.0;
-    attackSpeed = 10;
+    attackSpeed = 2;
     isJumping = false;
     finalJumpHeight = 0;
 }
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
-    if(vec.x > 0 && ColisionManager::intersectsRightObject(getRect())) return;
-    if(vec.x < 0 && ColisionManager::intersectsLeftObject(getRect())) return;
+    if(vec.x > 0 && ColisionManager::intersectsRight(getRect())) return;
+    if(vec.x < 0 && ColisionManager::intersectsLeft(getRect())) return;
     pRect.move(vec);
     if(pRect.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
         view.move({vec.x,0});
@@ -56,7 +56,7 @@ void Player::onUpdate(){
             velocity.x -= 10;
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !ColisionManager::intersectsUpObject(getRect()) && ColisionManager::intersectsDownObject((getRect()))){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !ColisionManager::intersectsUp(getRect()) && ColisionManager::intersectsDown((getRect()))){
         if(!isJumping){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
@@ -89,7 +89,7 @@ void Player::onUpdate(){
             std::exit(0);
     }
 
-    if(ColisionManager::intersectsUpObject(getRect()) || ColisionManager::intersectsUpCharacter(getRect())){
+    if(ColisionManager::intersectsUp(getRect())){
         velocity.y = 0;
         isJumping = false;
     }
@@ -110,7 +110,7 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
+    if(attackTimer.getElapsedTime().asSeconds() < attackSpeed) return;
     for(int i = 0; i < Character::characters.size(); i++){
         if(Character::characters[i] == this) continue;
         if(Distance::getDistance(pRect.getPosition(),Character::characters[i]->getPos()) <= 50.0){

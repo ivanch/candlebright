@@ -75,14 +75,11 @@ void Engine::draw(sf::RenderWindow& window){
     for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
         (*itr)->drawTo(window);
     }
-    for(auto itr = Character::characters.begin(); itr != Character::characters.end(); ++itr){
-        (*itr)->drawTo(window);
-    }
 }
 
 void Engine::gravity(){
-    for(auto itr = Character::characters.begin(); itr != Character::characters.end(); ++itr){
-        if(!ColisionManager::intersectsDownObject((*itr)->getRect())){
+    for(auto itr = Object::objects.begin(); itr != Object::objects.end(); ++itr){
+        if(!ColisionManager::intersectsDown((*itr)->getRect())){
             (*itr)->fall();
         }
     }

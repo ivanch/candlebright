@@ -48,32 +48,33 @@ void Enemy::moveLeft(){
 void Enemy::onUpdate(){
 
     sf::Vector2f pos = enemy.getPosition();
-
+    
     if(mRight){
-        if(!ColisionManager::intersectsLeftCharacter(getRect()) && !ColisionManager::intersectsLeftObject(getRect()))
+        if(!ColisionManager::intersectsLeft(getRect()))
             enemy.move({-moveSpeed,0});
         else
             mRight=false;
         if(abs(pos.x) < abs(originalPos.x-100)) mRight = false;
     }else{
-        if(!ColisionManager::intersectsRightCharacter(getRect()) && !ColisionManager::intersectsRightObject(getRect()))
+        if(!ColisionManager::intersectsRight(getRect()))
             enemy.move({moveSpeed,0});
         else
             mRight=true;
         if(abs(pos.x) > abs(originalPos.x+100)) mRight = true;
     }
-    if(ColisionManager::intersectsUpCharacter(getRect()) && ColisionManager::intersectsUpObject(getRect())){
+    if(ColisionManager::intersectsUp(getRect())){
         velocity.y = 0;
         isJumping = false;
     }
 }
+
 void Enemy::takeDamage(float damage){
     health -= damage;
     move({15,0});
     if(health <= 0){
-        for(int i = 0; i < Character::characters.size(); i++){
-            if(Character::characters[i] == this){
-                Character::characters.erase(characters.begin()+i);
+        for(int i = 0; i < Object::objects.size(); i++){
+            if(Object::objects[i] == this){
+                Object::objects.erase(objects.begin()+i);
                 cout << "Morreu" << endl;
             }
         }
