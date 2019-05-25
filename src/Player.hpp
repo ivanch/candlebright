@@ -11,14 +11,7 @@ class Player : private Listener, public Object, public Character {
         sf::View& view;
         sf::Vector2f RespawnPos;
         string name;
-        sf::Sprite pSprite;
-
-        sf::IntRect runRect;
-        sf::IntRect standRect;
-        sf::Clock spriteClock;
-        bool isMoving;
-        bool movingRight;
-        bool animationBack;
+        sf::RectangleShape pRect;
 
     public:
         Player(sf::View& _view, string _name = "");
