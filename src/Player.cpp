@@ -31,6 +31,9 @@ Player::Player(sf::View& _view):
     run.addAnim("sprites/anim/Run4.png");
     run.addAnim("sprites/anim/Run5.png");
     run.addAnim("sprites/anim/Run6.png");
+
+    stand.setSize({30,65});
+    run.setSize({30,65});
 }
 Player::~Player(){}
 

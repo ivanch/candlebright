@@ -1,7 +1,6 @@
 #pragma once
 #include "includes.hpp"
 #include "World.hpp"
-#include "Enemy.hpp"
 #include "Menu.hpp"
 #include "Listener.hpp"
 #include "ColisionManager.hpp"

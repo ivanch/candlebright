@@ -23,6 +23,7 @@ void AnimManager::addAnim(string filename){
 void AnimManager::setSize(sf::Vector2i _size){
     size = _size;
     rect = {0,0,_size.x,_size.y};
+    sprite->setOrigin({_size.x/2,0});
 }
 
 void AnimManager::anim(){
@@ -38,6 +39,7 @@ void AnimManager::anim(){
 }
 
 void AnimManager::setScale(sf::Vector2f _scale){
+    if(scale == _scale) return;
     sprite->setScale(_scale);
     scale = _scale;
 }

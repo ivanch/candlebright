@@ -2,14 +2,15 @@
 #include "TextureManager.hpp"
 
 World::World(){
+    Plataform* p;
     new Plataform({1280,30},{0,720}, TextureManager::grass); // Chão
-    new Plataform({1280,10},{150,650}); // Plataforma branca
-    Plataform* p = new Plataform({1280,5},{200,580}, sf::Color::Red); // Plataforma vermelha
+    new Plataform({1280,10},{150,625}); // Plataforma branca
+    p = new Plataform({1280,5},{200,550}, sf::Color::Red); // Plataforma vermelha
     p->setMoving(true);
     p->setMove({100,0});
     p->setMoveSpeed({0.5,0});
 
-    p = new Plataform({25,2},{-25,700}, sf::Color::Magenta); // Plataforma rosa
+    p = new Plataform({50,2},{-50,700}, sf::Color::Magenta); // Plataforma rosa
     p->setMoving(true);
     p->setMove({0,100});
     p->setMoveSpeed({0,0.5});

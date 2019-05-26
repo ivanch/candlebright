@@ -17,8 +17,8 @@ int main(){
     Engine engine(window,view);
     Player player(view);
 
-
     new Enemy({150,650});
+    new Enemy({250,550});
 
     sf::Texture texture;
     if (!texture.loadFromFile("sprites/bg.png")){

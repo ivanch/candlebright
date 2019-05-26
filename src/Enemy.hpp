@@ -25,7 +25,6 @@ class Enemy : public Character {
         sf::RectangleShape enemy;
         sf::Vector2f RespawnPos;
         string name;
-        bool mRight;
         bool mLeft;
         sf::Vector2f originalPos;
         sf::Vector2f moving;

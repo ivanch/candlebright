@@ -13,7 +13,7 @@ Enemy::Enemy(sf::Vector2f pos, string _name):
     maxSlideY = 80;
     isJumping = false;
     health = 100;
-    mRight = false;
+    mLeft = false;
     finalJumpHeight = 0;
 }
 Enemy::~Enemy(){}
@@ -49,18 +49,18 @@ void Enemy::onUpdate(){
 
     sf::Vector2f pos = enemy.getPosition();
     
-    if(mRight){
+    if(mLeft){
         if(!ColisionManager::intersectsLeft(getRect()))
             enemy.move({-moveSpeed,0});
         else
-            mRight=false;
-        if(abs(pos.x) < abs(originalPos.x-100)) mRight = false;
+            mLeft=false;
+        if(abs(pos.x) < abs(originalPos.x-100)) mLeft = false;
     }else{
         if(!ColisionManager::intersectsRight(getRect()))
             enemy.move({moveSpeed,0});
         else
-            mRight=true;
-        if(abs(pos.x) > abs(originalPos.x+100)) mRight = true;
+            mLeft=true;
+        if(abs(pos.x) > abs(originalPos.x+100)) mLeft = true;
     }
     if(ColisionManager::intersectsUp(getRect())){
         velocity.y = 0;
@@ -70,7 +70,7 @@ void Enemy::onUpdate(){
 
 void Enemy::takeDamage(float damage){
     health -= damage;
-    move({15,0});
+    move({15,-5});
     if(health <= 0){
         cout << "Morreu" << endl;
         this->~Enemy();

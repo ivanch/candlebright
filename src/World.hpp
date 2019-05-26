@@ -3,6 +3,7 @@
 #include "Plataform.hpp"
 #include "Build.hpp"
 #include "Object.hpp"
+#include "TextureManager.hpp"
 
 class World{
     private:
