@@ -4,8 +4,7 @@ namespace {
     class TextureManager{
         public:
             static sf::Texture* grass;
-            static sf::Texture* playerStand;
-            static sf::Texture* playerRun;
+            static sf::Texture* playerAnim;
 
             static sf::Texture* getTexture(string filename){
                 sf::Texture* _tex = new sf::Texture;
@@ -21,6 +20,5 @@ namespace {
             ~TextureManager(){}
     };
     sf::Texture* TextureManager::grass = TextureManager::getTexture("sprites/grass_side.png");
-    sf::Texture* TextureManager::playerStand = TextureManager::getTexture("sprites/StandSprite.png");
-    sf::Texture* TextureManager::playerRun = TextureManager::getTexture("sprites/RunSheet.png");
+    sf::Texture* TextureManager::playerAnim = TextureManager::getTexture("sprites/CastlevaniaSheet.png");
 }

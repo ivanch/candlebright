@@ -1,9 +1,8 @@
 #include "Player.hpp"
 
 Player::Player(sf::View& _view):
-        view(_view),pRect({30,60}){
+        view(_view), stand(&pSprite), run(&pSprite){
 
-    pRect.setFillColor(sf::Color(255, 63, 63));
     setPos({50.0, 600});
     health = 100;
     moveSpeed = 1.5;
@@ -14,29 +13,50 @@ Player::Player(sf::View& _view):
     attackSpeed = 2;
     isJumping = false;
     finalJumpHeight = 0;
+
+    isMovingRight = true;
+    isMoving = false;
+
+    stand.addAnim("sprites/anim/Stand0.png");
+    stand.addAnim("sprites/anim/Stand1.png");
+    stand.addAnim("sprites/anim/Stand2.png");
+    stand.addAnim("sprites/anim/Stand3.png");
+    stand.addAnim("sprites/anim/Stand4.png");
+    stand.addAnim("sprites/anim/Stand5.png");
+
+    run.addAnim("sprites/anim/Run0.png");
+    run.addAnim("sprites/anim/Run1.png");
+    run.addAnim("sprites/anim/Run2.png");
+    run.addAnim("sprites/anim/Run3.png");
+    run.addAnim("sprites/anim/Run4.png");
+    run.addAnim("sprites/anim/Run5.png");
+    run.addAnim("sprites/anim/Run6.png");
 }
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
     if(vec.x > 0 && ColisionManager::intersectsRight(getRect())) return;
     if(vec.x < 0 && ColisionManager::intersectsLeft(getRect())) return;
-    pRect.move(vec);
-    if(pRect.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
+    pSprite.move(vec);
+    if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
         view.move({vec.x,0});
-    if(pRect.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
+    if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
         view.move({vec.x,0});
+    isMoving = true;
 }
 
 void Player::setPos(sf::Vector2f newPos) {
-    pRect.setPosition(newPos);
+    pSprite.setPosition(newPos);
 }
 
 void Player::moveRight(){
     move({moveSpeed,0});
+    isMovingRight = true;
 }
 
 void Player::moveLeft(){
-    Player::move({-moveSpeed,0});
+    move({-moveSpeed,0});
+    isMovingRight = false;
 }
 
 void Player::jump(){
@@ -46,6 +66,7 @@ void Player::jump(){
 }
 
 void Player::onUpdate(){
+    isMoving = false;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         if(velocity.x < maxSlideX)
             velocity.x += 10;
@@ -61,7 +82,8 @@ void Player::onUpdate(){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
             if(velocity.y > maxSlideY) velocity.y = maxSlideY;
-            finalJumpHeight= (pRect.getPosition().y) - jumpHeight;
+            finalJumpHeight= (pSprite.getPosition().y) - jumpHeight;
+
         }
     }
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
@@ -78,9 +100,9 @@ void Player::onUpdate(){
     if(velocity.y > 0.001){
         jump();
     }
-    if(pRect.getPosition().y < finalJumpHeight + 5)
+    if(pSprite.getPosition().y < finalJumpHeight + 5)
         isJumping=false;
-    if(pRect.getPosition().y > 800)
+    if(pSprite.getPosition().y > 800)
     {
         health -= 25;
         sf::Vector2f RespawnPos({50.0,600.0});
@@ -93,10 +115,28 @@ void Player::onUpdate(){
         velocity.y = 0;
         isJumping = false;
     }
+    if(isMoving){
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 250){
+            spriteClock.restart();
+            run.anim();
+        }
+        if(isMovingRight){
+            run.setScale({1,1});
+            stand.setScale({1,1});
+        }else{
+            run.setScale({-1,1});
+            stand.setScale({-1,1});
+        }
+    }else{
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 250){
+            spriteClock.restart();
+            stand.anim();
+        }
+    }
 }
 
 void Player::drawTo(sf::RenderWindow &window) {
-    window.draw(pRect);
+    window.draw(pSprite);
 }
 
 void Player::fall(){
@@ -106,14 +146,14 @@ void Player::fall(){
 }
 
 sf::FloatRect Player::getRect(){
-    return pRect.getGlobalBounds();
+    return pSprite.getGlobalBounds();
 }
 
 void Player::attack(){
     if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     for(int i = 0; i < Character::characters.size(); i++){
         if(Character::characters[i] == this) continue;
-        if(Distance::getDistance(pRect.getPosition(),Character::characters[i]->getPos()) <= 50.0){
+        if(Distance::getDistance(pSprite.getPosition(),Character::characters[i]->getPos()) <= 50.0){
             Character::characters[i]->takeDamage(damage);
         }
     }
@@ -121,7 +161,7 @@ void Player::attack(){
 }
 
 sf::Vector2f Player::getPos(){
-    return pRect.getPosition();
+    return pSprite.getPosition();
 }
 
 void Player::takeDamage(float damage){

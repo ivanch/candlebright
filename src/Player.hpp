@@ -4,12 +4,21 @@
 #include "ColisionManager.hpp"
 #include "Enemy.hpp"
 #include "TextureManager.hpp"
+#include "AnimManager.hpp"
 
 class Player : public Character {
     private:
         sf::View& view;
         sf::Vector2f RespawnPos;
-        sf::RectangleShape pRect;
+        string name;
+
+        sf::Clock spriteClock;
+        AnimManager stand;
+        AnimManager run;
+        bool isMoving;
+        bool isMovingRight;
+        sf::Sprite pSprite;
+
 
     public:
         Player(sf::View& _view);
