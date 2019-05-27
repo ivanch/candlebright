@@ -17,6 +17,6 @@ World::World(){
 
     new Build({10,50},{100,650}, sf::Color::Cyan);
     new Build({20,50},{50,500}, sf::Color::Cyan);
-    new Build({20,50},{125,500}, sf::Color::Cyan);
+    new Build({20,50},{125,450}, sf::Color::Cyan);
 }
 World::~World(){}
