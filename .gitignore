@@ -2,3 +2,6 @@
 bin
 build
 obj
+*.zip
+*.rar
+sfml

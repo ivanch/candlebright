@@ -7,7 +7,7 @@ Engine::Engine(sf::RenderWindow& _win,  sf::View& _view):
     window.setPosition(centerWindow);
     window.setKeyRepeatEnabled(true);
     window.setFramerateLimit(60);
-    menuEnabled = false;
+    menuEnabled = true;
 }
 Engine::~Engine(){}
 

@@ -1,7 +1,7 @@
 CC=g++
 OBJDIR=obj
 BINDIR=bin
-COMPILER_FLAGS=	-std=c++11 -lm -lsfml-graphics -lsfml-window -lsfml-system -ggdb
+COMPILER_FLAGS=	-std=c++11 -lm -Isfml/include -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system
 C_SOURCE = $(filter-out src/main.cpp, $(wildcard src/*.cpp))
 BUILD_SOURCE = $(wildcard $(OBJDIR)/*.o)
 
@@ -18,6 +18,12 @@ clean:
 	rm -rf $(OBJDIR)/* $(BINDIR)/* *.o
 
 execute:
-	./$(BINDIR)/jogo
+	LD_LIBRARY_PATH=sfml/lib ./$(BINDIR)/jogo
+
+debug:
+	$(CC) -c $(C_SOURCE) src/main.cpp $(COMPILER_FLAGS) -ggdb
+	mv *.o $(OBJDIR)/
+	$(CC) $(BUILD_SOURCE) -o $(BINDIR)/jogo-debug $(COMPILER_FLAGS)
+	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/jogo
 	
 run: main execute
