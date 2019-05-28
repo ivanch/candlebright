@@ -24,6 +24,6 @@ debug:
 	$(CC) -c $(C_SOURCE) src/main.cpp $(COMPILER_FLAGS) -ggdb
 	mv *.o $(OBJDIR)/
 	$(CC) $(BUILD_SOURCE) -o $(BINDIR)/jogo-debug $(COMPILER_FLAGS)
-	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/jogo
+	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/jogo-debug
 	
 run: main execute
