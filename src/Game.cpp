@@ -1,11 +1,11 @@
-#include "Main.hpp"
+#include "Game.hpp"
 
-Main::Main():
+Game::Game():
     view(sf::FloatRect(0.f, 300.f, 600.f, 500.f)){
 }
-Main::~Main(){}
+Game::~Game(){}
 
-void Main::run(){
+void Game::run(){
     Engine engine(window,view);
     Player player(view);
 

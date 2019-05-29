@@ -5,7 +5,7 @@
 #include "Engine.hpp"
 #include "Enemy.hpp"
 
-class Main{
+class Game{
     private:
         sf::RenderWindow window;
         sf::View view;
@@ -16,8 +16,8 @@ class Main{
         World w1;
 
     public:
-        Main();
-        ~Main();
+        Game();
+        ~Game();
 
         void run();
 };

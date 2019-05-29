@@ -1,7 +1,7 @@
-#include "Main.hpp"
+#include "Game.hpp"
 
 int main(){
-    Main game;
+    Game game;
     game.run();
     return 0;
 }

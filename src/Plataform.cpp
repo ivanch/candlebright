@@ -71,7 +71,6 @@ void Plataform::fmove(){
         rect.move({0,-vel.y});
         if(abs(pos.y) < abs(move.y-originalPos.y)) mUp = false;
     }else{
-        ColisionManager::moveChars(this,{0,vel.y});
         rect.move({0,vel.y});
         if(abs(pos.y) > abs(move.y+originalPos.y)) mUp = true;
     }
