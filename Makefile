@@ -7,7 +7,7 @@ BUILD_SOURCE = $(wildcard $(OBJDIR)/*.o)
 
 default: main
 
-compile: clean
+compile: clean dependencies
 	$(CC) -c $(C_SOURCE) src/main.cpp $(COMPILER_FLAGS)
 	mv *.o $(OBJDIR)/
 
@@ -27,3 +27,6 @@ debug:
 	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/jogo-debug
 	
 run: main execute
+
+dependencies:
+	sh dependencies.sh
