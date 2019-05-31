@@ -1,8 +1,8 @@
 #pragma once
 #include "includes.hpp"
-#include "Object.hpp"
+#include "Entity.hpp"
 
-class Character : public Object {
+class Character : public Entity {
     public:        
         virtual sf::Vector2f getPos() = 0;
         virtual void move(sf::Vector2f _move) = 0;

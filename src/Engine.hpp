@@ -1,5 +1,6 @@
 #pragma once
 #include "includes.hpp"
+#include "ColisionManager.hpp"
 #include "Menu.hpp"
 
 class Engine {

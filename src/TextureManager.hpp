@@ -9,7 +9,7 @@ namespace {
             static sf::Texture* getTexture(string filename){
                 sf::Texture* _tex = new sf::Texture;
                 if(!_tex->loadFromFile(filename)){
-                    cerr << "NÃ£o foi possÃ­vel ler textura do arquivo: " << filename << endl;
+                    cerr << "Não foi possível ler textura do arquivo: " << filename << endl;
                     return NULL;
                 }
                 return _tex;

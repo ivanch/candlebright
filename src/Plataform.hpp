@@ -1,10 +1,11 @@
 #pragma once
 #include "includes.hpp"
-#include "Object.hpp"
+#include "Entity.hpp"
+#include "ColisionManager.hpp"
 #include "Engine.hpp"
 #include "utils.hpp"
 
-class Plataform : public Object {
+class Plataform : public Entity {
     private:
         sf::RectangleShape rect;
         sf::Color color;
