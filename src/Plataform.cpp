@@ -49,16 +49,13 @@ void Plataform::setMoving(bool _moving){
 void Plataform::fmove(){
     sf::Vector2f pos = rect.getPosition();
     if(mRight){
-        ColisionManager::moveChars(this,{-vel.x,0});
         rect.move({-vel.x,0});
         if(abs(pos.x) < abs(originalPos.x-move.x)) mRight = false;
     }else{
-        ColisionManager::moveChars(this,{vel.x,0});
         rect.move({vel.x,0});
         if(abs(pos.x) > abs(originalPos.x+move.x)) mRight = true;
     }
     if(mUp){
-        ColisionManager::moveChars(this,{0,-vel.y});
         rect.move({0,-vel.y});
         if(abs(pos.y) < abs(move.y-originalPos.y)) mUp = false;
     }else{

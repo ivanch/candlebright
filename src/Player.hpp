@@ -1,8 +1,6 @@
 #pragma once
 #include "includes.hpp"
 #include "Character.hpp"
-#include "ColisionManager.hpp"
-#include "Enemy1.hpp"
 #include "TextureManager.hpp"
 #include "AnimManager.hpp"
 

@@ -38,8 +38,8 @@ Player::Player(sf::View* _view):
 Player::~Player(){}
 
 void Player::move(sf::Vector2f vec){
-    if(vec.x > 0 && ColisionManager::intersectsRight(getRect())) return;
-    if(vec.x < 0 && ColisionManager::intersectsLeft(getRect())) return;
+    if(vec.x > 0 && collidingRight) return;
+    if(vec.x < 0 && collidingLeft) return;
     pSprite.move(vec);
     if(pSprite.getPosition().x - (view->getCenter().x+((view->getSize().x)/2))  > -50   && vec.x > 0)
         view->move({vec.x,0});
@@ -80,7 +80,7 @@ void Player::update(){
             velocity.x -= 10;
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !ColisionManager::intersectsUp(getRect()) && ColisionManager::intersectsDown((getRect()))){
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !collidingUp && collidingDown){
         if(!isJumping){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
@@ -114,7 +114,7 @@ void Player::update(){
             std::exit(0);
     }
 
-    if(ColisionManager::intersectsUp(getRect())){
+    if(collidingUp){
         velocity.y = 0;
         isJumping = false;
     }

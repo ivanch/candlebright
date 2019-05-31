@@ -53,19 +53,19 @@ void Enemy_1::update(){
     sf::Vector2f pos = enemy.getPosition();
     
     if(mLeft){
-        if(!ColisionManager::intersectsLeft(getRect()))
+        if(!collidingLeft)
             enemy.move({-moveSpeed,0});
         else
             mLeft=false;
         if(abs(pos.x) < abs(originalPos.x-100)) mLeft = false;
     }else{
-        if(!ColisionManager::intersectsRight(getRect()))
+        if(!collidingRight)
             enemy.move({moveSpeed,0});
         else
             mLeft=true;
         if(abs(pos.x) > abs(originalPos.x+100)) mLeft = true;
     }
-    if(ColisionManager::intersectsUp(getRect())){
+    if(collidingUp){
         velocity.y = 0;
         isJumping = false;
     }

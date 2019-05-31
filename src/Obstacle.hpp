@@ -1,9 +1,9 @@
 #pragma once
 #include "includes.hpp"
-#include "Entity.hpp"
+#include "Object.hpp"
 #include "Engine.hpp"
 
-class Obstacle : public Entity {
+class Obstacle : public Object {
     private:
         sf::RectangleShape rect;
         sf::Color color;

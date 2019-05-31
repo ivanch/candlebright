@@ -2,6 +2,9 @@
 #include "includes.hpp"
 #include "TextureManager.hpp"
 
+/*  AnimManager
+    Classe para gerenciar animações.
+*/
 class AnimManager {
     private:
         sf::Sprite* sprite;
