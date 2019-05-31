@@ -12,6 +12,13 @@ Engine::Engine(sf::RenderWindow& _win,  sf::View& _view):
 Engine::~Engine(){}
 
 void Engine::update(){
+    sf::IntRect rect(0,0,40,47);
+    sf::Clock clock;
+    sf::Texture gordola;
+    gordola.loadFromFile("sprites/GordolaSheet.png");
+
+    sf::Sprite sprite(gordola, rect);
+    sprite.setPosition({280,670});
     while (window.isOpen()){
         window.clear();
         if(menuEnabled){
@@ -62,7 +69,17 @@ void Engine::update(){
                 (*itr)->onUpdate();
             }
 
+            if(clock.getElapsedTime().asMilliseconds() >= 250){
+                if(rect.left == 160){
+                    rect.left = 0;
+                }else rect.left += 40;
+                sprite.setTextureRect(rect);
+                clock.restart();
+            }
+
             window.draw(*world->getBackground());
+
+            window.draw(sprite);
 
             draw(window);
             gravity();

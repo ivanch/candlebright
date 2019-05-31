@@ -12,13 +12,14 @@ void Game::run(){
     new Enemy({150,650});
     new Enemy({250,550});
 
-    if (!backgroundTexture.loadFromFile("sprites/bg.png")){
+    if (!backgroundTexture.loadFromFile("sprites/background.png")){
         cerr << "Erro ao ler background..." << endl;
     }
 
     backgroundTexture.setSmooth(true);
     background.setTexture(backgroundTexture);
 
+    background.setPosition({0,300});
     w1.setBackground(&background);
     engine.setWorld(&w1);
 
