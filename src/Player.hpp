@@ -2,13 +2,13 @@
 #include "includes.hpp"
 #include "Character.hpp"
 #include "ColisionManager.hpp"
-#include "Enemy.hpp"
+#include "Enemy1.hpp"
 #include "TextureManager.hpp"
 #include "AnimManager.hpp"
 
 class Player : public Character {
     private:
-        sf::View& view;
+        sf::View* view;
         sf::Vector2f RespawnPos;
         string name;
 
@@ -19,9 +19,8 @@ class Player : public Character {
         bool isMovingRight;
         sf::Sprite pSprite;
 
-
     public:
-        Player(sf::View& _view);
+        Player(sf::View* _view);
         ~Player();
 
         void setPos(sf::Vector2f newPos);
@@ -31,8 +30,8 @@ class Player : public Character {
 
         virtual sf::Vector2f getPos();
         virtual sf::FloatRect getRect();
-        virtual void onUpdate();
-        virtual void drawTo(sf::RenderWindow &window);
+        virtual void update();
+        virtual void draw();
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void fall();

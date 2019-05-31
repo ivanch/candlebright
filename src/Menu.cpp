@@ -29,11 +29,11 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::draw(sf::RenderWindow &window){
+void Menu::draw(sf::RenderWindow* window){
 
     for(int i=0; i<NUM_ITEMS; i++)
     {
-        window.draw(menu_text[i]);
+        window->draw(menu_text[i]);
     }
 }
 void Menu::moveUp(){

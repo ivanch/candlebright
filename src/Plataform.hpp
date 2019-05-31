@@ -1,11 +1,11 @@
 #pragma once
 #include "includes.hpp"
-#include "Object.hpp"
-#include "Listener.hpp"
+#include "Entity.hpp"
 #include "ColisionManager.hpp"
+#include "Engine.hpp"
 #include "utils.hpp"
 
-class Plataform : public Object, private Listener{
+class Plataform : public Entity {
     private:
         sf::RectangleShape rect;
         sf::Color color;
@@ -28,7 +28,7 @@ class Plataform : public Object, private Listener{
         void setMove(sf::Vector2f _move);
         void setMoving(bool _moving);
         virtual sf::FloatRect getRect();
-        virtual void drawTo(sf::RenderWindow& window);
-        virtual void onUpdate();
+        virtual void draw();
+        virtual void update();
 
 };

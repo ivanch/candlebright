@@ -9,7 +9,7 @@ class Menu
         Menu(float width, float height);
         ~Menu();
 
-        void draw(sf::RenderWindow &window);
+        void draw(sf::RenderWindow* window);
         void moveUp();
         void moveDown();
         int getEnter(){return selectedItem;}

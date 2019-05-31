@@ -18,15 +18,16 @@ Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
 }
 Plataform::~Plataform(){}
 
-void Plataform::drawTo(sf::RenderWindow& window){
-    window.draw(rect);
+void Plataform::draw(){
+    engine->draw(rect);
 }
 
-void Plataform::onUpdate(){
+void Plataform::update(){
     if(moving){
         fmove();
     }
     if(texture != NULL) rect.setTexture(texture);
+    draw();
 }
 
 sf::FloatRect Plataform::getRect(){
@@ -43,16 +44,6 @@ void Plataform::setMove(sf::Vector2f _move){
 
 void Plataform::setMoving(bool _moving){
     moving = _moving;
-    if(moving){
-        Listener::listeners.push_back(dynamic_cast<Listener*>(this));
-    }else{
-        for(auto itr = Listener::listeners.begin(); itr != Listener::listeners.end(); ++itr){
-            if(*itr == this){
-                Listener::listeners.erase(itr);
-                break;
-            }
-        }
-    }
 }
 
 void Plataform::fmove(){

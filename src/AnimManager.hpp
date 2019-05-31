@@ -2,7 +2,7 @@
 #include "includes.hpp"
 #include "TextureManager.hpp"
 
-class AnimManager{
+class AnimManager {
     private:
         sf::Sprite* sprite;
         sf::Vector2i size;

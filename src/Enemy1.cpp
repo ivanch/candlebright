@@ -1,8 +1,6 @@
-#include "Enemy.hpp"
+#include "Enemy1.hpp"
 
-Enemy::Enemy(sf::Vector2f pos, string _name):
-        name(_name){
-
+Enemy_1::Enemy_1(sf::Vector2f pos, string _name){
     enemy.setSize({20,30});
     enemy.setFillColor(sf::Color::Red);
     setPos(pos);
@@ -16,37 +14,42 @@ Enemy::Enemy(sf::Vector2f pos, string _name):
     mLeft = false;
     finalJumpHeight = 0;
 }
-Enemy::~Enemy(){}
+Enemy_1::~Enemy_1(){}
 
-void Enemy::move(sf::Vector2f vec){
+void Enemy_1::move(sf::Vector2f vec){
     enemy.move(vec);
 }
-void Enemy::setPos(sf::Vector2f newPos) {
+
+void Enemy_1::setPos(sf::Vector2f newPos) {
     enemy.setPosition(newPos);
 }
-sf::Vector2f Enemy::getPos(){
+
+sf::Vector2f Enemy_1::getPos(){
     return enemy.getPosition();
 }
 
-void Enemy::drawTo(sf::RenderWindow &window) {
-    window.draw(enemy);
+void Enemy_1::draw() {
+    engine->draw(enemy);
 }
-sf::FloatRect Enemy::getRect(){
+
+sf::FloatRect Enemy_1::getRect(){
     return enemy.getGlobalBounds();
 }
-void Enemy::fall(){
+void Enemy_1::fall(){
     if(!isJumping){
         move({0,2.50});
     }
 }
-void Enemy::moveRight(){
+
+void Enemy_1::moveRight(){
     move({moveSpeed,0});
 }
-void Enemy::moveLeft(){
+
+void Enemy_1::moveLeft(){
     move({-moveSpeed,0});
 }
-void Enemy::onUpdate(){
 
+void Enemy_1::update(){
     sf::Vector2f pos = enemy.getPosition();
     
     if(mLeft){
@@ -66,13 +69,14 @@ void Enemy::onUpdate(){
         velocity.y = 0;
         isJumping = false;
     }
+    draw();
 }
 
-void Enemy::takeDamage(float damage){
+void Enemy_1::takeDamage(float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){
         cout << "Morreu" << endl;
-        this->~Enemy();
+        this->~Enemy_1();
     }
 }

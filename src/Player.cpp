@@ -1,6 +1,6 @@
 #include "Player.hpp"
 
-Player::Player(sf::View& _view):
+Player::Player(sf::View* _view):
         view(_view), stand(&pSprite), run(&pSprite){
 
     setPos({50.0, 600});
@@ -41,10 +41,10 @@ void Player::move(sf::Vector2f vec){
     if(vec.x > 0 && ColisionManager::intersectsRight(getRect())) return;
     if(vec.x < 0 && ColisionManager::intersectsLeft(getRect())) return;
     pSprite.move(vec);
-    if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50   && vec.x > 0)
-        view.move({vec.x,0});
-    if(pSprite.getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550  && vec.x < 0)
-        view.move({vec.x,0});
+    if(pSprite.getPosition().x - (view->getCenter().x+((view->getSize().x)/2))  > -50   && vec.x > 0)
+        view->move({vec.x,0});
+    if(pSprite.getPosition().x - (view->getCenter().x+((view->getSize().x)/2))  < -550  && vec.x < 0)
+        view->move({vec.x,0});
     isMoving = true;
 }
 
@@ -68,7 +68,7 @@ void Player::jump(){
     isJumping=true;
 }
 
-void Player::onUpdate(){
+void Player::update(){
     isMoving = false;
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         if(velocity.x < maxSlideX)
@@ -136,10 +136,11 @@ void Player::onUpdate(){
             stand.anim();
         }
     }
+    draw();
 }
 
-void Player::drawTo(sf::RenderWindow &window) {
-    window.draw(pSprite);
+void Player::draw() {
+    engine->draw(pSprite);
 }
 
 void Player::fall(){
@@ -153,6 +154,10 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
+    ////////////////////////////////////////////////
+    /*  REFAZER QUANDO TIVER A LISTA DE ENTIDADES */
+    ////////////////////////////////////////////////
+    /*
     if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     for(int i = 0; i < Character::characters.size(); i++){
         if(Character::characters[i] == this) continue;
@@ -161,6 +166,7 @@ void Player::attack(){
         }
     }
     attackTimer.restart();
+    */
 }
 
 sf::Vector2f Player::getPos(){

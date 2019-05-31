@@ -3,7 +3,7 @@
 #include "Character.hpp"
 #include "utils.hpp"
 
-class ColisionManager{
+class ColisionManager {
     public:
         ColisionManager();
         ~ColisionManager();
@@ -12,6 +12,6 @@ class ColisionManager{
         static bool intersectsUp(sf::FloatRect obj1);
         static bool intersectsRight(sf::FloatRect obj1);
         static bool intersectsLeft(sf::FloatRect obj1);
-        static void moveChars(Object* obj, sf::Vector2f _move);
+        static void moveChars(Entity* obj, sf::Vector2f _move);
 
 };

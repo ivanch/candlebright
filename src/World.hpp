@@ -1,17 +1,16 @@
 #pragma once
 #include "includes.hpp"
-#include "Plataform.hpp"
-#include "Build.hpp"
-#include "Object.hpp"
-#include "TextureManager.hpp"
+#include "Engine.hpp"
 
-class World{
-    private:
+class World {
+    protected:
         sf::Sprite* background;
-
+        Engine* engine;
+        
     public:
-        World();
-        ~World();
-        void setBackground(sf::Sprite* _bg){ background = _bg; }
-        const sf::Sprite* getBackground(){ return background; }
+        void setBackground(sf::Sprite* _bg) { background = _bg; }
+        sf::Sprite* getBackground() { return background; }
+        //virtual void colisionManager() = 0;
+        virtual void update() = 0; // Atualizar a lista de entidades dentro do mundo
+        virtual void setAllEngine(Engine* _engine) = 0;
 };

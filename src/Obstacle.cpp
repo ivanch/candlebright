@@ -1,29 +1,33 @@
-#include "Build.hpp"
+#include "Obstacle.hpp"
 
-Build::Build(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
+Obstacle::Obstacle(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
     rect = sf::RectangleShape(size);
     rect.setFillColor(_col);
     rect.setPosition(pos);
     position = pos;
 }
-Build::Build(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
+Obstacle::Obstacle(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
     rect = sf::RectangleShape(size);
     rect.setTexture(_tex);
     rect.setPosition(pos);
     texture = _tex;
     position = pos;
 }
-Build::~Build(){}
+Obstacle::~Obstacle(){}
 
-void Build::drawTo(sf::RenderWindow& window){
+void Obstacle::draw(){
     //rect.setTexture(texture);
-    window.draw(rect);
+    engine->draw(rect);
 }
 
-sf::FloatRect Build::getRect(){
+sf::FloatRect Obstacle::getRect(){
     return rect.getGlobalBounds();
 }
 
-void Build::fall(){
+void Obstacle::fall(){
     //rect.move({0,0.5}); // Gravidade da construção
+}
+
+void Obstacle::update(){
+    draw();
 }

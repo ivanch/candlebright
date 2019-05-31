@@ -1,23 +1,28 @@
 #include "includes.hpp"
-#include "Object.hpp"
-#include "World.hpp"
+#include "Entity.hpp"
+#include "World1.hpp"
 #include "Player.hpp"
 #include "Engine.hpp"
-#include "Enemy.hpp"
 
-class Game{
+class Game {
     private:
-        sf::RenderWindow window;
-        sf::View view;
+        sf::RenderWindow* window;
+        Engine engine;
 
-        sf::Texture backgroundTexture;
-        sf::Sprite background;
+        Player player;
+        World* world;
 
-        World w1;
+        Menu menu;
+        bool menuEnabled;
 
     public:
         Game();
         ~Game();
 
         void run();
+        void update();
+
+        void draw(sf::RenderWindow& window);
+        void addEntity(Entity* o);
+        void gravity();
 };
