@@ -46,6 +46,7 @@ void Game::update(){
                                             cout<<"Jogar pressionado"<<endl;
                                             menuEnabled=false;
                                             world = new World_1;
+                                            world->addEntity(static_cast<Entity*>(&player));
                                             world->setAllEngine(&engine);
                                         }
                                     break;
@@ -71,31 +72,10 @@ void Game::update(){
                 cerr << "Mundo não inicializado" << endl;
                 return;
             }
-            gravity();
+            world->gravity();
 
-            engine.setView();
-
-            if(gordolaClock.getElapsedTime().asMilliseconds() >= 250){
-                if(gordolaRect.left == 160){
-                    gordolaRect.left = 0;
-                }else gordolaRect.left += 40;
-                gordola.setTextureRect(gordolaRect);
-                gordolaClock.restart();
-            }
-            engine.draw(*world->getBackground());
-            window->draw(gordola);
-
-            player.update(); // Atualiza o jogador
             world->update(); // Atualiza as entidades do mundo
         }
         engine.render();
-    }
-}
-
-void Game::gravity(){
-    for(auto itr = Entity::entities.begin(); itr != Entity::entities.end(); ++itr){
-        if(!ColisionManager::intersectsDown((*itr)->getRect())){
-            (*itr)->fall();
-        }
     }
 }
