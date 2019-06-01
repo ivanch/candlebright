@@ -38,7 +38,7 @@ void World::collisionManager(){
         (*obj1)->setCollidingDown(false);
     }
     for(auto obj1 = objects.begin(); obj1 != objects.end(); ++obj1){
-        for(auto obj2 = objects.begin(); obj2 != objects.end(); ++obj2){
+        for(auto obj2 = obj1; obj2 != objects.end(); ++obj2){
             if(obj1 == obj2) continue;
             if(Intersect::intersectsUp((*obj1)->getRect(), (*obj2)->getRect())){
                 (*obj1)->setCollidingUp(true);

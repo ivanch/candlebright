@@ -14,7 +14,6 @@ class World : public Entity {
     public:
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
-        //virtual void colisionManager() = 0;
         void addEntity(Entity* _e) { entities.push_back(static_cast<Entity*>(_e)); objects.push_back(static_cast<Object*>(_e)); }
         void update(); // Atualizar a lista de entidades dentro do mundo
         void draw();

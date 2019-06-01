@@ -3,7 +3,7 @@
 #ifndef Intersect
 #define Intersect
 namespace Intersect{
-    #define LIMIT   1
+    #define LIMIT   3
 
     /* Parte de baixo do obj1 com a parte de cima do obj2. */
     bool intersectsDown(sf::FloatRect obj1, sf::FloatRect obj2){
