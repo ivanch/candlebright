@@ -2,10 +2,9 @@
 
 EntityList::EntityList()
 {
-    //ctor
-}
 
+}
 EntityList::~EntityList()
 {
-    //dtor
+
 }
