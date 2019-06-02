@@ -19,7 +19,7 @@ void World::setAllEngine(Engine* _engine){
 }
 
 void World::draw(){
-    engine->draw(background);
+    engine->draw(*background);
 }
 
 void World::gravity(){

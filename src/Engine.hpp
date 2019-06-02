@@ -1,6 +1,6 @@
 #pragma once
+#include "SFML/Graphics/Drawable.hpp"
 #include "includes.hpp"
-#include "Menu.hpp"
 
 class Engine {
     private:
@@ -13,10 +13,7 @@ class Engine {
 
         sf::View* getView() { return &view; }
         sf::RenderWindow* getWindow() { return &window; }
-        void draw(sf::Sprite& _sprite);
-        void draw(sf::Sprite* _sprite);
-        void draw(sf::RectangleShape& _shape);
-        void draw(sf::RectangleShape* _shape);
+        void draw(const sf::Drawable& drawable);
 
         const bool isWindowOpen() const { return window.isOpen(); }
 

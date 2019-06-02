@@ -3,6 +3,7 @@
 #include "World1.hpp"
 #include "Player.hpp"
 #include "Engine.hpp"
+#include "Menu.hpp"
 
 class Game {
     private:

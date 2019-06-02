@@ -1,18 +1,20 @@
 #pragma once
-#include "SFML/Graphics.hpp"
 #include "includes.hpp"
+#include "Entity.hpp"
 
 #define NUM_ITEMS 3
-class Menu
+class Menu : public Entity
 {
     public:
         Menu(float width, float height);
         ~Menu();
 
-        void draw(sf::RenderWindow* window);
+        virtual void draw();
         void moveUp();
         void moveDown();
         int getEnter(){return selectedItem;}
+        virtual void update();
+        bool isEnabled(){ return enabled; }
 
     protected:
 
@@ -20,5 +22,6 @@ class Menu
         sf::Text menu_text[NUM_ITEMS];
         sf::Font font;
         int selectedItem;
+        bool enabled;
 
 };

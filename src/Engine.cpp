@@ -9,17 +9,8 @@ Engine::Engine():   view(sf::FloatRect(0.f, 300.f, 600.f, 500.f)) {
 }
 Engine::~Engine(){}
 
-void Engine::draw(sf::Sprite& _sprite){
-    window.draw(_sprite);
-}
-void Engine::draw(sf::Sprite* _sprite){
-    window.draw(*_sprite);
-}
-void Engine::draw(sf::RectangleShape& _shape){
-    window.draw(_shape);
-}
-void Engine::draw(sf::RectangleShape* _shape){
-    window.draw(*_shape);
+void Engine::draw(const sf::Drawable& drawable){
+    window.draw(drawable);
 }
 
 void Engine::clearWindow(){

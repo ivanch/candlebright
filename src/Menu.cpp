@@ -22,6 +22,7 @@ Menu::Menu(float width, float height)
     menu_text[2].setPosition(sf::Vector2f(600/2 -50,((NUM_ITEMS+1)/4) * 300));
 
     selectedItem = 0;
+    enabled = true;
 }
 
 Menu::~Menu()
@@ -29,11 +30,11 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::draw(sf::RenderWindow* window){
+void Menu::draw(){
 
     for(int i=0; i<NUM_ITEMS; i++)
     {
-        window->draw(menu_text[i]);
+        engine->draw(menu_text[i]);
     }
 }
 void Menu::moveUp(){
@@ -53,4 +54,47 @@ void Menu::moveDown(){
         selectedItem++;
         menu_text[selectedItem].setColor(sf::Color::Red);
      }
+}
+
+void Menu::update(){
+    sf::Event event;
+    while (engine->getWindow()->pollEvent(event)){
+        switch(event.type)
+        {
+            case sf::Event::KeyReleased:
+                switch(event.key.code)
+                {
+                    case sf::Keyboard::Up:
+                        moveUp();
+                    break;
+                    case sf::Keyboard::Down:
+                        moveDown();
+                    break;
+                    case sf::Keyboard::Return:
+                        switch(getEnter())
+                        {
+                            case 0:
+                                {
+                                    cout<<"Jogar pressionado"<<endl;
+                                    enabled=false;
+                                }
+                            break;
+                            case 1:
+                                cout<<"Opcao pressionado"<<endl;
+                            break;
+                            case 2:
+                                engine->getWindow()->close();
+                            break;
+                            default: break;
+
+                        }
+                }
+                break;
+            case sf::Event::Closed:
+                engine->getWindow()->close();
+            default: break;
+            break;
+        }
+    }
+    draw();
 }
