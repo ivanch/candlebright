@@ -4,7 +4,7 @@ Game::Game():   player(engine.getView()),
                 menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
     world = new World_1;
-    world->addEntity(static_cast<Entity*>(&player));
+    world->addObject(&player);
     world->setAllEngine(&engine);
 }
 Game::~Game(){}

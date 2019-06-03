@@ -3,9 +3,8 @@
 #include "TextureManager.hpp"
 #include "World.hpp"
 #include "Plataform.hpp"
-#include "Obstacle.hpp"
+#include "Obstacle1.hpp"
 #include "Enemy1.hpp"
-#include "Object.hpp"
 
 class World_1 : public World {
     public:

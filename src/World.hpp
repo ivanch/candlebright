@@ -11,12 +11,12 @@ class World : public Entity {
     protected:
         sf::Sprite* background;
         EntityList entities;
-        vector<Object*> objects;
+        LinkedList<Object> objects;
 
     public:
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
-        void addEntity(Entity* _e) { entities.entity_list.insertBack(_e); objects.push_back(static_cast<Object*>(_e)); }
+        void addObject(Object* _e) { entities.entity_list.insertBack(static_cast<Entity*>(_e)); objects.insertBack(static_cast<Object*>(_e)); }
         void update(); // Atualizar a lista de entidades dentro do mundo
         void draw();
         void setAllEngine(Engine* _engine);
