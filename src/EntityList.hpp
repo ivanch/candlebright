@@ -6,8 +6,8 @@
 class EntityList
 {
     public:
-        EntityList();
-        ~EntityList();
+        EntityList(){ }
+        ~EntityList(){ }
 
         LinkedList<Entity> entity_list;
 

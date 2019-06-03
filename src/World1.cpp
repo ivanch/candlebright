@@ -2,8 +2,6 @@
 #include "TextureManager.hpp"
 
 World_1::World_1(){
-    entities.entity_list.insertBack(static_cast<Entity*>(this));
-
     Plataform* p;
     p = new Plataform({1280,30},{0,720}, TextureManager::grass); // Chão
     entities.entity_list.insertBack(static_cast<Entity*>(p));

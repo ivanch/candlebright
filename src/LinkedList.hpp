@@ -3,25 +3,25 @@
 #include "includes.hpp"
 
 template <class T>
-class Node
-{
-    private:
-        T* data;
-        Node<T>* next;
-
-    public:
-
-        T* getData(){return data;}
-        void setData(T* data){this->data=data;}
-
-        Node<T>* getNext(){return next;}
-        void setNext(Node<T>* next){this->next=next;}
-};
-
-template <class T>
 class LinkedList
 {
     public:
+		template <class TE>
+		class Node
+		{
+			private:
+				TE* data;
+				Node<TE>* next;
+
+			public:
+
+				TE* getData(){return data;}
+				void setData(TE* _data){data=_data;}
+
+				Node<TE>* getNext(){return next;}
+				void setNext(Node<TE>* next){this->next=next;}
+		};
+
         LinkedList();
         ~LinkedList();
         void insertBack(T *newData);
@@ -35,13 +35,8 @@ class LinkedList
         Node<T>* operator [] (int chave);
 
 
-
         Node<T>* getFirst(){return first;}
-        void setFirst(Node<T>* first){this->first=first;}
-
-
         Node<T>* getLast(){return last;}
-        void setLast(Node<T>* last){this->last=last;}
 
     private:
         Node<T> *first;
@@ -70,9 +65,11 @@ LinkedList<T>::~LinkedList()
 template <class T>
 void LinkedList<T>::insertBack(T* newData)
 {
-	Node<T>* newNode;
+	Node<T>* newNode = new Node<T>;
 	newNode->setData(newData);
 	newNode->setNext(NULL);
+
+	if(first == NULL) first = newNode;
 
     if(last != NULL)
     {
@@ -125,7 +122,7 @@ bool LinkedList<T>::removeBack()
 template <class T>
 void LinkedList<T>::insertFront(T *newData)
 {
-	Node<T>* newNode;
+	Node<T>* newNode = new Node<T>;
 
 	newNode->data = newData;
 
@@ -171,7 +168,7 @@ void LinkedList<T>::clear()
 }
 
 template <class T>
-Node<T>* LinkedList<T>::operator [] (int chave)
+LinkedList<T>::Node<T>* LinkedList<T>::operator[](int chave)
 {
     Node<T>* temp = first;
     for (int i=0; i<chave; i++)
