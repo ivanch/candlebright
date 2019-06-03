@@ -5,9 +5,17 @@
 template <class T>
 class Node
 {
+    private:
+        T* data;
+        Node<T>* next;
+
     public:
-        T *data;
-        Node<T> *next;
+
+        T* getData(){return data;}
+        void setData(T* data){this->data=data;}
+
+        Node<T>* getNext(){return next;}
+        void setNext(Node<T>* next){this->next=next;}
 };
 
 template <class T>
@@ -23,6 +31,17 @@ class LinkedList
         bool removeFront();
 
         void clear();
+
+        Node<T>* operator [] (int chave);
+
+
+
+        Node<T>* getFirst(){return first;}
+        void setFirst(Node<T>* first){this->first=first;}
+
+
+        Node<T>* getLast(){return last;}
+        void setLast(Node<T>* last){this->last=last;}
 
     private:
         Node<T> *first;
@@ -42,34 +61,26 @@ LinkedList<T>::~LinkedList()
 	Node<T>* temp = first;
 	while(temp != NULL)
 	{
-		temp = temp->next;
+		temp = temp->getNext();
 		delete(first);
 		first = temp;
 	}
 }
 
 template <class T>
-void LinkedList<T>::insertBack(T *newData)
+void LinkedList<T>::insertBack(T* newData)
 {
 	Node<T>* newNode;
-	newNode->data = newData;
-	newNode->next = NULL;
+	newNode->setData(newData);
+	newNode->setNext(NULL);
 
-	Node<T>* temp = first;
-
-	if (temp != NULL)
-	{
-		while (temp->next != NULL)
-		{
-			temp = temp->next;
-		}
-
-		temp->next = newNode;
-	}
-	else
-	{
-		first = newNode;
-	}
+    if(last != NULL)
+    {
+        last->setNext(newNode);
+        last = newNode;
+    }
+    else
+        last = newNode;
 }
 
 template <class T>
@@ -157,4 +168,14 @@ void LinkedList<T>::clear()
 		first = temp;
 		delete(temp);
 	}
+}
+
+template <class T>
+Node<T>* LinkedList<T>::operator [] (int chave)
+{
+    Node<T>* temp = first;
+    for (int i=0; i<chave; i++)
+        temp = temp->getNext();
+
+    return temp;
 }

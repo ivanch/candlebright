@@ -3,18 +3,20 @@
 void World::update(){
     engine->setView();
     collisionManager();
-    for(auto itr = entities.begin(); itr != entities.end(); ++itr){
-        if(*itr == this){
+    for(auto itr = entities.entity_list.getFirst(); itr != entities.entity_list.getLast(); ++itr){
+        if((World*)itr == this){
             draw();
         }else{
-            (*itr)->update();
+            ((World*)itr)->update();
         }
     }
 }
 
 void World::setAllEngine(Engine* _engine){
-    for(auto itr = entities.begin(); itr != entities.end(); ++itr){
-        (*itr)->setEngine(_engine);
+    int i = 0;
+    World* itr;
+    for(static_cast <Entity*>(itr) = entities.entity_list.getFirst()->getData(); static_cast <Entity*>(itr) != entities.entity_list.getLast()->getData(); static_cast <Entity*>(itr) = entities.entity_list[++i]->getData()){
+        (itr->setEngine(_engine));
     }
 }
 

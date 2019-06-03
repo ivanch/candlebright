@@ -24,5 +24,4 @@ class Game {
         void update();
 
         void draw(sf::RenderWindow& window);
-        void addEntity(Entity* o);
 };
