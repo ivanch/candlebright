@@ -1,18 +1,34 @@
 #include "Game.hpp"
 
-Game::Game():   player(engine.getView()),
+Game::Game():   player1(1),
+                player2(2),
                 menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
-    world = new World_1;
-    world->addObject(&player);
-    world->setAllEngine(&engine);
+    menu.setEngine(&engine);
 }
 Game::~Game(){}
 
 void Game::run(){
-    player.setEngine(&engine);
-    menu.setEngine(&engine);
-    update();
+    while(menu.isEnabled()){ // Roda o menu primeiro...
+        engine.clearWindow();
+        menu.update();
+        engine.render();
+    }
+    if(menu.getSelectedWorld() == 1){
+        world = new World_1;
+    }else if(menu.getSelectedWorld() == 2){
+        world = new World_2;
+    }
+    world->setAllEngine(&engine);
+
+    world->addObject(&player1); // Sempre haverá um jogador por padrão
+    player1.setEngine(&engine);
+    if(menu.getSelectedPlayers() == 2){
+        world->addObject(&player2);
+        player2.setEngine(&engine);
+    }
+
+    update(); // Roda o jogo...
 }
 
 void Game::update(){
@@ -26,17 +42,13 @@ void Game::update(){
 
     while (engine.isWindowOpen()){
         engine.clearWindow();
-        if(menu.isEnabled()){
-            menu.update();
-        }else{
-            if(world == NULL){
-                cerr << "Mundo não inicializado" << endl;
-                return;
-            }
-            world->gravity();
-
-            world->update(); // Atualiza as entidades do mundo
+        if(world == NULL){
+            cerr << "Mundo não inicializado" << endl;
+            return;
         }
+        world->gravity();
+
+        world->update(); // Atualiza as entidades do mundo
         engine.render();
     }
 }
