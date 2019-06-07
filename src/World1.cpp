@@ -3,7 +3,7 @@
 
 World_1::World_1(){
     Plataform* p;
-    p = new Plataform({1280,30},{0,720}, TextureManager::grass); // Chão
+    p = new Plataform({1280,30},{0,720}, texManager->grass()); // Chão
     addObject(p);
     p = new Plataform({1280,10},{150,625}); // Plataforma branca
     addObject(p);

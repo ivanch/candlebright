@@ -25,4 +25,5 @@ class AnimManager {
         void setSize(sf::Vector2i _size);
         void setScale(sf::Vector2f _scale);
         void setTime(float milliseconds){ delay = milliseconds; };
+        sf::Texture* getTexture(string filename);
 };

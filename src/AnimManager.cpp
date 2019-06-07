@@ -17,7 +17,7 @@ AnimManager::~AnimManager(){
 }
 
 void AnimManager::addAnim(string filename){
-    animes.push_back(TextureManager::getTexture(filename));
+    animes.push_back(getTexture(filename));
 }
 
 void AnimManager::setSize(sf::Vector2i _size){
@@ -42,4 +42,13 @@ void AnimManager::setScale(sf::Vector2f _scale){
     if(scale == _scale) return;
     sprite->setScale(_scale);
     scale = _scale;
+}
+
+sf::Texture* AnimManager::getTexture(string filename){
+    sf::Texture* _tex = new sf::Texture;
+    if(!_tex->loadFromFile(filename)){
+        cerr << "Não foi possível ler textura do arquivo: " << filename << endl;
+        return NULL;
+    }
+    return _tex;
 }
