@@ -28,7 +28,7 @@ sf::Vector2f Enemy_1::getPos(){
     return enemy.getPosition();
 }
 
-void Enemy_1::draw() {
+void Enemy_1::draw(Engine* engine) {
     engine->draw(enemy);
 }
 
@@ -69,7 +69,6 @@ void Enemy_1::update(){
         velocity.y = 0;
         isJumping = false;
     }
-    draw();
 }
 
 void Enemy_1::takeDamage(float damage){

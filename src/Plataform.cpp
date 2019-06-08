@@ -18,7 +18,7 @@ Plataform::Plataform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
 }
 Plataform::~Plataform(){}
 
-void Plataform::draw(){
+void Plataform::draw(Engine* engine){
     engine->draw(rect);
 }
 
@@ -27,7 +27,6 @@ void Plataform::update(){
         fmove();
     }
     if(texture != NULL) rect.setTexture(texture);
-    draw();
 }
 
 sf::FloatRect Plataform::getRect(){

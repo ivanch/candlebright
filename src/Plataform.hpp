@@ -27,7 +27,7 @@ class Plataform : public Object {
         void setMove(sf::Vector2f _move);
         void setMoving(bool _moving);
         virtual sf::FloatRect getRect();
-        virtual void draw();
+        virtual void draw(Engine* engine);
         virtual void update();
 
 };

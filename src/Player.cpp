@@ -136,10 +136,9 @@ void Player::update(){
             stand.anim();
         }
     }
-    draw();
 }
 
-void Player::draw() {
+void Player::draw(Engine* engine) {
     engine->draw(pSprite);
 }
 

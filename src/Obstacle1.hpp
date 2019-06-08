@@ -9,6 +9,6 @@ class Obstacle1 : public Obstacle {
         Obstacle1(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Obstacle1();
         virtual void update();
-        virtual void draw();
+        virtual void draw(Engine* engine);
         virtual sf::FloatRect getRect();
 };

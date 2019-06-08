@@ -29,7 +29,7 @@ class Player : public Character {
         virtual sf::Vector2f getPos();
         virtual sf::FloatRect getRect();
         virtual void update();
-        virtual void draw();
+        virtual void draw(Engine* engine);
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void fall();

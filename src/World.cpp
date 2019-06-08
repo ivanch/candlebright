@@ -1,22 +1,21 @@
 #include "World.hpp"
 
 void World::update(){
-    engine->setView();
     collisionManager();
-    draw();
     for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
         itr->getData()->update();
     }
 }
 
-void World::setAllEngine(Engine* _engine){
-    engine = _engine;
+void World::drawAll(Engine* engine){
+    engine->setView();
+    draw(engine);
     for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
-        itr->getData()->setEngine(_engine);
+        itr->getData()->draw(engine);
     }
 }
 
-void World::draw(){
+void World::draw(Engine* engine){
     engine->draw(*background);
 }
 

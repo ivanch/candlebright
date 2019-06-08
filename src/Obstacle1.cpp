@@ -18,10 +18,10 @@ Obstacle1::Obstacle1(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
 Obstacle1::~Obstacle1(){}
 
 void Obstacle1::update(){
-    draw();
+    
 }
 
-void Obstacle1::draw(){
+void Obstacle1::draw(Engine* engine){
     if(texture != NULL) rect.setTexture(texture);
     else engine->draw(rect);
 }

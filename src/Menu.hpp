@@ -9,11 +9,12 @@ class Menu : public Entity
         Menu(float width, float height);
         ~Menu();
 
-        virtual void draw();
+        virtual void draw(Engine* engine);
         void moveUp();
         void moveDown();
         int getEnter(){return selectedItem;}
-        virtual void update();
+        virtual void update(){}
+        void update(Engine* engine);
         bool isEnabled(){ return enabled; }
 
     protected:

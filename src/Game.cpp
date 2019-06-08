@@ -5,13 +5,10 @@ Game::Game():   player(engine.getView()),
     window = engine.getWindow();
     world = new World_1;
     world->addObject(&player);
-    world->setAllEngine(&engine);
 }
 Game::~Game(){}
 
 void Game::run(){
-    player.setEngine(&engine);
-    menu.setEngine(&engine);
     update();
 }
 
@@ -27,7 +24,8 @@ void Game::update(){
     while (engine.isWindowOpen()){
         engine.clearWindow();
         if(menu.isEnabled()){
-            menu.update();
+            menu.update(&engine);
+            menu.draw(&engine);
         }else{
             if(world == NULL){
                 cerr << "Mundo não inicializado" << endl;
@@ -36,6 +34,7 @@ void Game::update(){
             world->gravity();
 
             world->update(); // Atualiza as entidades do mundo
+            world->drawAll(&engine); // Desenha todas entidades do mundo
         }
         engine.render();
     }

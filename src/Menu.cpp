@@ -30,8 +30,7 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::draw(){
-
+void Menu::draw(Engine* engine){
     for(int i=0; i<NUM_ITEMS; i++)
     {
         engine->draw(menu_text[i]);
@@ -56,7 +55,7 @@ void Menu::moveDown(){
      }
 }
 
-void Menu::update(){
+void Menu::update(Engine* engine){
     sf::Event event;
     while (engine->getWindow()->pollEvent(event)){
         switch(event.type)
@@ -96,5 +95,4 @@ void Menu::update(){
             break;
         }
     }
-    draw();
 }

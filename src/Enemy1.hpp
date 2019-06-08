@@ -17,6 +17,6 @@ class Enemy_1 : public Enemy {
         virtual void takeDamage(float damage);
         virtual void fall();
         virtual void update();
-        virtual void draw();
+        virtual void draw(Engine* engine);
         virtual void move(sf::Vector2f vec);
 };
