@@ -1,9 +1,8 @@
 #include "Player.hpp"
 
-Player::Player(sf::View* _view):
-        view(_view), stand(&pSprite), run(&pSprite){
+Player::Player(int _template):
+        stand(&pSprite), run(&pSprite){
 
-    setPos({50.0, 600});
     health = 100;
     moveSpeed = 1.5;
     jumpHeight = 80;
@@ -34,6 +33,20 @@ Player::Player(sf::View* _view):
 
     stand.setSize({30,65});
     run.setSize({30,65});
+
+    if(_template == 1){
+        key_right = sf::Keyboard::Right;
+        key_left = sf::Keyboard::Left;
+        key_jump = sf::Keyboard::Up;
+        key_attack = sf::Keyboard::RControl;
+        setPos({75.0, 600});
+    }else{
+        key_right = sf::Keyboard::D;
+        key_left = sf::Keyboard::A;
+        key_jump = sf::Keyboard::Space;
+        key_attack = sf::Keyboard::Z;
+        setPos({50.0, 600});
+    }
 }
 Player::~Player(){}
 
@@ -41,10 +54,6 @@ void Player::move(sf::Vector2f vec){
     if(vec.x > 0 && collidingRight) return;
     if(vec.x < 0 && collidingLeft) return;
     pSprite.move(vec);
-    if(pSprite.getPosition().x - (view->getCenter().x+((view->getSize().x)/2))  > -50   && vec.x > 0)
-        view->move({vec.x,0});
-    if(pSprite.getPosition().x - (view->getCenter().x+((view->getSize().x)/2))  < -550  && vec.x < 0)
-        view->move({vec.x,0});
     isMoving = true;
 }
 
@@ -70,17 +79,17 @@ void Player::jump(){
 
 void Player::update(){
     isMoving = false;
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+    if(sf::Keyboard::isKeyPressed(key_right)) {
         if(velocity.x < maxSlideX)
             velocity.x += 10;
         if(velocity.x > maxSlideX) velocity.x = maxSlideX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+    else if(sf::Keyboard::isKeyPressed(key_left)) {
         if(velocity.x > -maxSlideX)
             velocity.x -= 10;
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !collidingUp && collidingDown){
+    else if(sf::Keyboard::isKeyPressed(key_jump) && !collidingUp && collidingDown){
         if(!isJumping){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
@@ -89,7 +98,7 @@ void Player::update(){
 
         }
     }
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+    if(sf::Keyboard::isKeyPressed(key_attack)){
         attack();
     }
 

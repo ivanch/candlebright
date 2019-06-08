@@ -1,15 +1,32 @@
 #include "Game.hpp"
 
-Game::Game():   player(engine.getView()),
+Game::Game():   player1(1),
+                player2(2),
                 menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
     world = new World_1;
-    world->addObject(&player);
 }
 Game::~Game(){}
 
 void Game::run(){
-    update();
+    while(menu.isEnabled()){ // Roda o menu primeiro...
+        engine.clearWindow();
+        menu.update(&engine);
+        menu.draw(&engine);
+        engine.render();
+    }
+    if(menu.getSelectedWorld() == 1){
+        world = new World_1;
+    }else if(menu.getSelectedWorld() == 2){
+        world = new World_2;
+    }
+
+    world->addObject(&player1); // Sempre haverá um jogador por padrão
+    if(menu.getSelectedPlayers() == 2){
+        world->addObject(&player2);
+    }
+
+    update(); // Roda o jogo...
 }
 
 void Game::update(){

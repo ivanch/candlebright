@@ -6,7 +6,6 @@
 
 class Player : public Character {
     private:
-        sf::View* view;
         sf::Vector2f RespawnPos;
         string name;
 
@@ -17,8 +16,13 @@ class Player : public Character {
         bool isMovingRight;
         sf::Sprite pSprite;
 
+        sf::Keyboard::Key key_right;
+        sf::Keyboard::Key key_left;
+        sf::Keyboard::Key key_jump;
+        sf::Keyboard::Key key_attack;
+
     public:
-        Player(sf::View* _view);
+        Player(int _template=-1);
         ~Player();
 
         void setPos(sf::Vector2f newPos);

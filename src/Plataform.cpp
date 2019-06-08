@@ -39,6 +39,7 @@ void Plataform::setMoveSpeed(sf::Vector2f _vel){
 
 void Plataform::setMove(sf::Vector2f _move){
     move = _move;
+    if(_move != sf::Vector2f(0,0)) moving = true;
 }
 
 void Plataform::setMoving(bool _moving){

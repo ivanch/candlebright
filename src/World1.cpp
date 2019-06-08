@@ -37,7 +37,7 @@ World_1::World_1(){
     sf::Texture* backgroundTexture = new sf::Texture;
     background = new sf::Sprite;
 
-    if (!backgroundTexture->loadFromFile("sprites/background.png")){
+    if (!backgroundTexture->loadFromFile("sprites/background1.png")){
         cerr << "Erro ao ler background..." << endl;
     }
 
