@@ -35,5 +35,8 @@ World_2::World_2(){
     backgroundTexture->setSmooth(true);
     background->setTexture(*backgroundTexture);
     background->setPosition({0,300});
+
+    Music* background_music = new Music("audio.ogg");
+    background_music->play();
 }
 World_2::~World_2(){}

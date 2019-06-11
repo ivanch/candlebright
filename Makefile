@@ -1,7 +1,7 @@
 CC=g++
 OBJDIR=obj
 BINDIR=bin
-COMPILER_FLAGS=	-std=c++11 -lm -Isfml/include -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system
+COMPILER_FLAGS=	-std=c++11 -lm -Isfml/include -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -pthread
 C_SOURCE = $(filter-out src/main.cpp, $(wildcard src/*.cpp))
 BUILD_SOURCE = $(wildcard $(OBJDIR)/*.o)
 
