@@ -1,14 +1,17 @@
 #include "Game.hpp"
 
-Game::Game():   player1(1),
-                player2(2),
+Game::Game():   player1(1,getView()),
+                player2(2,getView()),
                 menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
+    setView(view);
     world = new World_1;
+
 }
 Game::~Game(){}
 
 void Game::run(){
+
     while(menu.isEnabled()){ // Roda o menu primeiro...
         engine.clearWindow();
         menu.update(&engine);
@@ -48,6 +51,7 @@ void Game::update(){
                 cerr << "Mundo não inicializado" << endl;
                 return;
             }
+
             world->gravity();
 
             world->update(); // Atualiza as entidades do mundo

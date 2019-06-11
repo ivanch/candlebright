@@ -16,13 +16,15 @@ class Player : public Character {
         bool isMovingRight;
         sf::Sprite pSprite;
 
+        sf::View* view;
+
         sf::Keyboard::Key key_right;
         sf::Keyboard::Key key_left;
         sf::Keyboard::Key key_jump;
         sf::Keyboard::Key key_attack;
 
     public:
-        Player(int _template=-1);
+        Player(int _template=-1, sf::View* _view=NULL);
         ~Player();
 
         void setPos(sf::Vector2f newPos);

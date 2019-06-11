@@ -8,12 +8,14 @@
 
 class Game {
     private:
-        sf::RenderWindow* window;
         Engine engine;
+        sf::RenderWindow* window;
 
         Player player1;
         Player player2;
         World* world;
+        sf::View view;
+
 
         Menu menu;
         bool menuEnabled;
@@ -24,6 +26,9 @@ class Game {
 
         void run();
         void update();
+
+        sf::View* getView() { return &view; }
+        void setView(sf::View _view){ this->view=_view; }
 
         void draw(sf::RenderWindow& window);
 };

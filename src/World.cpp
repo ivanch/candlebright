@@ -8,7 +8,6 @@ void World::update(){
 }
 
 void World::drawAll(Engine* engine){
-    engine->setView();
     draw(engine);
     for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
         itr->getData()->draw(engine);

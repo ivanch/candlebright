@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player(int _template):
-        stand(&pSprite), run(&pSprite){
+Player::Player(int _template, sf::View* _view):
+     stand(&pSprite), run(&pSprite), view(_view){
 
     health = 100;
     moveSpeed = 1.5;
@@ -43,7 +43,7 @@ Player::Player(int _template):
     }else{
         key_right = sf::Keyboard::D;
         key_left = sf::Keyboard::A;
-        key_jump = sf::Keyboard::Space;
+        key_jump = sf::Keyboard::W;
         key_attack = sf::Keyboard::Z;
         setPos({50.0, 600});
     }
