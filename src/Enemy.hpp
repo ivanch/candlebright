@@ -10,4 +10,7 @@ class Enemy : public Character {
         bool mLeft;
         sf::Vector2f originalPos;
         sf::Vector2f moving;
+
+    public:
+        virtual void attack() = 0;
 };

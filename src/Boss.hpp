@@ -3,11 +3,11 @@
 #include "Engine.hpp"
 #include "Enemy.hpp"
 
-class Enemy_1 : public Enemy {
+class Boss : public Enemy {
 
     public:
-        Enemy_1(sf::Vector2f pos = {0,0}, string _name = "");
-        ~Enemy_1();
+        Boss(sf::Vector2f pos = {0,0}, string _name = "");
+        ~Boss();
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();
