@@ -5,7 +5,7 @@ AnimManager::AnimManager(sf::Sprite* _sprite, sf::Vector2i _size){
     size = _size;
     animBack = false;
     rect = {0,0,_size.x,_size.y};
-    sprite->setOrigin({_size.x/2,0});
+    sprite->setOrigin({(float)_size.x/2,0.0});
     scale = {1,1};
     index = 0;
 }
@@ -23,7 +23,7 @@ void AnimManager::addAnim(string filename){
 void AnimManager::setSize(sf::Vector2i _size){
     size = _size;
     rect = {0,0,_size.x,_size.y};
-    sprite->setOrigin({_size.x/2,0});
+    sprite->setOrigin({(float)_size.x/2,0.0});
 }
 
 void AnimManager::anim(){

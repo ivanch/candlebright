@@ -34,9 +34,9 @@ void Menu::draw(Engine* engine){
 void Menu::moveUp(){
     if(selectedItem -1 >= 0)
     {
-        menu_text[currentMenu][selectedItem].setColor(sf::Color::White);
+        menu_text[currentMenu][selectedItem].setFillColor(sf::Color::White);
         selectedItem--;
-        menu_text[currentMenu][selectedItem].setColor(sf::Color::Red);
+        menu_text[currentMenu][selectedItem].setFillColor(sf::Color::Red);
      }
 }
 
@@ -44,9 +44,9 @@ void Menu::moveDown(){
 
     if(selectedItem +1 < getMenuItems(currentMenu))
     {
-        menu_text[currentMenu][selectedItem].setColor(sf::Color::White);
+        menu_text[currentMenu][selectedItem].setFillColor(sf::Color::White);
         selectedItem++;
-        menu_text[currentMenu][selectedItem].setColor(sf::Color::Red);
+        menu_text[currentMenu][selectedItem].setFillColor(sf::Color::Red);
      }
 }
 
@@ -60,10 +60,10 @@ void Menu::update(Engine* engine){
                 {
                     case sf::Keyboard::Up:
                         moveUp();
-                    break;
+                        break;
                     case sf::Keyboard::Down:
                         moveDown();
-                    break;
+                        break;
                     case sf::Keyboard::Return:
                         switch(getEnter())
                         {
@@ -114,14 +114,19 @@ void Menu::update(Engine* engine){
                             case 2:
                                 engine->getWindow()->close();
                                 break;
-                            default: break;
+                            default:
+                              break;
                         }
+                        break;
+                    default:
+                        break;
                 }
                 break;
             case sf::Event::Closed:
                 engine->getWindow()->close();
-            default: break;
-            break;
+                break;
+            default:
+                break;
         }
     }
 }
@@ -143,7 +148,7 @@ void Menu::addMenuItem(int _menu, string _title, bool isPrimary, sf::Font _font)
         }
     }
     menu_text[_menu][index].setFont(font);
-    menu_text[_menu][index].setColor(isPrimary ? sf::Color::Red : sf::Color::White);
+    menu_text[_menu][index].setFillColor(isPrimary ? sf::Color::Red : sf::Color::White);
     menu_text[_menu][index].setString(_title);
     menu_text[_menu][index].setPosition(sf::Vector2f(600/2 -50, 100 * (index+1)));
 }

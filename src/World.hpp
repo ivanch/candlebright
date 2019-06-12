@@ -3,7 +3,6 @@
 #include "Engine.hpp"
 #include "Entity.hpp"
 #include "Object.hpp"
-#include "utils.hpp"
 #include "LinkedList.hpp"
 #include "EntityList.hpp"
 #include "Music.hpp"

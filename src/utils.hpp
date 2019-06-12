@@ -1,8 +1,6 @@
 #pragma once
 
-#ifndef Intersect
-#define Intersect
-namespace Intersect{
+namespace Intersect {
     #define LIMIT   3
 
     /* Parte de baixo do obj1 com a parte de cima do obj2. */
@@ -43,13 +41,3 @@ namespace Intersect{
         else return false;
     }
 }
-#endif
-
-#ifndef Distance
-#define Distance
-namespace Distance{
-    float getDistance(sf::Vector2f p1, sf::Vector2f p2){
-        return sqrt(pow(p1.x-p2.x,2.0) + pow(p1.y-p2.y,2.0));
-    }
-}
-#endif

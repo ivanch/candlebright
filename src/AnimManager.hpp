@@ -11,7 +11,7 @@ class AnimManager {
         sf::Vector2i size;
         sf::IntRect rect;
         sf::Vector2f scale;
-        int index;
+        unsigned int index;
         vector<sf::Texture*> animes;
         bool animBack;
         float delay;

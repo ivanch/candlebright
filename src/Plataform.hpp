@@ -2,7 +2,6 @@
 #include "includes.hpp"
 #include "Object.hpp"
 #include "Engine.hpp"
-#include "utils.hpp"
 
 class Plataform : public Object {
     private:
