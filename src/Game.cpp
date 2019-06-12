@@ -1,17 +1,14 @@
 #include "Game.hpp"
 
-Game::Game():   player1(1,getView()),
-                player2(2,getView()),
+Game::Game():   player1(1),
+                player2(2),
                 menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
-    setView(view);
-    world = new World_1;
-
+    view.reset(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
 }
 Game::~Game(){}
 
 void Game::run(){
-
     while(menu.isEnabled()){ // Roda o menu primeiro...
         engine.clearWindow();
         menu.update(&engine);
@@ -29,6 +26,7 @@ void Game::run(){
         world->addObject(&player2);
     }
 
+    engine.getWindow()->setView(view);
     update(); // Roda o jogo...
 }
 
@@ -51,9 +49,16 @@ void Game::update(){
                 cerr << "Mundo não inicializado" << endl;
                 return;
             }
-
+            if(player1.getPos().x >= (view.getCenter().x+view.getSize().x/2)-50 && player2.getPos().x <= (view.getCenter().x-view.getSize().x/2)+50)
+                player1.setCollidingRight(true);
+            else if(player1.getPos().x <= (view.getCenter().x-view.getSize().x/2)+50  && player2.getPos().x >= (view.getCenter().x+view.getSize().x/2)-50)
+                player1.setCollidingLeft(true);
+            if(player1.getPos().x - (view.getCenter().x+((view.getSize().x)/2))  > -50)
+                view.move({1.5,0});
+            if(player1.getPos().x - (view.getCenter().x+((view.getSize().x)/2))  < -550)
+                view.move({-1.5,0});
+            engine.getWindow()->setView(view);
             world->gravity();
-
             world->update(); // Atualiza as entidades do mundo
             world->drawAll(&engine); // Desenha todas entidades do mundo
         }

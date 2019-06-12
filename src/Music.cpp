@@ -4,7 +4,7 @@ Music::Music(string filename){
     if(!music.openFromFile(filename))
         cerr << "Erro ao ler música do arquivo: " << filename << endl;
     music.setLoop(true);
-    music.setVolume(25.0);
+    music.setVolume(10.0);
 }
 
 Music::~Music(){}

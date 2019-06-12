@@ -3,7 +3,7 @@
 TextureManager* TextureManager::instance = NULL;
 
 TextureManager::TextureManager(){
-    _grass = getTexture("sprites/grass_side.png");
+    _grass = getTexture("sprites/ground.png");
     _playerAnim = getTexture("sprites/CastlevaniaSheet.png");
 }
 

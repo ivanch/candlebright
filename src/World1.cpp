@@ -44,5 +44,8 @@ World_1::World_1(){
     backgroundTexture->setSmooth(true);
     background->setTexture(*backgroundTexture);
     background->setPosition({0,300});
+
+    Music* background_music = new Music("songs/city_theme.ogg");
+    background_music->run();
 }
 World_1::~World_1(){}

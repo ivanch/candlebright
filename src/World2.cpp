@@ -28,7 +28,7 @@ World_2::World_2(){
     sf::Texture* backgroundTexture = new sf::Texture;
     background = new sf::Sprite;
 
-    if (!backgroundTexture->loadFromFile("sprites/background1.png")){
+    if (!backgroundTexture->loadFromFile("sprites/background2ALL.png")){
         cerr << "Erro ao ler background..." << endl;
     }
 
@@ -36,7 +36,7 @@ World_2::World_2(){
     background->setTexture(*backgroundTexture);
     background->setPosition({0,300});
 
-    Music* background_music = new Music("audio.ogg");
-    background_music->play();
+    Music* background_music = new Music("songs/cemitery_theme.ogg");
+    background_music->run();
 }
 World_2::~World_2(){}
