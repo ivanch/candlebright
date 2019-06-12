@@ -6,6 +6,7 @@
 #include "utils.hpp"
 #include "LinkedList.hpp"
 #include "EntityList.hpp"
+#include "Music.hpp"
 
 class World : public Entity {
     protected:
