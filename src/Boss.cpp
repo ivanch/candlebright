@@ -1,16 +1,16 @@
 #include "Boss.hpp"
 
 Boss::Boss(sf::Vector2f pos, string _name){
-    enemy.setSize({20,30});
+    enemy.setSize({50,150});
     enemy.setFillColor(sf::Color::Red);
     setPos(pos);
     originalPos = pos;
-    moveSpeed = 1.5;
+    moveSpeed = 2.5;
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
     isJumping = false;
-    health = 100;
+    health = 400;
     mLeft = false;
     finalJumpHeight = 0;
 }
@@ -51,7 +51,7 @@ void Boss::moveLeft(){
 
 void Boss::update(){
     sf::Vector2f pos = enemy.getPosition();
-    
+
     if(mLeft){
         if(!collidingLeft)
             enemy.move({-moveSpeed,0});

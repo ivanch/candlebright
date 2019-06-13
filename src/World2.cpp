@@ -3,7 +3,7 @@
 
 World_2::World_2(){
     Plataform* p;
-    p = new Plataform({1280,30},{0,720}, sf::Color(122,122,122)); // Chão
+    p = new Plataform({1525,100},{0,720}, texManager->ground2()); // Chão
     addObject(p);
     p = new Plataform({100,10},{150,625}, sf::Color::Black); // Plataforma Preta
     p->setMove({1000,0});
@@ -22,6 +22,8 @@ World_2::World_2(){
     e = new Enemy_1({250,650});
     addObject(e);
     e = new Enemy_1({300,650});
+    addObject(e);
+    e = new Boss({1200,650});
     addObject(e);
 
 
