@@ -5,6 +5,7 @@
 class Entity {
 
     public:
+        virtual ~Entity(){}
         virtual void update() = 0;
         virtual void draw(Engine* engine) = 0;
         inline sf::Texture* getTexture(string filename){

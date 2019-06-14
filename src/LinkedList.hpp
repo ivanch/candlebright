@@ -10,10 +10,10 @@ class LinkedList
 		class Node
 		{
 			private:
-				TE* data;
-				Node<TE>* next;
 
 			public:
+				TE* data;
+				Node<TE>* next;
 
 				TE* getData(){return data;}
 				void setData(TE* _data){data=_data;}
@@ -157,30 +157,30 @@ bool LinkedList<T>::removeFront()
 }
 template <class T>
 void LinkedList<T>::removeNth(T *data){
-
-    if(first == NULL)
+    if(first == NULL){
         return;
-
+	}
+	
     Node<T>* temp = first;
 
-    if(temp == data)
+    if(temp->data == data)
     {
         first = temp->next;
-        free(temp);
+        delete temp->data;
+		delete temp;
         return;
     }
 
-     while (temp->next!=data)
+     while (temp->next->data!=data)
         temp = temp->next;
 
     if(temp == NULL || temp->next == NULL)
         return;
 
 
-    next = temp->next->next;
-    free(temp);
+    Node<T>* next = temp->next->next;
     temp->next = next;
-
+	delete next;
 }
 template <class T>
 void LinkedList<T>::clear()

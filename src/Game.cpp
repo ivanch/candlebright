@@ -22,10 +22,8 @@ void Game::run(){
         world = new World_2;
     }
 
-    world->addObject(&player1); // Sempre haverá um jogador por padrão
     world->addCharacter(&player1); // Sempre haverá um jogador por padrão
     if(menu.getSelectedPlayers() == 2){
-        world->addObject(&player2);
         world->addCharacter(&player2);
     }
 

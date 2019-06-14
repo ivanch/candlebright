@@ -11,10 +11,14 @@ void World::update(){
             for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
                 if(itr == itr2) continue; // auto-dano
                 cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < 75) continue; // Range
-               // (*itr2)->takeDamage(*itr, (*itr)->getDamage());
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < 75.0) continue; // Range
 
-                if((*itr2)->getHealth() <= 0) characters.remove(*itr2);
+                //if((*itr2)->getHealth()-(*itr)->getDamage() <= 0){
+                    entities.remove(*itr2);
+                    things.remove(*itr2);
+                    characters.remove(*itr2);
+                //}
+                //(*itr2)->takeDamage(*itr, (*itr)->getDamage());
             }
             (*itr)->setAttacking(false);
         }
@@ -33,8 +37,8 @@ void World::draw(Engine* engine){
 }
 
 void World::gravity(){
-    for(auto itr = objects.getFirst(); itr != NULL; itr = itr->getNext()){
-        Thing* obj1 = itr->getData();
+    for(auto itr = things.begin(); itr != things.end(); ++itr){
+        Thing* obj1 = *itr;
         if(!obj1->isCollidingDown()){
             obj1->fall();
         }
@@ -42,18 +46,18 @@ void World::gravity(){
 }
 
 void World::collisionManager(){
-    for(auto itr1 = objects.getFirst(); itr1 != NULL; itr1 = itr1->getNext()){
-        Thing* obj1 = itr1->getData();
+    for(auto itr = things.begin(); itr != things.end(); ++itr){
+        Thing* obj1 = *itr;
         obj1->setCollidingUp(false);
         obj1->setCollidingRight(false);
         obj1->setCollidingLeft(false);
         obj1->setCollidingDown(false);
     }
-    for(auto itr1 = objects.getFirst(); itr1 != NULL; itr1 = itr1->getNext()){
-        Thing* obj1 = itr1->getData();
+    for(auto itr1 = things.begin(); itr1 != things.end(); ++itr1){
+        Thing* obj1 = *itr1;
         if(!obj1->isCollisionEnabled()) continue;
-        for(auto itr2 = itr1; itr2 != NULL; itr2 = itr2->getNext()){
-            Thing* obj2 = itr2->getData();
+        for(auto itr2 = things.begin(); itr2 != things.end(); ++itr2){
+            Thing* obj2 = *itr2;
             if(!obj2->isCollisionEnabled()) continue;
             if(obj1 == obj2) continue;
             if(Intersect::intersectsUp(obj1->getRect(), obj2->getRect())){

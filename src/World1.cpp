@@ -3,35 +3,35 @@
 World_1::World_1(){
     Platform* p;
     p = new Platform({1510,80},{0,733}, getTexture("sprites/ground.png")); // Chão
-    addObject(p);
+    addThing(p);
     p = new Platform({1280,10},{150,625}); // Platforma branca
-    addObject(p);
+    addThing(p);
     p = new Platform({1280,5},{200,550}, sf::Color::Red); // Platforma vermelha
     p->setMoving(true);
     p->setMove({100,0});
     p->setMoveSpeed({0.5,0});
-    addObject(p);
+    addThing(p);
 
     p = new Platform({50,2},{-50,700}, sf::Color::Magenta); // Platforma rosa
     p->setMoving(true);
     p->setMove({0,100});
     p->setMoveSpeed({0,0.5});
-    addObject(p);
+    addThing(p);
 
     Obstacle* o;
     o = new Obstacle1({10,50},{100,650}, sf::Color::Cyan);
-    addObject(o);
+    addThing(o);
     o = new Obstacle1({20,50},{50,500}, sf::Color::Cyan);
-    addObject(o);
+    addThing(o);
     o = new Obstacle1({20,50},{125,450}, sf::Color::Cyan);
-    addObject(o);
+    addThing(o);
 
     Enemy* e;
     e = new Enemy_1({150,650});
-    addObject(e);
+    addThing(e);
     addCharacter(e);
     e = new Enemy_1({250,550});
-    addObject(e);
+    addThing(e);
     addCharacter(e);
 
 
