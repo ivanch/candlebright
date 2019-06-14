@@ -1,8 +1,7 @@
 #pragma once
 #include "includes.hpp"
-#include "TextureManager.hpp"
 #include "World.hpp"
-#include "Plataform.hpp"
+#include "Platform.hpp"
 #include "Obstacle1.hpp"
 #include "Enemy1.hpp"
 #include "Boss.hpp"

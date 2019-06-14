@@ -1,7 +1,7 @@
 #include "Player.hpp"
 
-Player::Player(int _template, sf::View* _view):
-     stand(&pSprite), run(&pSprite), view(_view){
+Player::Player(int _template):
+        anim(&pSprite, {30,75}){
 
     health = 100;
     moveSpeed = 1.5;
@@ -13,26 +13,11 @@ Player::Player(int _template, sf::View* _view):
     isJumping = false;
     finalJumpHeight = 0;
 
+    anim.addSheet("idle", "sprites/Player/idle.png");
+    anim.addSheet("walk", "sprites/Player/walking.png");
+
     isMovingRight = true;
     isMoving = false;
-
-    stand.addAnim("sprites/anim/Stand0.png");
-    stand.addAnim("sprites/anim/Stand1.png");
-    stand.addAnim("sprites/anim/Stand2.png");
-    stand.addAnim("sprites/anim/Stand3.png");
-    stand.addAnim("sprites/anim/Stand4.png");
-    stand.addAnim("sprites/anim/Stand5.png");
-
-    run.addAnim("sprites/anim/Run0.png");
-    run.addAnim("sprites/anim/Run1.png");
-    run.addAnim("sprites/anim/Run2.png");
-    run.addAnim("sprites/anim/Run3.png");
-    run.addAnim("sprites/anim/Run4.png");
-    run.addAnim("sprites/anim/Run5.png");
-    run.addAnim("sprites/anim/Run6.png");
-
-    stand.setSize({30,65});
-    run.setSize({30,65});
 
     if(_template == 1){
         key_right = sf::Keyboard::Right;
@@ -128,21 +113,19 @@ void Player::update(){
         isJumping = false;
     }
     if(isMoving){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 250){
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
             spriteClock.restart();
-            run.anim();
+            anim.play("walk");
         }
         if(isMovingRight){
-            run.setScale({1,1});
-            stand.setScale({1,1});
+            anim.setScale({1,1});
         }else{
-            run.setScale({-1,1});
-            stand.setScale({-1,1});
+            anim.setScale({-1,1});
         }
     }else{
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 250){
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
             spriteClock.restart();
-            stand.anim();
+            anim.play("idle");
         }
     }
 }
@@ -162,25 +145,17 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    ////////////////////////////////////////////////
-    /*  REFAZER QUANDO TIVER A LISTA DE ENTIDADES */
-    ////////////////////////////////////////////////
-    /*
     if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
-    for(int i = 0; i < Character::characters.size(); i++){
-        if(Character::characters[i] == this) continue;
-        if(Distance::getDistance(pSprite.getPosition(),Character::characters[i]->getPos()) <= 50.0){
-            Character::characters[i]->takeDamage(damage);
-        }
-    }
+    attacking = true;
     attackTimer.restart();
-    */
 }
 
 sf::Vector2f Player::getPos(){
     return pSprite.getPosition();
 }
 
-void Player::takeDamage(float damage){
+void Player::takeDamage(Character* issuer, float damage){
     health -= damage;
+    move({0,2});
+    cout << "Levou dano" << endl;
 }

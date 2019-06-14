@@ -1,19 +1,18 @@
 #include "World1.hpp"
-#include "TextureManager.hpp"
 
 World_1::World_1(){
-    Plataform* p;
-    p = new Plataform({1510,80},{0,733}, texManager->grass()); // Chão
+    Platform* p;
+    p = new Platform({1510,80},{0,733}, getTexture("sprites/ground.png")); // Chão
     addObject(p);
-    p = new Plataform({1280,10},{150,625}); // Plataforma branca
+    p = new Platform({1280,10},{150,625}); // Platforma branca
     addObject(p);
-    p = new Plataform({1280,5},{200,550}, sf::Color::Red); // Plataforma vermelha
+    p = new Platform({1280,5},{200,550}, sf::Color::Red); // Platforma vermelha
     p->setMoving(true);
     p->setMove({100,0});
     p->setMoveSpeed({0.5,0});
     addObject(p);
 
-    p = new Plataform({50,2},{-50,700}, sf::Color::Magenta); // Plataforma rosa
+    p = new Platform({50,2},{-50,700}, sf::Color::Magenta); // Platforma rosa
     p->setMoving(true);
     p->setMove({0,100});
     p->setMoveSpeed({0,0.5});
@@ -30,8 +29,10 @@ World_1::World_1(){
     Enemy* e;
     e = new Enemy_1({150,650});
     addObject(e);
+    addCharacter(e);
     e = new Enemy_1({250,550});
     addObject(e);
+    addCharacter(e);
 
 
     sf::Texture* backgroundTexture = new sf::Texture;

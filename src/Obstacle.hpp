@@ -1,8 +1,8 @@
 #pragma once
 #include "includes.hpp"
-#include "Object.hpp"
+#include "Thing.hpp"
 
-class Obstacle : public Object {
+class Obstacle : public Thing {
     protected:
         sf::RectangleShape rect;
         sf::Color color;

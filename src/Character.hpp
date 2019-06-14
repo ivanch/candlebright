@@ -1,12 +1,18 @@
 #pragma once
 #include "includes.hpp"
-#include "Object.hpp"
+#include "Thing.hpp"
 
-class Character : public Object {
+class Character : public Thing {
     public:
         virtual sf::Vector2f getPos() = 0;
         virtual void move(sf::Vector2f _move) = 0;
-        virtual void takeDamage(float damage) = 0;
+        virtual void takeDamage(Character* issuer, float damage) = 0;
+        virtual void death() = 0;
+
+        virtual bool isAttacking(){ return attacking; }
+        virtual void setAttacking(bool _att){ attacking = _att; }
+        virtual float getDamage(){ return damage; }
+        virtual float getHealth(){ return health; }
 
     protected:
         sf::Vector2f velocity;
@@ -22,4 +28,5 @@ class Character : public Object {
 
         sf::Clock attackTimer;
         float attackSpeed; // Ataques por segundo
+        bool attacking;
 };

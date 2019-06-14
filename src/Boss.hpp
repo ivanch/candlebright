@@ -14,10 +14,11 @@ class Boss : public Enemy {
 
         virtual sf::Vector2f getPos();
         virtual sf::FloatRect getRect();
-        virtual void takeDamage(float damage);
+        virtual void takeDamage(Character* issuer, float damage);
         virtual void fall();
         virtual void update();
         virtual void draw(Engine* engine);
         virtual void move(sf::Vector2f vec);
         virtual void attack();
+        virtual void death(){}
 };

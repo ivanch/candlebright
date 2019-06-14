@@ -1,7 +1,6 @@
 #pragma once
 #include "includes.hpp"
 #include "Character.hpp"
-#include "TextureManager.hpp"
 #include "AnimManager.hpp"
 
 class Player : public Character {
@@ -10,13 +9,10 @@ class Player : public Character {
         string name;
 
         sf::Clock spriteClock;
-        AnimManager stand;
-        AnimManager run;
+        AnimManager anim;
         bool isMoving;
         bool isMovingRight;
         sf::Sprite pSprite;
-
-        sf::View* view;
 
         sf::Keyboard::Key key_right;
         sf::Keyboard::Key key_left;
@@ -24,7 +20,7 @@ class Player : public Character {
         sf::Keyboard::Key key_attack;
 
     public:
-        Player(int _template=-1, sf::View* _view=NULL);
+        Player(int _template=-1);
         ~Player();
 
         void setPos(sf::Vector2f newPos);
@@ -39,5 +35,6 @@ class Player : public Character {
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void fall();
-        virtual void takeDamage(float damage);
+        virtual void takeDamage(Character* issuer, float damage);
+        virtual void death(){}
 };
