@@ -12,7 +12,7 @@ void World::update(){
                 if(itr == itr2) continue; // auto-dano
                 cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < 75) continue; // Range
-                (*itr2)->takeDamage(*itr, (*itr)->getDamage());
+               // (*itr2)->takeDamage(*itr, (*itr)->getDamage());
 
                 if((*itr2)->getHealth() <= 0) characters.remove(*itr2);
             }

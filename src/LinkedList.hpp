@@ -29,6 +29,7 @@ class LinkedList
 
         void insertFront(T *newData);
         bool removeFront();
+        void removeNth(T *data);
 
         void clear();
 
@@ -154,7 +155,33 @@ bool LinkedList<T>::removeFront()
 		return true;
 	}
 }
+template <class T>
+void LinkedList<T>::removeNth(T *data){
 
+    if(first == NULL)
+        return;
+
+    Node<T>* temp = first;
+
+    if(temp == data)
+    {
+        first = temp->next;
+        free(temp);
+        return;
+    }
+
+     while (temp->next!=data)
+        temp = temp->next;
+
+    if(temp == NULL || temp->next == NULL)
+        return;
+
+
+    next = temp->next->next;
+    free(temp);
+    temp->next = next;
+
+}
 template <class T>
 void LinkedList<T>::clear()
 {
