@@ -1,7 +1,7 @@
 #pragma once
 #include "includes.hpp"
 #include "Entity.hpp"
-
+#include <time.h>
 #define MAIN_MENU       0
 #define WORLD_MENU      1
 #define PLAYER_MENU     2
@@ -33,6 +33,7 @@ class Menu : public Entity
         sf::Text menu_text[MAX_MENU][MAX_ITEMS];
         sf::Font font;
         sf::Clock enterClock;
+        sf::Sprite* spriteMenu;
         int selectedItem;
         bool enabled;
         int currentMenu;

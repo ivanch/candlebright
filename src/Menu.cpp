@@ -5,6 +5,36 @@ Menu::Menu(float width, float height)
     {
         cerr<<"Erro ao ler fonte"<<endl;
     }
+
+    sf::Texture* textureMenu = new sf::Texture;
+    spriteMenu = new sf::Sprite;
+    int menu_opt;
+    srand(time(NULL));
+    menu_opt=rand()%5;
+    cout<<menu_opt;
+    if(menu_opt==0){
+        if (!textureMenu->loadFromFile("sprites/menu1.png"))
+            cerr << "Erro ao ler background..." << endl;
+    }
+    else if(menu_opt==1){
+        if (!textureMenu->loadFromFile("sprites/menu2.png"))
+            cerr << "Erro ao ler background..." << endl;
+    }
+    else if(menu_opt==2){
+        if (!textureMenu->loadFromFile("sprites/menu3.png"))
+            cerr << "Erro ao ler background..." << endl;
+    }
+    else if(menu_opt==3){
+        if (!textureMenu->loadFromFile("sprites/menu4.png"))
+            cerr << "Erro ao ler background..." << endl;
+    }
+    else {
+        if (!textureMenu->loadFromFile("sprites/menu5.png"))
+            cerr << "Erro ao ler background..." << endl;
+    }
+
+    spriteMenu->setTexture(*textureMenu);
+
     addMenuItem(MAIN_MENU, "Jogar", true, font);
     addMenuItem(MAIN_MENU, "Opcoes", false, font);
     addMenuItem(MAIN_MENU, "Sair", false, font);
@@ -18,6 +48,7 @@ Menu::Menu(float width, float height)
     enabled = true;
     selectedItem = 0;
     currentMenu = MAIN_MENU;
+
 }
 
 Menu::~Menu()
@@ -26,6 +57,7 @@ Menu::~Menu()
 }
 
 void Menu::draw(Engine* engine){
+    engine->draw(*spriteMenu);
     for(int i=0; i<getMenuItems(currentMenu); i++){
         engine->draw(menu_text[currentMenu][i]);
     }
