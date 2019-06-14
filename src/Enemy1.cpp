@@ -12,6 +12,7 @@ Enemy_1::Enemy_1(sf::Vector2f pos, string _name){
     isJumping = false;
     health = 100;
     mLeft = false;
+    attackChance = 0.1; // 0.1% * 60 = 0.6 ataques/segundo
     finalJumpHeight = 0;
 }
 Enemy_1::~Enemy_1(){}
@@ -69,9 +70,13 @@ void Enemy_1::update(){
         velocity.y = 0;
         isJumping = false;
     }
+    
+    if(rand()/RAND_MAX <= attackChance){
+        attack();
+    }
 }
 
-void Enemy_1::takeDamage(float damage){
+void Enemy_1::takeDamage(Character* issuer, float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){
@@ -81,5 +86,7 @@ void Enemy_1::takeDamage(float damage){
 }
 
 void Enemy_1::attack(){
-    // to-do
+    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
+    attacking = true;
+    attackTimer.restart();
 }

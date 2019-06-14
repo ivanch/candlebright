@@ -5,6 +5,7 @@ Game::Game():   player1(1),
                 menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
     view.reset(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
+    srand (static_cast <unsigned> (time(NULL)));
 }
 Game::~Game(){}
 
@@ -22,8 +23,10 @@ void Game::run(){
     }
 
     world->addObject(&player1); // Sempre haverá um jogador por padrão
+    world->addCharacter(&player1); // Sempre haverá um jogador por padrão
     if(menu.getSelectedPlayers() == 2){
         world->addObject(&player2);
+        world->addCharacter(&player2);
     }
 
     engine.getWindow()->setView(view);

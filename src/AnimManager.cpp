@@ -2,53 +2,53 @@
 
 AnimManager::AnimManager(sf::Sprite* _sprite, sf::Vector2i _size){
     sprite = _sprite;
-    size = _size;
-    animBack = false;
     rect = {0,0,_size.x,_size.y};
-    sprite->setOrigin({(float)_size.x/2,0.0});
+    size = _size;
     scale = {1,1};
-    index = 0;
+    goingBack = false;
+
+    sprite->setOrigin({(float)size.x/2, 0.0});
 }
 AnimManager::~AnimManager(){
     for(auto itr = animes.begin(); itr != animes.end(); ++itr){
-        delete *itr;
+        delete (*itr).second;
     }
     animes.clear();
 }
 
-void AnimManager::addAnim(string filename){
-    animes.push_back(getTexture(filename));
-}
-
-void AnimManager::setSize(sf::Vector2i _size){
-    size = _size;
-    rect = {0,0,_size.x,_size.y};
-    sprite->setOrigin({(float)_size.x/2,0.0});
-}
-
-void AnimManager::anim(){
-    sprite->setTexture(*animes[index]);
-    sprite->setScale(scale);
-    if(animBack){
-        index--;
+void AnimManager::play(string name, bool goBack){
+    if(name == current){
+        sprite->setTextureRect(rect);
+        if(goingBack) rect.left -= rect.width;
+        else rect.left += rect.width;
+        if(goBack && rect.left+rect.width >= animes[current]->getSize().x-rect.width){
+            goingBack = true;
+        }else if(rect.left <= 0){
+            goingBack = false;
+        }
     }else{
-        index++;
+        try {
+            animes.at(name);
+        }catch (const std::out_of_range& oor) {
+            std::cerr << "Out of Range error: " << oor.what() << endl;
+        }
+        sprite->setTexture(*animes[name]);
+        current = name;
     }
-    if(index >= animes.size()-1) animBack = true;
-    else if(index == 0) animBack = false;
 }
 
 void AnimManager::setScale(sf::Vector2f _scale){
     if(scale == _scale) return;
+    sprite->setOrigin({(float)size.x/2, 0.0});
+    
     sprite->setScale(_scale);
     scale = _scale;
 }
 
-sf::Texture* AnimManager::getTexture(string filename){
-    sf::Texture* _tex = new sf::Texture;
-    if(!_tex->loadFromFile(filename)){
+void AnimManager::addSheet(string name, string filename){
+    sf::Texture* tex = new sf::Texture;
+    if(!tex->loadFromFile(filename)){
         cerr << "Não foi possível ler textura do arquivo: " << filename << endl;
-        return NULL;
     }
-    return _tex;
+    animes.insert(pair<string, sf::Texture*>(name, tex));
 }

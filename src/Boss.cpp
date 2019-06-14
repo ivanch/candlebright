@@ -71,7 +71,7 @@ void Boss::update(){
     }
 }
 
-void Boss::takeDamage(float damage){
+void Boss::takeDamage(Character* issuer, float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){
@@ -81,5 +81,7 @@ void Boss::takeDamage(float damage){
 }
 
 void Boss::attack(){
-    // to-do
+    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
+    attacking = true;
+    attackTimer.restart();
 }
