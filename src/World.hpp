@@ -9,7 +9,6 @@
 #include "List/EntityList.hpp"
 #include "List/CharacterList.hpp"
 #include "List/ThingsList.hpp"
-#include "List/EnemyList.hpp"
 
 class World : public Entity {
     protected:
@@ -17,7 +16,6 @@ class World : public Entity {
         EntityList entities;
         ThingsList things;
         CharacterList characters;
-        EnemyList enemies;
         CollisionManager col_mngr;
         
         float getDistance(sf::Vector2f p1, sf::Vector2f p2);
