@@ -13,8 +13,10 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
 }
 Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     originalPos(pos){
+    cout<<_tex<<endl;
     rect = sf::RectangleShape(size);
-    rect.setTexture(_tex);
+    if(_tex!=NULL){
+    rect.setTexture(_tex);}
     rect.setPosition(pos);
     sprite = NULL;
     moving = false;

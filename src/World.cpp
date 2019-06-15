@@ -16,11 +16,11 @@ void World::update(){
                 cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 75.0) continue; // Range
 
-                //if((*itr2)->getHealth()-(*itr)->getDamage() <= 0){
-                    //entities.remove(*itr2);
-                    //things.remove(*itr2);
-                    //characters.remove(*itr2);
-                //}
+                if((*itr2)->getHealth()-(*itr)->getDamage() <= 0){
+                    entities.remove(*itr2);
+                    things.remove(*itr2);
+                    characters.remove(*itr2);
+                }
                 (*itr2)->takeDamage(*itr, (*itr)->getDamage());
             }
             (*itr)->setAttacking(false);

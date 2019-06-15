@@ -32,6 +32,7 @@ class LinkedList
         void removeNth(T *data);
 
         void clear();
+        int getIndex(T* data);
 
         Node<T>* operator [] (int chave);
 
@@ -157,30 +158,32 @@ bool LinkedList<T>::removeFront()
 }
 template <class T>
 void LinkedList<T>::removeNth(T *data){
-    if(first == NULL){
-        return;
-	}
-	
-    Node<T>* temp = first;
 
-    if(temp->data == data)
+    int index = getIndex(data);
+    cout<<index<<endl;
+
+   if (first == NULL)
+   {
+      return;
+   }
+   Node<T>* temp = first;
+    if (index == 0)
     {
         first = temp->next;
-        delete temp->data;
-		delete temp;
+        free(temp);
         return;
     }
-
-     while (temp->next->data!=data)
+    for (int i=0; temp!=NULL && i<index-1; i++)
+    {
         temp = temp->next;
-
-    if(temp == NULL || temp->next == NULL)
+    }
+    if (temp == NULL || temp->next == NULL)
+    {
         return;
-
-
-    Node<T>* next = temp->next->next;
-    temp->next = next;
-	delete next;
+    }
+    Node<T>* temp2 = temp->next->next;
+    free(temp->next);
+    temp->next = temp2;
 }
 template <class T>
 void LinkedList<T>::clear()
@@ -202,4 +205,22 @@ LinkedList<T>::Node<T>* LinkedList<T>::operator[](int chave)
         temp = temp->getNext();
 
     return temp;
+}
+template <class T>
+int LinkedList<T>::getIndex(T* data)
+{
+    int index=0;
+    Node<T>* n = first;
+    if(n->data == data) return 0;
+
+    while(n->next!=NULL)
+    {
+        n = n->next;
+        index++;
+    }
+
+    if(n->data == data)
+        return index;
+
+    return -1;
 }

@@ -9,7 +9,7 @@ Player::Player(int _template):
     maxSlideX = 0.001;
     maxSlideY = 80;
     damage = 25.0;
-    attackSpeed = 2;
+    attackSpeed = 10;
     isJumping = false;
     finalJumpHeight = 0;
 

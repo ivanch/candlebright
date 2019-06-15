@@ -2,7 +2,7 @@
 
 World_1::World_1(){
     Platform* p;
-    p = new Platform({1510,80},{0,733}, getTexture("sprites/ground.png")); // Chão
+    p = new Platform({1510,80},{0,733}, new sf::Sprite (*getTexture("sprites/ground.png"))); // Chão
     addThing(p);
     p = new Platform({1280,10},{150,625}); // Platforma branca
     addThing(p);

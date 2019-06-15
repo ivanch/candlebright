@@ -27,7 +27,7 @@ World_2::World_2(){
     e = new Enemy_1({300,650});
     addThing(e);
     addCharacter(e);
-    e = new Boss({1200,650});
+    e = new Boss({500,550});
     addThing(e);
     addCharacter(e);
 
