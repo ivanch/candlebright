@@ -14,17 +14,11 @@ default: $(SRC) $(EXEC)
 .PHONY: run
 run: default execute
 
-compile: dependencies
-
 $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o "$@"
 
 $(OBJDIR)/%.o: src/%.cpp
 	$(CC) $(CFLAGS) -o "$@" -c "$<"
-
-.PHONY: clean
-clean:
-	rm -rf $(OBJDIR)/* $(BINDIR)/* *.o
 
 .PHONY: debug
 debug:
@@ -33,6 +27,11 @@ debug:
 	$(CC) $(OBJ) -o $(BINDIR)/$(EXEC)-debug $(COMPILER_FLAGS) $(SFML) $(CFLAGS)
 	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug $(VAL_FLAGS)
 
+.PHONY: clean
+clean:
+	rm -rf $(OBJDIR)/* $(BINDIR)/* *.o
+
+.PHONY: dependencies
 dependencies:
 	sh dependencies.sh
 

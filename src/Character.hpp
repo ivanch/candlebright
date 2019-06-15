@@ -10,6 +10,7 @@ class Character : public Thing {
         virtual void move(sf::Vector2f _move) = 0;
         virtual void takeDamage(Character* issuer, float damage) = 0;
         virtual void death() = 0;
+        virtual int getType() { return type; }
 
         virtual bool isAttacking(){ return attacking; }
         virtual void setAttacking(bool _att){ attacking = _att; }
@@ -31,4 +32,9 @@ class Character : public Thing {
         sf::Clock attackTimer;
         float attackSpeed; // Ataques por segundo
         bool attacking;
+
+        /*  0 = Player
+            1 = Enemy
+            2 = Boss */
+        int type;
 };

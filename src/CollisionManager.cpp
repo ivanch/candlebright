@@ -10,7 +10,7 @@ void CollisionManager::checkCollisions(ThingsList* things){
     }
     for(auto itr1 = things->begin(); itr1 != things->end(); ++itr1){
         Thing* obj1 = *itr1;
-        for(auto itr2 = things->begin(); itr2 != things->end(); ++itr2){
+        for(auto itr2 = itr1; itr2 != things->end(); ++itr2){
             Thing* obj2 = *itr2;
             if(obj1 == obj2) continue;
             if(intersectsUp(obj1->getRect(), obj2->getRect())){

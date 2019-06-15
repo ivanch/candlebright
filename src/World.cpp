@@ -12,6 +12,7 @@ void World::update(){
         if((*itr)->isAttacking()){
             for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
                 if(itr == itr2) continue; // auto-dano
+                if((*itr)->getType() == (*itr2)->getType()) continue; // Não ataca personagens do mesmo tipo
                 cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 75.0) continue; // Range
 

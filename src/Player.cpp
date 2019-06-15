@@ -19,6 +19,8 @@ Player::Player(int _template):
     isMovingRight = true;
     isMoving = false;
 
+    type = 0;
+
     if(_template == 1){
         key_right = sf::Keyboard::Right;
         key_left = sf::Keyboard::Left;
@@ -156,6 +158,6 @@ sf::Vector2f Player::getPos(){
 
 void Player::takeDamage(Character* issuer, float damage){
     health -= damage;
-    move({0,2});
+    move({0,-10});
     cout << "Levou dano" << endl;
 }

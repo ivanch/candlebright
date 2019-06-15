@@ -13,6 +13,7 @@ Boss::Boss(sf::Vector2f pos, string _name){
     health = 400;
     mLeft = false;
     finalJumpHeight = 0;
+    type = 2;
 }
 Boss::~Boss(){}
 

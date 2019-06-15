@@ -16,6 +16,7 @@ Enemy_1::Enemy_1(sf::Vector2f pos, string _name){
     attackChance = 0.1 / 60; // Chance de ataques por segundo
     attackSpeed = 0.5;
     finalJumpHeight = 0;
+    type = 1;
 }
 Enemy_1::~Enemy_1(){}
 
