@@ -21,7 +21,7 @@ void AnimManager::play(string name, bool goBack){
         sprite->setTextureRect(rect);
         if(goingBack) rect.left -= rect.width;
         else rect.left += rect.width;
-        if(goBack && rect.left+rect.width >= animes[current]->getSize().x-rect.width){
+        if(goBack && rect.left+rect.width >= static_cast<signed>(animes[current]->getSize().x-rect.width)){
             goingBack = true;
         }else if(rect.left <= 0){
             goingBack = false;

@@ -1,3 +1,4 @@
+#pragma once
 #include "Thing.hpp"
 #include "List.hpp"
 #include <list>

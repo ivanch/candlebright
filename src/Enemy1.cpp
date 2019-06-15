@@ -12,7 +12,9 @@ Enemy_1::Enemy_1(sf::Vector2f pos, string _name){
     isJumping = false;
     health = 100;
     mLeft = false;
-    attackChance = 0.1; // 0.1% * 60 = 0.6 ataques/segundo
+    damage = 0;
+    attackChance = 0.1 / 60; // Chance de ataques por segundo
+    attackSpeed = 0.5;
     finalJumpHeight = 0;
 }
 Enemy_1::~Enemy_1(){}
@@ -71,7 +73,7 @@ void Enemy_1::update(){
         isJumping = false;
     }
     
-    if(rand()/RAND_MAX <= attackChance){
+    if(((float) rand()) / (float) RAND_MAX <= attackChance){
         attack();
     }
 }

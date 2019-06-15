@@ -6,7 +6,7 @@ World_1::World_1(){
     addThing(p);
     p = new Platform({1280,10},{150,625}); // Platforma branca
     addThing(p);
-    p = new Platform({1280,5},{200,550}, sf::Color::Red); // Platforma vermelha
+    p = new Platform({1280,5},{200,525}, sf::Color::Red); // Platforma vermelha
     p->setMoving(true);
     p->setMove({100,0});
     p->setMoveSpeed({0.5,0});

@@ -1,32 +1,42 @@
 CC=g++
 OBJDIR=obj
 BINDIR=bin
-COMPILER_FLAGS=	-std=c++11 -lm -Isfml/include -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -pthread -Wall
-C_SOURCE = $(filter-out src/main.cpp, $(wildcard src/*.cpp))
-BUILD_SOURCE = $(wildcard $(OBJDIR)/*.o)
+EXEC=jogo
+LDFLAGS = -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm
+CFLAGS = -Isfml/include -std=c++11 -Wall -pthread 
+CSOURCE = $(wildcard src/*.cpp)
+OBJ=$(subst src, obj, $(CSOURCE:.cpp=.o))
+VAL_FLAGS = --track-origins=yes --leak-check=full
 
-default: main
+.PHONY: default
+default: $(SRC) $(EXEC)
 
-compile: clean dependencies
-	$(CC) -c $(C_SOURCE) src/main.cpp $(COMPILER_FLAGS)
-	mv *.o $(OBJDIR)/
+.PHONY: run
+run: default execute
 
-main: clean compile
-	$(CC) $(BUILD_SOURCE) -o $(BINDIR)/jogo $(COMPILER_FLAGS)
+compile: dependencies
 
+$(EXEC): $(OBJ)
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o "$@"
+
+$(OBJDIR)/%.o: src/%.cpp
+	$(CC) $(CFLAGS) -o "$@" -c "$<"
+
+.PHONY: clean
 clean:
 	rm -rf $(OBJDIR)/* $(BINDIR)/* *.o
 
-execute:
-	LD_LIBRARY_PATH=sfml/lib ./$(BINDIR)/jogo
-
+.PHONY: debug
 debug:
-	$(CC) -c $(C_SOURCE) src/main.cpp $(COMPILER_FLAGS) -ggdb
+	$(CC) -c $(CSOURCE) $(COMPILER_FLAGS) $(SFML) -ggdb
 	mv *.o $(OBJDIR)/
-	$(CC) $(BUILD_SOURCE) -o $(BINDIR)/jogo-debug $(COMPILER_FLAGS)
-	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/jogo-debug
-
-run: main execute
+	$(CC) $(OBJ) -o $(BINDIR)/$(EXEC)-debug $(COMPILER_FLAGS) $(SFML) $(CFLAGS)
+	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug $(VAL_FLAGS)
 
 dependencies:
 	sh dependencies.sh
+
+.PHONY: execute
+execute:
+	mv $(EXEC) $(BINDIR)/
+	LD_LIBRARY_PATH=sfml/lib ./$(BINDIR)/$(EXEC)

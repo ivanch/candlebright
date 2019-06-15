@@ -4,6 +4,8 @@
 
 class Character : public Thing {
     public:
+        Character(){ attacking = false; }
+        virtual ~Character(){}
         virtual sf::Vector2f getPos() = 0;
         virtual void move(sf::Vector2f _move) = 0;
         virtual void takeDamage(Character* issuer, float damage) = 0;
