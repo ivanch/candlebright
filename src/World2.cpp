@@ -15,19 +15,15 @@ World_2::World_2(){
     addThing(o);
 
     Enemy* e;
-    e = new Enemy_1({150,650});
-    addThing(e);
+    e = new Zombie({150,650});
     addCharacter(e);
-    e = new Enemy_1({200,650});
-    addThing(e);
+    e = new Zombie({200,650});
     addCharacter(e);
-    e = new Enemy_1({250,650});
-    addThing(e);
+    e = new Zombie({250,650});
     addCharacter(e);
-    e = new Enemy_1({300,650});
-    addThing(e);
+    e = new Zombie({300,650});
     addCharacter(e);
-    e = new Boss({500,550});
+    e = new Sylathus({500,550});
     addThing(e);
     addCharacter(e);
 

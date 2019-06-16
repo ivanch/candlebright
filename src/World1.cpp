@@ -27,11 +27,9 @@ World_1::World_1(){
     addThing(o);
 
     Enemy* e;
-    e = new Enemy_1({150,650});
-    addThing(e);
+    e = new Zombie({150,650});
     addCharacter(e);
-    e = new Enemy_1({250,550});
-    addThing(e);
+    e = new Zombie({250,550});
     addCharacter(e);
 
 

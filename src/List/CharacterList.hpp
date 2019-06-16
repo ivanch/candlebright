@@ -1,4 +1,4 @@
-#include "../Character.hpp"
+#include "../Character/Character.hpp"
 #include "List.hpp"
 #include <set>
 
@@ -10,11 +10,7 @@ class CharacterList : public List<Character*> {
             characters.insert(_el);
         }
         virtual void remove(Character* _el){
-            for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-                if(*itr == _el){
-                    characters.erase(itr, itr);
-                }
-            }
+            characters.erase(_el);
         }
         set<Character *>::iterator begin(){ return characters.begin(); }
         set<Character *>::iterator end(){ return characters.end(); }

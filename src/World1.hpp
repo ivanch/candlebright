@@ -3,7 +3,7 @@
 #include "World.hpp"
 #include "Platform.hpp"
 #include "Obstacle1.hpp"
-#include "Enemy1.hpp"
+#include "Enemies/Zombie.hpp"
 
 class World_1 : public World {
     public:

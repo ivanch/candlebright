@@ -160,9 +160,8 @@ template <class T>
 void LinkedList<T>::removeNth(T *data){
 
     int index = getIndex(data);
-    cout<<index<<endl;
 
-   if (first == NULL)
+   if (first == NULL || index == -1)
    {
       return;
    }
@@ -170,10 +169,10 @@ void LinkedList<T>::removeNth(T *data){
     if (index == 0)
     {
         first = temp->next;
-        free(temp);
+        delete temp;
         return;
     }
-    for (int i=0; temp!=NULL && i<index-1; i++)
+    for (int i=1; temp!=NULL && i<index; i++)
     {
         temp = temp->next;
     }
@@ -182,7 +181,7 @@ void LinkedList<T>::removeNth(T *data){
         return;
     }
     Node<T>* temp2 = temp->next->next;
-    free(temp->next);
+    delete temp->next;
     temp->next = temp2;
 }
 template <class T>
@@ -213,14 +212,14 @@ int LinkedList<T>::getIndex(T* data)
     Node<T>* n = first;
     if(n->data == data) return 0;
 
-    while(n->next!=NULL)
+    while(n != NULL)
     {
         n = n->next;
         index++;
-    }
 
-    if(n->data == data)
-        return index;
+		if(n->data == data)
+			return index;
+    }
 
     return -1;
 }

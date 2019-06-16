@@ -2,7 +2,7 @@
 #include "Entity.hpp"
 #include "World1.hpp"
 #include "World2.hpp"
-#include "Player.hpp"
+#include "Character/Player.hpp"
 #include "Engine.hpp"
 #include "Menu.hpp"
 

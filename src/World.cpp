@@ -8,22 +8,36 @@ void World::update(){
     for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
         itr->getData()->update();
     }
+
+    set<Character*> bufferKill;
     for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-        if((*itr)->isAttacking()){
+        if((*itr)->getState() == CharacterState::STATE_ATTACKING){
             for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
+                /* Exclusões */
                 if(itr == itr2) continue; // auto-dano
                 if((*itr)->getType() == (*itr2)->getType()) continue; // Não ataca personagens do mesmo tipo
-                cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 75.0) continue; // Range
+                if((*itr2)->getType() == 0) continue; // Player não morre
+                if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de trás
+                if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de trás
 
-                if((*itr2)->getHealth()-(*itr)->getDamage() <= 0){
-                    entities.remove(*itr2);
-                    things.remove(*itr2);
-                    characters.remove(*itr2);
-                }
+                cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
+                
                 (*itr2)->takeDamage(*itr, (*itr)->getDamage());
+
+                if((*itr2)->getHealth() <= 0){
+                    bufferKill.insert(*itr2);
+                }
             }
-            (*itr)->setAttacking(false);
+            if((*itr)->getType() != 2) (*itr)->setState(CharacterState::STATE_IDLE);
+        }
+    }
+    
+    for(auto itr = bufferKill.begin(); itr != bufferKill.end(); ++itr){
+        if((*itr)->getHealth() <= 0){
+            entities.remove(*itr);
+            things.remove(*itr);
+            characters.remove(*itr);
         }
     }
 }

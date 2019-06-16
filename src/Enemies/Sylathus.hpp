@@ -1,13 +1,17 @@
 #pragma once
-#include "includes.hpp"
-#include "Engine.hpp"
-#include "Enemy.hpp"
+#include "../includes.hpp"
+#include "../Engine.hpp"
+#include "../Character/Enemy.hpp"
 
-class Boss : public Enemy {
+class Sylathus : public Enemy {
+    private:
+        sf::Clock spriteClock;
+        sf::Sprite sSprite;
+        AnimManager anim;
 
     public:
-        Boss(sf::Vector2f pos = {0,0}, string _name = "");
-        ~Boss();
+        Sylathus(sf::Vector2f pos = {0,0}, string _name = "");
+        ~Sylathus();
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();

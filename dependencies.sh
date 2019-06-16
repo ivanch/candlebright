@@ -1,7 +1,9 @@
 #!/bin/bash
 
-[ ! -d ./obj ] && mkdir obj
 [ ! -d ./bin ] && mkdir bin
+[ ! -d ./obj ] && mkdir obj
+[ ! -d ./obj/Enemies ] && mkdir obj/Enemies
+[ ! -d ./obj/Character ] && mkdir obj/Character
 
 if [ ! -d sfml ]
 then

@@ -1,5 +1,5 @@
 #pragma once
-#include "includes.hpp"
+#include "../includes.hpp"
 #include "Character.hpp"
 #include "AnimManager.hpp"
 
@@ -9,10 +9,8 @@ class Player : public Character {
         string name;
 
         sf::Clock spriteClock;
-        AnimManager anim;
-        bool isMoving;
-        bool isMovingRight;
         sf::Sprite pSprite;
+        AnimManager anim;
 
         sf::Keyboard::Key key_right;
         sf::Keyboard::Key key_left;

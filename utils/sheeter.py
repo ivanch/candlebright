@@ -1,12 +1,12 @@
 import cv2, os, sys
 import numpy as np
 
-if(len(sys.argv)):
+if(len(sys.argv) == 0):
     print("Erro: python sheeter.py [arquivo.png]")
     sys.exit(1)
 
 # Define o tamanho Y,X do Sprite
-size = (75,30)
+size = (120,170)
 
 name = sys.argv[1]
 nname = "new-" + name
@@ -23,7 +23,7 @@ miny = -1
 for x in range(img.shape[1]):
     encontrou = False # encontrou alguma coisa no eixo Y
     for y in range(img.shape[0]):
-        if(np.sum(img[y][x]) > 0):
+        if(np.sum(img[y][x]) > 0): # > 0 ou < 765, depende da imagem
             if(start == -1):
                 start = x
             if(y > maxy): maxy = y
@@ -42,7 +42,7 @@ for x in range(img.shape[1]):
                 temp[ty-miny][tx-start] = img[ty][tx]
         # pré processamento
         print(temp.shape)
-        temp = cv2.resize(temp, (size[1],size[0]))
+        temp = cv2.resize(temp, (size[1],size[0]), interpolation=cv2.INTER_NEAREST)
         nimg = np.append(nimg, temp, axis=1)
         
         start = -1

@@ -20,6 +20,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     rect.setPosition(pos);
     sprite = NULL;
     moving = false;
+    texture = _tex;
 }
 Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
     originalPos(pos){

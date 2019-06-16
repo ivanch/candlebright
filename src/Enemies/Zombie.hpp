@@ -1,13 +1,18 @@
 #pragma once
-#include "includes.hpp"
-#include "Engine.hpp"
-#include "Enemy.hpp"
+#include "../includes.hpp"
+#include "../Engine.hpp"
+#include "../Character/Enemy.hpp"
+#include "../Character/AnimManager.hpp"
 
-class Enemy_1 : public Enemy {
-
+class Zombie : public Enemy {
+    private:
+        sf::Clock spriteClock;
+        sf::Sprite pSprite;
+        AnimManager anim;
+    
     public:
-        Enemy_1(sf::Vector2f pos = {0,0}, string _name = "");
-        ~Enemy_1();
+        Zombie(sf::Vector2f pos = {0,0}, string _name = "");
+        ~Zombie();
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();

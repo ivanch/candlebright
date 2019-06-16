@@ -4,12 +4,12 @@ BINDIR=bin
 EXEC=jogo
 LDFLAGS = -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm
 CFLAGS = -Isfml/include -std=c++11 -Wall -pthread 
-CSOURCE = $(wildcard src/*.cpp)
+CSOURCE = $(wildcard src/*.cpp src/*/**.cpp)
 OBJ=$(subst src, obj, $(CSOURCE:.cpp=.o))
 VAL_FLAGS = --track-origins=yes --leak-check=full
 
 .PHONY: default
-default: $(SRC) $(EXEC)
+default: dependencies $(CSOURCE) $(EXEC)
 
 .PHONY: run
 run: default execute
@@ -22,14 +22,14 @@ $(OBJDIR)/%.o: src/%.cpp
 
 .PHONY: debug
 debug:
-	$(CC) -c $(CSOURCE) $(COMPILER_FLAGS) $(SFML) -ggdb
+	$(CC) -c $(CSOURCE) $(LDFLAGS) $(SFML) -ggdb
 	mv *.o $(OBJDIR)/
-	$(CC) $(OBJ) -o $(BINDIR)/$(EXEC)-debug $(COMPILER_FLAGS) $(SFML) $(CFLAGS)
+	$(CC) $(OBJDIR)/*.o -o $(BINDIR)/$(EXEC)-debug $(LDFLAGS) $(SFML) $(CFLAGS)
 	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug $(VAL_FLAGS)
 
 .PHONY: clean
 clean:
-	rm -rf $(OBJDIR)/* $(BINDIR)/* *.o
+	rm -f $(OBJDIR)/* $(OBJDIR)/*/** $(BINDIR)/* *.o 2>/dev/null
 
 .PHONY: dependencies
 dependencies:

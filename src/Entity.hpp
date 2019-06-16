@@ -3,7 +3,6 @@
 #include "Engine.hpp"
 
 class Entity {
-
     public:
         virtual ~Entity(){}
         virtual void update() = 0;

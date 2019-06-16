@@ -10,14 +10,13 @@ Player::Player(int _template):
     maxSlideY = 80;
     damage = 25.0;
     attackSpeed = 10;
-    isJumping = false;
     finalJumpHeight = 0;
 
     anim.addSheet("idle", "sprites/Player/idle.png");
     anim.addSheet("walk", "sprites/Player/walking.png");
 
-    isMovingRight = true;
-    isMoving = false;
+    setState(CharacterState::STATE_IDLE);
+    facing = FACING_RIGHT;
 
     type = 0;
 
@@ -41,7 +40,6 @@ void Player::move(sf::Vector2f vec){
     if(vec.x > 0 && collidingRight) return;
     if(vec.x < 0 && collidingLeft) return;
     pSprite.move(vec);
-    isMoving = true;
 }
 
 void Player::setPos(sf::Vector2f newPos) {
@@ -50,22 +48,23 @@ void Player::setPos(sf::Vector2f newPos) {
 
 void Player::moveRight(){
     move({moveSpeed,0});
-    isMovingRight = true;
+    setFacing(Character::FACING_RIGHT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void Player::moveLeft(){
     move({-moveSpeed,0});
-    isMovingRight = false;
+    setFacing(Character::FACING_LEFT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void Player::jump(){
     velocity.y -= 2.50;
     move({0,-2.50});
-    isJumping=true;
+    setState(CharacterState::STATE_JUMPING);
 }
 
 void Player::update(){
-    isMoving = false;
     if(sf::Keyboard::isKeyPressed(key_right)) {
         if(velocity.x < maxSlideX)
             velocity.x += 10;
@@ -77,16 +76,16 @@ void Player::update(){
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }
     else if(sf::Keyboard::isKeyPressed(key_jump) && !collidingUp && collidingDown){
-        if(!isJumping){
+        if(currentState->getState() != CharacterState::STATE_JUMPING){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
             if(velocity.y > maxSlideY) velocity.y = maxSlideY;
             finalJumpHeight= (pSprite.getPosition().y) - jumpHeight;
-
         }
-    }
-    if(sf::Keyboard::isKeyPressed(key_attack)){
+    }else if(sf::Keyboard::isKeyPressed(key_attack)){
         attack();
+    }else{
+        setState(CharacterState::STATE_IDLE);
     }
 
     if(velocity.x > 0.001){
@@ -99,8 +98,9 @@ void Player::update(){
     if(velocity.y > 0.001){
         jump();
     }
-    if(pSprite.getPosition().y < finalJumpHeight + 5)
-        isJumping=false;
+    if(pSprite.getPosition().y < finalJumpHeight + 5){
+        setState(CharacterState::STATE_FALLING);
+    }
     if(pSprite.getPosition().y > 800)
     {
         health -= 25;
@@ -110,16 +110,17 @@ void Player::update(){
             std::exit(0);
     }
 
-    if(collidingUp){
+    if(collidingUp && getState() == CharacterState::STATE_JUMPING){
         velocity.y = 0;
-        isJumping = false;
+        setState(CharacterState::STATE_FALLING);
     }
-    if(isMoving){
+
+    if(currentState->getState() == CharacterState::STATE_WALKING){
         if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
             spriteClock.restart();
             anim.play("walk");
         }
-        if(isMovingRight){
+        if(facing == FACING_RIGHT){
             anim.setScale({1,1});
         }else{
             anim.setScale({-1,1});
@@ -137,7 +138,7 @@ void Player::draw(Engine* engine) {
 }
 
 void Player::fall(){
-    if(!isJumping){
+    if(currentState->getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
@@ -148,7 +149,7 @@ sf::FloatRect Player::getRect(){
 
 void Player::attack(){
     if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
-    attacking = true;
+    setState(CharacterState::STATE_ATTACKING);
     attackTimer.restart();
 }
 

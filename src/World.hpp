@@ -9,6 +9,7 @@
 #include "List/EntityList.hpp"
 #include "List/CharacterList.hpp"
 #include "List/ThingsList.hpp"
+#include <set>
 
 class World : public Entity {
     protected:
@@ -30,7 +31,7 @@ class World : public Entity {
         void drawAll(Engine* engine);
         void gravity();
         
-        void addEntity(Entity* _e) { entities.add(static_cast<Entity*>(_e)); }
+        void addEntity(Entity* _e) { entities.add(_e); }
         void addThing(Thing* _thing) { things.add(_thing); addEntity(static_cast<Entity*>(_thing)); }
         void addCharacter(Character* _char){ characters.add(_char); addThing(static_cast<Thing*>(_char)); }
 };
