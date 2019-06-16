@@ -18,8 +18,8 @@ void World::update(){
                 if((*itr)->getType() == (*itr2)->getType()) continue; // Não ataca personagens do mesmo tipo
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 75.0) continue; // Range
                 if((*itr2)->getType() == 0) continue; // Player não morre
-                if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de trás
-                if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de trás
+                if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de costas
+                if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de costas
 
                 cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
                 
@@ -29,7 +29,7 @@ void World::update(){
                     bufferKill.insert(*itr2);
                 }
             }
-            if((*itr)->getType() != 2) (*itr)->setState(CharacterState::STATE_IDLE);
+            //if((*itr)->getType() != 2) (*itr)->setState(CharacterState::STATE_IDLE);
         }
     }
     

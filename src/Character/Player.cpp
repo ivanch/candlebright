@@ -1,19 +1,24 @@
 #include "Player.hpp"
 
-Player::Player(int _template):
-        anim(&pSprite, {30,75}){
-
+Player::Player(int _template){
     health = 100;
     moveSpeed = 1.5;
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
-    damage = 25.0;
+    damage = 5.0;
+    range = 20.0;
     attackSpeed = 10;
     finalJumpHeight = 0;
 
-    anim.addSheet("idle", "sprites/Player/idle.png");
-    anim.addSheet("walk", "sprites/Player/walking.png");
+    anim = new AnimManager(&pSprite, {30,75});
+    anim->addSheet("idle", "sprites/Player/idle.png");
+    anim->addSheet("walk", "sprites/Player/walking.png");
+    anim->addSheet("attack", "sprites/Player/new-Player-Attacking.png", 3);
+
+    wSprite = sf::Sprite(*getTexture("sprites/Player/whip.png"));
+    whipSize = 0.0;
+    whipExpanding = true;
 
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
@@ -47,12 +52,14 @@ void Player::setPos(sf::Vector2f newPos) {
 }
 
 void Player::moveRight(){
+    if(anim->isLocked()) return;
     move({moveSpeed,0});
     setFacing(Character::FACING_RIGHT);
     setState(CharacterState::STATE_WALKING);
 }
 
 void Player::moveLeft(){
+    if(anim->isLocked()) return;
     move({-moveSpeed,0});
     setFacing(Character::FACING_LEFT);
     setState(CharacterState::STATE_WALKING);
@@ -118,23 +125,39 @@ void Player::update(){
     if(currentState->getState() == CharacterState::STATE_WALKING){
         if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
             spriteClock.restart();
-            anim.play("walk");
+            anim->play("walk");
         }
         if(facing == FACING_RIGHT){
-            anim.setScale({1,1});
+            anim->setScale({1,1});
         }else{
-            anim.setScale({-1,1});
+            anim->setScale({-1,1});
         }
+    }else if(currentState->getState() == CharacterState::STATE_ATTACKING){
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
+            spriteClock.restart();
+            anim->play("attack", true);
+
+            if(whipExpanding){
+                whipSize += 5;
+                if(whipSize >= range) whipExpanding = false;
+            }else if(!whipExpanding){
+                if(whipSize > 0) whipSize -= 5;
+            }
+        }
+        wSprite.setScale({whipSize/range,1});
+        wSprite.setPosition(pSprite.getPosition().x, pSprite.getPosition().y+10);
+        //cout << whipSize << endl;
     }else{
         if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
             spriteClock.restart();
-            anim.play("idle");
+            anim->play("idle");
         }
     }
 }
 
 void Player::draw(Engine* engine) {
     engine->draw(pSprite);
+    if(whipSize > 0) engine->draw(wSprite);
 }
 
 void Player::fall(){
@@ -148,9 +171,13 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
+    if( attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed ||
+        currentState->getState() == CharacterState::STATE_ATTACKING ) return;
     setState(CharacterState::STATE_ATTACKING);
+    whipExpanding = true;
     attackTimer.restart();
+    spriteClock.restart();
+    anim->play("attack", true);
 }
 
 sf::Vector2f Player::getPos(){

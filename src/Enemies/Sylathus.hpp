@@ -1,16 +1,18 @@
 #pragma once
 #include "../includes.hpp"
-#include "../Engine.hpp"
-#include "../Character/Enemy.hpp"
+#include "Enemy.hpp"
 
 class Sylathus : public Enemy {
     private:
         sf::Clock spriteClock;
         sf::Sprite sSprite;
-        AnimManager anim;
+        sf::Sprite bSprite; // Bafo sprite
+
+        AnimManager breathAnim;
+        sf::Clock breathClock;
 
     public:
-        Sylathus(sf::Vector2f pos = {0,0}, string _name = "");
+        Sylathus(sf::Vector2f pos = {0,0});
         ~Sylathus();
         void setPos(sf::Vector2f newPos);
         void moveRight();

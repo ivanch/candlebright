@@ -14,6 +14,7 @@ class AnimManager {
         map<string, int> modes;
 
         int count; // Contagem de quantas animações foram feitas
+        bool locked;
 
         sf::Texture* getTexture(string filename);
 
@@ -23,11 +24,19 @@ class AnimManager {
 
         /*  mode = 0: vai e volta
             mode = 1: vai e volta pro começo
-            mode = 2: vai e fica nos 2 ultimos, não sobrepõe   */
+            mode = 2: vai e fica nos 2 ultimos, não sobrepõe
+            mode = 3: vai e destranca as animações              
+            mode = 4: vai e fica, destranca depois de terminado     */
         void addSheet(string name, string filename, int mode = 0);
-        void play(string name, bool goBack=true);
+
+        /*  lock = true: não deixa outra animação sobrepor e 
+                         impede que o personagem mude seu State */
+        void play(string name, bool lock = false);
+        void stop();
+        
         void setScale(sf::Vector2f _scale);
         void setTime(float milliseconds){ delay = milliseconds; };
         int getStage(){ return (int)rect.left/rect.width; }
         int getCount(){ return count; }
+        bool isLocked(){ return locked; }
 };

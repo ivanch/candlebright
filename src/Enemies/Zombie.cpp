@@ -1,7 +1,6 @@
 #include "Zombie.hpp"
 
-Zombie::Zombie(sf::Vector2f pos, string _name):
-    anim(&eSprite, {20,50}){
+Zombie::Zombie(sf::Vector2f pos, string _name){
     //eSprite.setSize({20,50});
     //eSprite.setFillColor(sf::Color::Red);
     setPos(pos);
@@ -11,7 +10,8 @@ Zombie::Zombie(sf::Vector2f pos, string _name):
     maxSlideX = 0.001;
     maxSlideY = 80;
     health = 100;
-    damage = 0;
+    damage = 5.0;
+    range = 10.0;
     attackChance = 0.1 / 60; // Chance de ataques por segundo
     attackSpeed = 0.5;
     finalJumpHeight = 0;
@@ -20,7 +20,8 @@ Zombie::Zombie(sf::Vector2f pos, string _name):
     setState(CharacterState::STATE_WALKING);
     facing = FACING_RIGHT;
 
-    anim.addSheet("walk", "sprites/Zombie/new-zombie-walking.png");
+    anim = new AnimManager(&eSprite, {20,50});
+    anim->addSheet("walk", "sprites/Zombie/new-zombie-walking.png");
 }
 Zombie::~Zombie(){}
 
@@ -83,12 +84,12 @@ void Zombie::update(){
     if(currentState->getState() == CharacterState::STATE_WALKING){
         if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
             spriteClock.restart();
-            anim.play("walk");
+            anim->play("walk");
         }
         if(facing == FACING_RIGHT){
-            anim.setScale({1,1});
+            anim->setScale({-1,1});
         }else{
-            anim.setScale({-1,1});
+            anim->setScale({1,1});
         }
     }
     
@@ -107,7 +108,12 @@ void Zombie::takeDamage(Character* issuer, float damage){
 }
 
 void Zombie::attack(){
+    /*
+
+    // Atacar sem animação é meio tenso. //
+
     if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     setState(CharacterState::STATE_ATTACKING);
     attackTimer.restart();
+    */
 }

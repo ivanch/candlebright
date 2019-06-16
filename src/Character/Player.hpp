@@ -1,7 +1,6 @@
 #pragma once
 #include "../includes.hpp"
 #include "Character.hpp"
-#include "AnimManager.hpp"
 
 class Player : public Character {
     private:
@@ -10,7 +9,10 @@ class Player : public Character {
 
         sf::Clock spriteClock;
         sf::Sprite pSprite;
-        AnimManager anim;
+
+        sf::Sprite wSprite; // Whip Sprite
+        float whipSize;
+        bool whipExpanding;
 
         sf::Keyboard::Key key_right;
         sf::Keyboard::Key key_left;

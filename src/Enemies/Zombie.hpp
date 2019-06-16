@@ -1,14 +1,11 @@
 #pragma once
 #include "../includes.hpp"
-#include "../Engine.hpp"
-#include "../Character/Enemy.hpp"
-#include "../Character/AnimManager.hpp"
+#include "Enemy.hpp"
 
 class Zombie : public Enemy {
     private:
         sf::Clock spriteClock;
         sf::Sprite pSprite;
-        AnimManager anim;
     
     public:
         Zombie(sf::Vector2f pos = {0,0}, string _name = "");

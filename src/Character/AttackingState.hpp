@@ -9,7 +9,5 @@ class AttackingState : public CharacterState {
         virtual ~AttackingState();
 
         virtual void idle(Character* _char);
-        virtual void walking(Character* _char);
-        virtual void jumping(Character* _char);
         virtual void falling(Character* _char);
 };

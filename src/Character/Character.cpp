@@ -8,12 +8,14 @@ Character::~Character(){
 
 }
 
-void Character::setState(CharacterState::State _state){
+void Character::setState(CharacterState::State newState){
     if(currentState != nullptr){
-        if(_state == currentState->getState()) return;
+        if(newState == currentState->getState()) return;
+        if(anim->isLocked()) return;
+        cout << CharacterState::getStateName(currentState->getState()) << " para " << CharacterState::getStateName(newState) << endl;
         delete currentState;
     }
-    switch (_state){
+    switch (newState){
         case CharacterState::STATE_IDLE:
             currentState = new IdleState();
             break;

@@ -8,6 +8,7 @@
 #include "JumpingState.hpp"
 #include "FallingState.hpp"
 #include "AttackingState.hpp"
+#include "../Engine.hpp"
 
 class Character : public Thing {
     public:
@@ -22,10 +23,13 @@ class Character : public Thing {
         virtual void move(sf::Vector2f _move) = 0;
         virtual void takeDamage(Character* issuer, float damage) = 0;
         virtual void death() = 0;
+        virtual sf::Vector2f getSize() { return {getRect().width, getRect().height}; }
 
         virtual float getDamage(){ return damage; }
+        virtual float getRange(){ return range; }
         virtual float getHealth(){ return health; }
         virtual short getType() { return type; }
+        virtual AnimManager* getAnim(){ return anim; }
 
         virtual void setState(CharacterState::State _state);
         virtual CharacterState::State getState(){ return currentState->getState(); }
@@ -43,6 +47,9 @@ class Character : public Thing {
         float maxSlideX;
         float maxSlideY;
         float damage;
+        float range;
+
+        AnimManager* anim;
 
         CharacterState* currentState;
         short facing;

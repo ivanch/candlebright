@@ -1,6 +1,6 @@
 #pragma once
 #include "../includes.hpp"
-#include "Character.hpp"
+#include "../Character/Character.hpp"
 
 class Enemy : public Character {
     protected:
