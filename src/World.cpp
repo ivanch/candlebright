@@ -29,7 +29,6 @@ void World::update(){
                     bufferKill.insert(*itr2);
                 }
             }
-            //if((*itr)->getType() != 2) (*itr)->setState(CharacterState::STATE_IDLE);
         }
     }
     

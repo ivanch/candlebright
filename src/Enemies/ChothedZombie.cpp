@@ -1,8 +1,6 @@
-#include "Zombie.hpp"
+#include "ClothedZombie.hpp"
 
-Zombie::Zombie(sf::Vector2f pos, string _name){
-    //eSprite.setSize({20,50});
-    //eSprite.setFillColor(sf::Color::Red);
+ClothedZombie::ClothedZombie(sf::Vector2f pos, string _name){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 1.5;
@@ -21,46 +19,46 @@ Zombie::Zombie(sf::Vector2f pos, string _name){
     facing = FACING_RIGHT;
 
     anim = new AnimManager(&eSprite, {20,50});
-    anim->addSheet("walk", "sprites/Zombie/new-zombie-walking.png");
+    anim->addSheet("walk", "sprites/Clothed-Zombie/new-clothed-zombie-walking.png");
 }
-Zombie::~Zombie(){}
+ClothedZombie::~ClothedZombie(){}
 
-void Zombie::move(sf::Vector2f vec){
+void ClothedZombie::move(sf::Vector2f vec){
     eSprite.move(vec);
 }
 
-void Zombie::setPos(sf::Vector2f newPos) {
+void ClothedZombie::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f Zombie::getPos(){
+sf::Vector2f ClothedZombie::getPos(){
     return eSprite.getPosition();
 }
 
-void Zombie::draw(Engine* engine) {
+void ClothedZombie::draw(Engine* engine) {
     engine->draw(eSprite);
 }
 
-sf::FloatRect Zombie::getRect(){
+sf::FloatRect ClothedZombie::getRect(){
     return eSprite.getGlobalBounds();
 }
-void Zombie::fall(){
+void ClothedZombie::fall(){
     if(currentState->getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
 
-void Zombie::moveRight(){
+void ClothedZombie::moveRight(){
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
 }
 
-void Zombie::moveLeft(){
+void ClothedZombie::moveLeft(){
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
 }
 
-void Zombie::update(){
+void ClothedZombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
     
     if(facing == Facing::FACING_LEFT){
@@ -68,13 +66,13 @@ void Zombie::update(){
             eSprite.move({-moveSpeed,0});
         else
             facing = Facing::FACING_RIGHT;
-        if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
+        if(abs(pos.x) < abs(originalPos.x-150)) facing = Facing::FACING_RIGHT;
     }else{
         if(!collidingRight)
             eSprite.move({moveSpeed,0});
         else
             facing = Facing::FACING_LEFT;
-        if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
+        if(abs(pos.x) > abs(originalPos.x+150)) facing = Facing::FACING_LEFT;
     }
     if(collidingUp){
         velocity.y = 0;
@@ -82,7 +80,7 @@ void Zombie::update(){
     }
 
     if(currentState->getState() == CharacterState::STATE_WALKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
+        if(spriteClock.getElapsedTime().asMilliseconds() >= 125){
             spriteClock.restart();
             anim->play("walk");
         }
@@ -98,17 +96,16 @@ void Zombie::update(){
     }
 }
 
-void Zombie::takeDamage(Character* issuer, float damage){
+void ClothedZombie::takeDamage(Character* issuer, float damage){
     health -= damage;
     move({15,-5});
-    moveSpeed += 0.5;
     if(health <= 0){
         cout << "Morreu" << endl;
         //delete this;
     }
 }
 
-void Zombie::attack(){
+void ClothedZombie::attack(){
     /*
 
     // Atacar sem animação é meio tenso. //

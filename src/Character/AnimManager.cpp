@@ -24,7 +24,7 @@ void AnimManager::play(string name, bool lock){
         if(modes[name] == 0){
             if(goingBack) rect.left -= rect.width;
             else rect.left += rect.width;
-            if(rect.left+rect.width >= static_cast<signed>(animes[current]->getSize().x-rect.width)){
+            if(rect.left >= static_cast<signed>(animes[current]->getSize().x-rect.width)){
                 goingBack = true;
             }else if(rect.left <= 0){
                 goingBack = false;
@@ -32,7 +32,7 @@ void AnimManager::play(string name, bool lock){
         }else if(modes[name] == 1){
             if(goingBack) rect.left -= rect.width;
             else rect.left += rect.width;
-            if(rect.left+rect.width >= static_cast<signed>(animes[current]->getSize().x-rect.width)){
+            if(rect.left >= static_cast<signed>(animes[current]->getSize().x-rect.width)){
                 rect.left = 0;
             }
         }else if(modes[name] == 2){
@@ -44,11 +44,11 @@ void AnimManager::play(string name, bool lock){
                 goingBack = true;
             }
         }else if(modes[name] == 3){
-            rect.left += rect.width;
             if(rect.left >= static_cast<signed>(animes[current]->getSize().x-rect.width)){
                 locked = false;
                 current = "NULL";
             }
+            rect.left += rect.width;
         }else if(modes[name] == 4){
             if(rect.left < static_cast<signed>(animes[current]->getSize().x-rect.width)){
                 rect.left += rect.width;

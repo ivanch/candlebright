@@ -6,7 +6,7 @@ if(len(sys.argv) == 0):
     sys.exit(1)
 
 # Define o tamanho Y,X do Sprite
-size = (75,30)
+size = (50,20)
 
 name = sys.argv[1]
 nname = "new-" + name
@@ -14,6 +14,7 @@ nname = "new-" + name
 img = cv2.imread(name, -1)
 nimg = np.zeros(shape=(size[0],0,4))
 print(nimg.shape)
+transparent = np.sum(img[0,0])
 tem = False
 start = -1
 end = -1
@@ -23,7 +24,7 @@ miny = -1
 for x in range(img.shape[1]):
     encontrou = False # encontrou alguma coisa no eixo Y
     for y in range(img.shape[0]):
-        if(np.sum(img[y][x]) > 0): # > 0 ou < 765, depende da imagem
+        if(np.sum(img[y][x]) > transparent or np.sum(img[y][x]) < transparent): # > 0 ou < 765, depende da imagem
             if(start == -1):
                 start = x
             if(y > maxy): maxy = y

@@ -92,7 +92,8 @@ void Player::update(){
     }else if(sf::Keyboard::isKeyPressed(key_attack)){
         attack();
     }else{
-        setState(CharacterState::STATE_IDLE);
+        if(getState() != CharacterState::STATE_JUMPING)
+            setState(CharacterState::STATE_IDLE);
     }
 
     if(velocity.x > 0.001){
