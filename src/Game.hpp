@@ -5,7 +5,6 @@
 #include "Character/Player.hpp"
 #include "Engine.hpp"
 #include "Menu.hpp"
-
 class Game {
     private:
         Engine engine;
@@ -18,7 +17,11 @@ class Game {
 
 
         Menu menu;
+        bool game_paused;
         bool menuEnabled;
+
+        sf::Clock timer;
+
 
     public:
         Game();

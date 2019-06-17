@@ -6,6 +6,7 @@ Game::Game():   player1(1),
     window = engine.getWindow();
     view.reset(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
     srand (static_cast <unsigned> (time(NULL)));
+    game_paused = false;
 }
 Game::~Game(){}
 
@@ -60,7 +61,13 @@ void Game::update(){
                 view.move({-1.5,0});
             engine.getWindow()->setView(view);
             world->gravity();
-            world->update(); // Atualiza as entidades do mundo
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && timer.getElapsedTime().asSeconds() > 0.2)
+            {
+                game_paused = !game_paused;
+                timer.restart();
+            }
+            if(!game_paused)
+                world->update(); // Atualiza as entidades do mundo
             world->drawAll(&engine); // Desenha todas entidades do mundo
         }
         engine.render();

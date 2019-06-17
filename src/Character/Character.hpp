@@ -33,7 +33,7 @@ class Character : public Thing {
 
         virtual void setState(CharacterState::State _state);
         virtual CharacterState::State getState(){ return currentState->getState(); }
-        
+
         virtual void setFacing(Facing _facing) { facing = _facing; }
         virtual short getFacing() { return facing; }
 
