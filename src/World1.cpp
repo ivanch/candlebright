@@ -25,9 +25,9 @@ World_1::World_1(){
     addObstacle(o);
     o = new Wall({20,50},{125,450}, sf::Color::Cyan);
     addObstacle(o);
-    o = new Fire({130,675});
+    o = new Fire({130,675}, 25);
     addObstacle(o);
-    o = new Black_Hole({500,650});
+    o = new Black_Hole({500,650}, 40);
     addObstacle(o);
 
     Enemy* e;

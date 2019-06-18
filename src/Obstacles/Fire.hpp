@@ -10,7 +10,7 @@ class Fire : public Obstacle {
         sf::Clock animClock;
     
     public:
-        Fire(sf::Vector2f pos);
+        Fire(sf::Vector2f pos, float _size);
         ~Fire();
 
         virtual float getDamage();

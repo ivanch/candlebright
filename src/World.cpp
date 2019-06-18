@@ -34,6 +34,7 @@ void World::update(){
         if((*itr)->getAttackClock()->getElapsedTime().asMilliseconds() < (*itr)->getAttackRate()) continue; // Attack rate
         for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
             if((*itr2)->getType() != 0) continue; // Só afeta players
+
             if((*itr)->getType() == 1){ // Fogo
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 50.0) continue; // Range
 
@@ -52,11 +53,11 @@ void World::update(){
                         bufferKill.insert(*itr2);
                     }
                 }
-                // 
+                
                 if((*itr2)->getPos().x < (*itr)->getPos().x){ // Player a esquerda do buraco
-                    (*itr2)->move({5,0});
+                    (*itr2)->move({3,0});
                 }else{
-                    (*itr2)->move({-5,0});
+                    (*itr2)->move({-3,0});
                 }
             }
         }

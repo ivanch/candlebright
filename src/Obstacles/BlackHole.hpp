@@ -10,7 +10,7 @@ class Black_Hole : public Obstacle {
         sf::Clock animClock;
     
     public:
-        Black_Hole(sf::Vector2f pos);
+        Black_Hole(sf::Vector2f pos, float _size);
         ~Black_Hole();
 
         virtual float getDamage();

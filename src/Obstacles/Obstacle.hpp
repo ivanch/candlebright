@@ -7,6 +7,7 @@ class Obstacle : public Thing {
         short type;
         float damage;
         float attackRate; // Milisegundo por ataque
+        float size;
         sf::Clock attackClock;
         sf::Sprite oSprite;
         sf::Texture* texture;
