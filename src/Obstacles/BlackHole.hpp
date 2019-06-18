@@ -1,14 +1,9 @@
 #pragma once
 #include "../includes.hpp"
 #include "Obstacle.hpp"
-#include "../Thing.hpp"
-#include "../AnimManager.hpp"
+#include "../Animatable.hpp"
 
-class Black_Hole : public Obstacle {
-    private:
-        AnimManager anim;
-        sf::Clock animClock;
-    
+class Black_Hole : public Obstacle, public Animatable {    
     public:
         Black_Hole(sf::Vector2f pos, float _size);
         ~Black_Hole();

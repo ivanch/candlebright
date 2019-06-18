@@ -7,7 +7,6 @@ class Player : public Character {
         sf::Vector2f RespawnPos;
         string name;
 
-        sf::Clock spriteClock;
         sf::Sprite pSprite;
 
         sf::Sprite wSprite; // Whip Sprite
@@ -37,6 +36,6 @@ class Player : public Character {
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void fall();
-        virtual void takeDamage(Thing* issuer, float damage);
+        virtual void takeDamage(Thing* _issuer, float _damage);
         virtual void death(){}
 };

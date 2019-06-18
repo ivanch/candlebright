@@ -13,7 +13,7 @@ Ghost::Ghost(sf::Vector2f pos, string _name){
     damage = 5.0;
     range = 10.0;
     attackChance = 0.15 / 60; // 15%
-    attackSpeed = 0.5;
+    attackSpeed = 250;
     finalJumpHeight = 0;
     type = 1;
 
@@ -85,13 +85,13 @@ void Ghost::update(){
     }
     
     if(getState() == CharacterState::STATE_ATTACKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 450){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 450){
+            animClock.restart();
             anim->play("attack", true);
         }
     }else{
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 200){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 200){
+            animClock.restart();
             anim->play("walk");
         }
         if(facing == FACING_RIGHT){
@@ -102,7 +102,7 @@ void Ghost::update(){
     }
 }
 
-void Ghost::takeDamage(Thing* issuer, float damage){
+void Ghost::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){
@@ -115,5 +115,5 @@ void Ghost::attack(){
     if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     setState(CharacterState::STATE_ATTACKING);
     anim->play("attack", true);
-    spriteClock.restart();
+    animClock.restart();
 }

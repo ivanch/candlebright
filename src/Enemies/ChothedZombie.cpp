@@ -80,8 +80,8 @@ void ClothedZombie::update(){
     }
 
     if(currentState->getState() == CharacterState::STATE_WALKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 125){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 125){
+            animClock.restart();
             anim->play("walk");
         }
         if(facing == FACING_RIGHT){
@@ -96,9 +96,11 @@ void ClothedZombie::update(){
     }
 }
 
-void ClothedZombie::takeDamage(Thing* issuer, float damage){
+void ClothedZombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
+    moveSpeed -= moveSpeed * 0.1;
+    damage += damage * 0.1;
     if(health <= 0){
         cout << "Morreu" << endl;
         //delete this;

@@ -14,6 +14,8 @@ Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, {160,96}){
     facing = FACING_RIGHT;
     type = 2;
     attackChance = 0.1 / 60; // 10%
+    damage = 1;
+    attackSpeed = 50;
 
     anim = new AnimManager(&sSprite, {170,120});
     anim->addSheet("idle","sprites/Sylathus/new-demon-idle.png");
@@ -62,13 +64,13 @@ void Sylathus::update(){
     }
 
     if(getState() == CharacterState::STATE_IDLE){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 150){
+            animClock.restart();
             anim->play("idle");
         }
     }else if(getState() == CharacterState::STATE_ATTACKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 200){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 200){
+            animClock.restart();
             anim->play("attack");
             if(anim->getCount() >= 8){
                 if(breathClock.getElapsedTime().asMilliseconds() >= 250){
@@ -84,7 +86,7 @@ void Sylathus::update(){
     }
 }
 
-void Sylathus::takeDamage(Thing* issuer, float damage){
+void Sylathus::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){

@@ -1,14 +1,9 @@
 #pragma once
 #include "../includes.hpp"
 #include "Obstacle.hpp"
-#include "../Thing.hpp"
-#include "../AnimManager.hpp"
+#include "../Animatable.hpp"
 
-class Fire : public Obstacle {
-    private:
-        AnimManager anim;
-        sf::Clock animClock;
-    
+class Fire : public Obstacle, public Animatable {    
     public:
         Fire(sf::Vector2f pos, float _size);
         ~Fire();

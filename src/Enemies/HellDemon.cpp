@@ -92,16 +92,16 @@ void HellDemon::update(){
     }
     
     if(getState() == CharacterState::STATE_ATTACKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 200){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 200){
+            animClock.restart();
             anim->play("attack1", true);
             if(anim->getCount() > 10){
                 anim->stop();
             }
         }
     }else{
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 75){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 75){
+            animClock.restart();
             anim->play("walk");
         }
         if(facing == FACING_RIGHT){
@@ -112,7 +112,7 @@ void HellDemon::update(){
     }
 }
 
-void HellDemon::takeDamage(Thing* issuer, float damage){
+void HellDemon::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){
@@ -126,5 +126,5 @@ void HellDemon::attack(){
     setState(CharacterState::STATE_ATTACKING);
 
     anim->play("attack1", true);
-    spriteClock.restart();
+    animClock.restart();
 }

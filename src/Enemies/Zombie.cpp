@@ -82,8 +82,8 @@ void Zombie::update(){
     }
 
     if(currentState->getState() == CharacterState::STATE_WALKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 150){
+            animClock.restart();
             anim->play("walk");
         }
         if(facing == FACING_RIGHT){
@@ -98,10 +98,10 @@ void Zombie::update(){
     }
 }
 
-void Zombie::takeDamage(Thing* issuer, float damage){
+void Zombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
-    moveSpeed += 0.5;
+    moveSpeed += moveSpeed * 0.1;
     if(health <= 0){
         cout << "Morreu" << endl;
         //delete this;

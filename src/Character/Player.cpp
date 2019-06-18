@@ -127,8 +127,8 @@ void Player::update(){
     }
 
     if(currentState->getState() == CharacterState::STATE_WALKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 150){
+            animClock.restart();
             anim->play("walk");
         }
         if(facing == FACING_RIGHT){
@@ -137,8 +137,8 @@ void Player::update(){
             anim->setScale({-1,1});
         }
     }else if(currentState->getState() == CharacterState::STATE_ATTACKING){
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 150){
+            animClock.restart();
             anim->play("attack", true);
 
             if(whipExpanding){
@@ -152,8 +152,8 @@ void Player::update(){
         wSprite.setPosition(pSprite.getPosition().x, pSprite.getPosition().y+10);
         //cout << whipSize << endl;
     }else{
-        if(spriteClock.getElapsedTime().asMilliseconds() >= 150){
-            spriteClock.restart();
+        if(animClock.getElapsedTime().asMilliseconds() >= 150){
+            animClock.restart();
             anim->play("idle");
         }
     }
@@ -188,7 +188,7 @@ void Player::attack(){
     if( currentState->getState() == CharacterState::STATE_ATTACKING ) return;
     setState(CharacterState::STATE_ATTACKING);
     whipExpanding = true;
-    spriteClock.restart();
+    animClock.restart();
     anim->play("attack", true);
 }
 
@@ -196,7 +196,7 @@ sf::Vector2f Player::getPos(){
     return pSprite.getPosition();
 }
 
-void Player::takeDamage(Thing* issuer, float damage){
+void Player::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({0,-0.1});
     cout << "Levou dano" << endl;

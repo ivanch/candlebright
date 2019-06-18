@@ -2,11 +2,7 @@
 #include "../includes.hpp"
 #include "Enemy.hpp"
 
-class Ghost : public Enemy {
-    private:
-        sf::Clock spriteClock;
-        sf::Sprite pSprite;
-    
+class Ghost : public Enemy {    
     public:
         Ghost(sf::Vector2f pos = {0,0}, string _name = "");
         ~Ghost();
@@ -16,7 +12,7 @@ class Ghost : public Enemy {
 
         virtual sf::Vector2f getPos();
         virtual sf::FloatRect getRect();
-        virtual void takeDamage(Thing* issuer, float damage);
+        virtual void takeDamage(Thing* _issuer, float _damage);
         virtual void fall();
         virtual void update();
         virtual void draw(Engine* engine);

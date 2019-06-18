@@ -1,10 +1,10 @@
 #pragma once
 #include "../includes.hpp"
 #include "Enemy.hpp"
+#include "../Animatable.hpp"
 
 class Sylathus : public Enemy {
     private:
-        sf::Clock spriteClock;
         sf::Sprite sSprite;
         sf::Sprite bSprite; // Bafo sprite
 
@@ -20,7 +20,7 @@ class Sylathus : public Enemy {
 
         virtual sf::Vector2f getPos();
         virtual sf::FloatRect getRect();
-        virtual void takeDamage(Thing* issuer, float damage);
+        virtual void takeDamage(Thing* _issuer, float _damage);
         virtual void fall();
         virtual void update();
         virtual void draw(Engine* engine);
