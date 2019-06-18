@@ -19,6 +19,7 @@ class Thing : public Entity {
         ~Thing() { }
         virtual void fall(){}
         virtual sf::FloatRect getRect(){ return {0,0,0,0}; }
+        virtual sf::Vector2f getPos(){ return {0,0}; }
 
         void setCollidingUp(bool _isColliding){ collidingUp = _isColliding; }
         void setCollidingRight(bool _isColliding){ collidingRight = _isColliding; }

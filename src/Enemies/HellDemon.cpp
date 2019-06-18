@@ -112,7 +112,7 @@ void HellDemon::update(){
     }
 }
 
-void HellDemon::takeDamage(Character* issuer, float damage){
+void HellDemon::takeDamage(Thing* issuer, float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){

@@ -84,7 +84,7 @@ void Sylathus::update(){
     }
 }
 
-void Sylathus::takeDamage(Character* issuer, float damage){
+void Sylathus::takeDamage(Thing* issuer, float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){

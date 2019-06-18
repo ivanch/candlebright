@@ -1,31 +1,37 @@
-#include "Obstacle1.hpp"
+#include "Wall.hpp"
 
-Obstacle1::Obstacle1(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
+Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
     rect = sf::RectangleShape(size);
     rect.setFillColor(_col);
     rect.setPosition(pos);
     position = pos;
     texture = NULL;
+    type = 0;
 }
-Obstacle1::Obstacle1(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
+Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
     rect = sf::RectangleShape(size);
     rect.setTexture(_tex);
     rect.setPosition(pos);
     texture = _tex;
     position = pos;
     texture = NULL;
+    type = 0;
 }
-Obstacle1::~Obstacle1(){}
+Wall::~Wall(){}
 
-void Obstacle1::update(){
+void Wall::update(){
     
 }
 
-void Obstacle1::draw(Engine* engine){
+void Wall::draw(Engine* engine){
     if(texture != NULL) rect.setTexture(texture);
     else engine->draw(rect);
 }
 
-sf::FloatRect Obstacle1::getRect(){
+sf::FloatRect Wall::getRect(){
     return rect.getGlobalBounds();
+}
+
+float Wall::getDamage(){
+    return 0.0;
 }

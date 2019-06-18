@@ -4,8 +4,21 @@
 
 class Obstacle : public Thing {
     protected:
-        sf::RectangleShape rect;
-        sf::Color color;
+        short type;
+        float damage;
+        float attackRate; // Milisegundo por ataque
+        sf::Clock attackClock;
+        sf::Sprite oSprite;
         sf::Texture* texture;
         sf::Vector2f position;
+
+    public:
+        Obstacle(){ damage = 0.0; }
+        virtual ~Obstacle(){}
+
+        virtual float getDamage() = 0;
+        virtual float getAttackRate(){ return attackRate; }
+        short getType(){ return type; }
+        virtual sf::Clock* getAttackClock(){ return &attackClock; }
+
 };

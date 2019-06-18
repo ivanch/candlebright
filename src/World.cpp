@@ -21,7 +21,7 @@ void World::update(){
                 if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de costas
                 if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de costas
                 
-                (*itr2)->takeDamage(*itr, (*itr)->getDamage());
+                (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
 
                 if((*itr2)->getHealth() <= 0){
                     bufferKill.insert(*itr2);
@@ -29,6 +29,38 @@ void World::update(){
             }
             (*itr)->getAttackClock()->restart();
         }
+    }
+    for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
+        if((*itr)->getAttackClock()->getElapsedTime().asMilliseconds() < (*itr)->getAttackRate()) continue; // Attack rate
+        for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
+            if((*itr2)->getType() != 0) continue; // Só afeta players
+            if((*itr)->getType() == 1){ // Fogo
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 50.0) continue; // Range
+
+                (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
+
+                if((*itr2)->getHealth() <= 0){
+                    bufferKill.insert(*itr2);
+                }
+            }else if((*itr)->getType() == 2){ // Black Hole
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 200.0) continue; // Range
+
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < 50.0){
+                    (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
+
+                    if((*itr2)->getHealth() <= 0){
+                        bufferKill.insert(*itr2);
+                    }
+                }
+                // 
+                if((*itr2)->getPos().x < (*itr)->getPos().x){ // Player a esquerda do buraco
+                    (*itr2)->move({5,0});
+                }else{
+                    (*itr2)->move({-5,0});
+                }
+            }
+        }
+        (*itr)->getAttackClock()->restart();
     }
     
     for(auto itr = bufferKill.begin(); itr != bufferKill.end(); ++itr){

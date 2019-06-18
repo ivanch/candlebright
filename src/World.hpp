@@ -9,6 +9,7 @@
 #include "List/EntityList.hpp"
 #include "List/CharacterList.hpp"
 #include "List/ThingsList.hpp"
+#include "List/ObstacleList.hpp"
 
 class World : public Entity {
     protected:
@@ -16,6 +17,7 @@ class World : public Entity {
         EntityList entities;
         ThingsList things;
         CharacterList characters;
+        ObstaclesList obstacles;
         CollisionManager col_mngr;
         
         float getDistance(sf::Vector2f p1, sf::Vector2f p2);
@@ -33,4 +35,5 @@ class World : public Entity {
         void addEntity(Entity* _e) { entities.add(_e); }
         void addThing(Thing* _thing) { things.add(_thing); addEntity(static_cast<Entity*>(_thing)); }
         void addCharacter(Character* _char){ characters.add(_char); addThing(static_cast<Thing*>(_char)); }
+        void addObstacle(Obstacle* _obs){ obstacles.add(_obs); addThing(static_cast<Thing*>(_obs)); }
 };

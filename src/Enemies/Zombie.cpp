@@ -98,7 +98,7 @@ void Zombie::update(){
     }
 }
 
-void Zombie::takeDamage(Character* issuer, float damage){
+void Zombie::takeDamage(Thing* issuer, float damage){
     health -= damage;
     move({15,-5});
     moveSpeed += 0.5;

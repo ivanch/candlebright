@@ -1,7 +1,7 @@
 #pragma once
 #include "../includes.hpp"
 #include "../Thing.hpp"
-#include "AnimManager.hpp"
+#include "../AnimManager.hpp"
 #include "CharacterState.hpp"
 #include "IdleState.hpp"
 #include "WalkingState.hpp"
@@ -21,7 +21,7 @@ class Character : public Thing {
         virtual ~Character();
         virtual sf::Vector2f getPos() = 0;
         virtual void move(sf::Vector2f _move) = 0;
-        virtual void takeDamage(Character* issuer, float damage) = 0;
+        virtual void takeDamage(Thing* issuer, float damage) = 0;
         virtual void death() = 0;
         virtual sf::Vector2f getSize() { return {getRect().width, getRect().height}; }
 

@@ -37,6 +37,6 @@ class Player : public Character {
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void fall();
-        virtual void takeDamage(Character* issuer, float damage);
+        virtual void takeDamage(Thing* issuer, float damage);
         virtual void death(){}
 };

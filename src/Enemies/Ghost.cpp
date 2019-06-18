@@ -102,7 +102,7 @@ void Ghost::update(){
     }
 }
 
-void Ghost::takeDamage(Character* issuer, float damage){
+void Ghost::takeDamage(Thing* issuer, float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){

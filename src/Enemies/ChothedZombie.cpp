@@ -96,7 +96,7 @@ void ClothedZombie::update(){
     }
 }
 
-void ClothedZombie::takeDamage(Character* issuer, float damage){
+void ClothedZombie::takeDamage(Thing* issuer, float damage){
     health -= damage;
     move({15,-5});
     if(health <= 0){

@@ -6,7 +6,7 @@ if(len(sys.argv) == 0):
     sys.exit(1)
 
 # Define o tamanho Y,X do Sprite
-size = (50,20)
+size = (50,50)
 
 name = sys.argv[1]
 nname = "new-" + name

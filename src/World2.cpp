@@ -11,8 +11,10 @@ World_2::World_2(){
     addThing(p);
 
     Obstacle* o;
-    o = new Obstacle1({10,50},{100,650}, sf::Color::Cyan);
-    addThing(o);
+    o = new Wall({10,50},{100,650}, sf::Color::Cyan);
+    addObstacle(o);
+    o = new Fire({120,650});
+    addObstacle(o);
 
     Enemy* e;
     e = new Zombie({150,650});

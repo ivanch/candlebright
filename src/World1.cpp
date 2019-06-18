@@ -19,12 +19,16 @@ World_1::World_1(){
     addThing(p);
 
     Obstacle* o;
-    o = new Obstacle1({10,50},{100,650}, sf::Color::Cyan);
-    addThing(o);
-    o = new Obstacle1({20,50},{50,500}, sf::Color::Cyan);
-    addThing(o);
-    o = new Obstacle1({20,50},{125,450}, sf::Color::Cyan);
-    addThing(o);
+    o = new Wall({10,50},{100,650}, sf::Color::Cyan);
+    addObstacle(o);
+    o = new Wall({20,50},{50,500}, sf::Color::Cyan);
+    addObstacle(o);
+    o = new Wall({20,50},{125,450}, sf::Color::Cyan);
+    addObstacle(o);
+    o = new Fire({130,675});
+    addObstacle(o);
+    o = new Black_Hole({500,650});
+    addObstacle(o);
 
     Enemy* e;
     e = new Zombie({150,650});

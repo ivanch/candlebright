@@ -196,8 +196,8 @@ sf::Vector2f Player::getPos(){
     return pSprite.getPosition();
 }
 
-void Player::takeDamage(Character* issuer, float damage){
+void Player::takeDamage(Thing* issuer, float damage){
     health -= damage;
-    move({0,-10});
+    move({0,-0.1});
     cout << "Levou dano" << endl;
 }
