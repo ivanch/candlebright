@@ -5,6 +5,7 @@
 #include "Character/Player.hpp"
 #include "Engine.hpp"
 #include "Menu.hpp"
+#include <fstream>
 class Game {
     private:
         Engine engine;
@@ -14,6 +15,8 @@ class Game {
         Player player2;
         World* world;
         sf::View view;
+
+        int act_world;
 
 
         Menu menu;
@@ -32,6 +35,8 @@ class Game {
 
         sf::View* getView() { return &view; }
         void setView(sf::View _view){ this->view=_view; }
+
+        void saveGame();
 
         void draw(sf::RenderWindow& window);
 };

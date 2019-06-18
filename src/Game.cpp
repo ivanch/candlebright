@@ -19,8 +19,10 @@ void Game::run(){
     }
     if(menu.getSelectedWorld() == 1){
         world = new World_1;
+        act_world = 1;
     }else if(menu.getSelectedWorld() == 2){
         world = new World_2;
+        act_world = 2;
     }
 
     world->addCharacter(&player1); // Sempre haverá um jogador por padrão
@@ -31,7 +33,21 @@ void Game::run(){
     engine.getWindow()->setView(view);
     update(); // Roda o jogo...
 }
+void Game::saveGame()
+{
+    timer.restart();
+    ofstream file("Save/GameSave.txt");
 
+    if(file.is_open())
+    {
+        file << act_world << endl;
+        for(auto itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
+            file << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y << endl;
+        }
+        cout << "Game Saved" << endl;
+
+    }
+}
 void Game::update(){
     sf::IntRect gordolaRect(0,0,40,47);
     sf::Clock gordolaClock;
@@ -64,11 +80,15 @@ void Game::update(){
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && timer.getElapsedTime().asSeconds() > 0.2)
             {
                 game_paused = !game_paused;
-                timer.restart();
             }
             if(!game_paused)
                 world->update(); // Atualiza as entidades do mundo
             world->drawAll(&engine); // Desenha todas entidades do mundo
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::F5)&& timer.getElapsedTime().asSeconds() > 1)
+            {
+                saveGame();
+            }
         }
         engine.render();
     }
