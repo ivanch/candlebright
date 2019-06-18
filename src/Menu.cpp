@@ -1,7 +1,7 @@
 #include "Menu.hpp"
 Menu::Menu(float width, float height)
 {
-    if(!font.loadFromFile("OldLondon.ttf"))
+    if(!font.loadFromFile("fonts/OldLondon.ttf"))
     {
         cerr<<"Erro ao ler fonte"<<endl;
     }

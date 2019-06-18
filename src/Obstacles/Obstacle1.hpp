@@ -1,7 +1,7 @@
 #pragma once
-#include "includes.hpp"
+#include "../includes.hpp"
 #include "Obstacle.hpp"
-#include "Thing.hpp"
+#include "../Thing.hpp"
 
 class Obstacle1 : public Obstacle {
     public:

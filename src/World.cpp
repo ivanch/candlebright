@@ -11,17 +11,15 @@ void World::update(){
 
     set<Character*> bufferKill;
     for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-        if((*itr)->getState() == CharacterState::STATE_ATTACKING){
+        if( (*itr)->getState() == CharacterState::STATE_ATTACKING && 
+            (*itr)->getAttackClock()->getElapsedTime().asMilliseconds() >= (*itr)->getAttackSpeed()){
             for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
                 /* Exclusões */
                 if(itr == itr2) continue; // auto-dano
                 if((*itr)->getType() == (*itr2)->getType()) continue; // Não ataca personagens do mesmo tipo
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 75.0) continue; // Range
-                if((*itr2)->getType() == 0) continue; // Player não morre
                 if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de costas
                 if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de costas
-
-                cout << getDistance((*itr)->getPos(), (*itr2)->getPos()) << endl;
                 
                 (*itr2)->takeDamage(*itr, (*itr)->getDamage());
 
@@ -29,7 +27,7 @@ void World::update(){
                     bufferKill.insert(*itr2);
                 }
             }
-            //if((*itr)->getType() != 2) (*itr)->setState(CharacterState::STATE_IDLE);
+            (*itr)->getAttackClock()->restart();
         }
     }
     

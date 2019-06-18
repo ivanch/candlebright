@@ -2,7 +2,7 @@
 #include "includes.hpp"
 #include "World.hpp"
 #include "Platform.hpp"
-#include "Obstacle1.hpp"
+#include "Obstacles/Obstacle1.hpp"
 #include "Enemies/Zombie.hpp"
 #include "Enemies/Sylathus.hpp"
 

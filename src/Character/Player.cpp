@@ -20,6 +20,9 @@ Player::Player(int _template){
     whipSize = 0.0;
     whipExpanding = true;
 
+    healthBar = sf::Sprite(*getTexture("sprites/Player/health.png"));
+    //healthBar.setScale(1/4, 1/4);
+
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
 
@@ -92,7 +95,8 @@ void Player::update(){
     }else if(sf::Keyboard::isKeyPressed(key_attack)){
         attack();
     }else{
-        setState(CharacterState::STATE_IDLE);
+        if(getState() != CharacterState::STATE_JUMPING)
+            setState(CharacterState::STATE_IDLE);
     }
 
     if(velocity.x > 0.001){
@@ -158,6 +162,16 @@ void Player::update(){
 void Player::draw(Engine* engine) {
     engine->draw(pSprite);
     if(whipSize > 0) engine->draw(wSprite);
+    if(health > 0){
+        int healthHearts = 25;
+        for(int i = 1; i <= 100/healthHearts; i++){
+            // 0..4
+            if(health >= i*healthHearts){
+                healthBar.setPosition(getPos().x - 45 - (15*(100/healthHearts - i)) + (20*i), getPos().y + 100);
+                engine->draw(healthBar);
+            }
+        }
+    }
 }
 
 void Player::fall(){
@@ -171,11 +185,9 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    if( attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed ||
-        currentState->getState() == CharacterState::STATE_ATTACKING ) return;
+    if( currentState->getState() == CharacterState::STATE_ATTACKING ) return;
     setState(CharacterState::STATE_ATTACKING);
     whipExpanding = true;
-    attackTimer.restart();
     spriteClock.restart();
     anim->play("attack", true);
 }

@@ -101,6 +101,7 @@ void Zombie::update(){
 void Zombie::takeDamage(Character* issuer, float damage){
     health -= damage;
     move({15,-5});
+    moveSpeed += 0.5;
     if(health <= 0){
         cout << "Morreu" << endl;
         //delete this;

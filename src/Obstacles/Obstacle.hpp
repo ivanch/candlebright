@@ -1,6 +1,6 @@
 #pragma once
-#include "includes.hpp"
-#include "Thing.hpp"
+#include "../includes.hpp"
+#include "../Thing.hpp"
 
 class Obstacle : public Thing {
     protected:

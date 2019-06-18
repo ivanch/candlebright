@@ -14,6 +14,8 @@ class Player : public Character {
         float whipSize;
         bool whipExpanding;
 
+        sf::Sprite healthBar;
+
         sf::Keyboard::Key key_right;
         sf::Keyboard::Key key_left;
         sf::Keyboard::Key key_jump;

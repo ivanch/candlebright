@@ -26,6 +26,8 @@ class Character : public Thing {
         virtual sf::Vector2f getSize() { return {getRect().width, getRect().height}; }
 
         virtual float getDamage(){ return damage; }
+        virtual float getAttackSpeed(){ return attackSpeed; }
+        virtual sf::Clock* getAttackClock(){ return &attackTimer; }
         virtual float getRange(){ return range; }
         virtual float getHealth(){ return health; }
         virtual short getType() { return type; }
