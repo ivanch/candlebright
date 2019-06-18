@@ -12,6 +12,7 @@ void Character::setState(CharacterState::State newState){
     if(currentState != nullptr){
         if(newState == currentState->getState()) return;
         if(anim->isLocked()) return;
+        cout << CharacterState::getStateName(currentState->getState()) << " para " << CharacterState::getStateName(newState) << endl;
         delete currentState;
     }
     switch (newState){

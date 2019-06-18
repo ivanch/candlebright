@@ -24,6 +24,23 @@ class CharacterState {
         virtual void attacking(Character* _char);
 
         State getState(){ return state; }
+
+        static string getStateName(State _state){
+            switch (_state){
+                case STATE_IDLE:
+                    return "Idle";
+                case STATE_WALKING:
+                    return "Walking";
+                case STATE_FALLING:
+                    return "Falling";
+                case STATE_JUMPING:
+                    return "Jumping";
+                case STATE_ATTACKING:
+                    return "Attacking";            
+                default:
+                    return "NULL";
+            }
+        }
         
     private:
         State state;

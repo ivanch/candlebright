@@ -3,7 +3,7 @@
 World_2::World_2(){
     sf::Sprite* ground2 = new sf::Sprite(*getTexture("sprites/ground2.png"));
     Platform* p;
-    p = new Platform({1525,100},{0,720}, ground2); // Chão
+    p = new Platform({1440,100},{0,720}, ground2); // Chão
     addThing(p);
     p = new Platform({100,10},{150,625}, sf::Color::Black); // Platforma Preta
     p->setMove({1000,0});
@@ -31,13 +31,13 @@ World_2::World_2(){
     sf::Texture* backgroundTexture = new sf::Texture;
     background = new sf::Sprite;
 
-    if (!backgroundTexture->loadFromFile("sprites/background2ALL.png")){
+    if (!backgroundTexture->loadFromFile("sprites/background2.png")){
         cerr << "Erro ao ler background..." << endl;
     }
 
     backgroundTexture->setSmooth(true);
     background->setTexture(*backgroundTexture);
-    background->setPosition({0,300});
+    background->setPosition({0,230});
 
     Music* background_music = new Music("songs/cemitery_theme.ogg");
     background_music->run();

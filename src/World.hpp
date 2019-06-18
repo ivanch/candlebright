@@ -9,6 +9,7 @@
 #include "List/EntityList.hpp"
 #include "List/CharacterList.hpp"
 #include "List/ThingsList.hpp"
+#include <set>
 
 class World : public Entity {
     protected:

@@ -29,16 +29,9 @@ World_1::World_1(){
     Enemy* e;
     e = new Zombie({150,650});
     addCharacter(e);
-    e = new ClothedZombie({250,550});
+    e = new Zombie({250,550});
     addCharacter(e);
-    e = new Ghost({150,550});
-    addCharacter(e);
-    e = new Ghost({300,550});
-    addCharacter(e);
-    e = new HellDemon({200,350});
-    addCharacter(e);
-    e = new HellDemon({400,600});
-    addCharacter(e);
+
 
     sf::Texture* backgroundTexture = new sf::Texture;
     background = new sf::Sprite;

@@ -1,7 +1,7 @@
 #include "Menu.hpp"
 Menu::Menu(float width, float height)
 {
-    if(!font.loadFromFile("arial.ttf"))
+    if(!font.loadFromFile("OldLondon.ttf"))
     {
         cerr<<"Erro ao ler fonte"<<endl;
     }
@@ -10,26 +10,14 @@ Menu::Menu(float width, float height)
     spriteMenu = new sf::Sprite;
     int menu_opt;
     srand(time(NULL));
-    menu_opt=rand()%5;
+    menu_opt=rand()%2;
     cout<<menu_opt;
     if(menu_opt==0){
-        if (!textureMenu->loadFromFile("sprites/menu1.png"))
+        if (!textureMenu->loadFromFile("sprites/menubg1.png"))
             cerr << "Erro ao ler background..." << endl;
     }
     else if(menu_opt==1){
-        if (!textureMenu->loadFromFile("sprites/menu2.png"))
-            cerr << "Erro ao ler background..." << endl;
-    }
-    else if(menu_opt==2){
-        if (!textureMenu->loadFromFile("sprites/menu3.png"))
-            cerr << "Erro ao ler background..." << endl;
-    }
-    else if(menu_opt==3){
-        if (!textureMenu->loadFromFile("sprites/menu4.png"))
-            cerr << "Erro ao ler background..." << endl;
-    }
-    else {
-        if (!textureMenu->loadFromFile("sprites/menu5.png"))
+        if (!textureMenu->loadFromFile("sprites/menubg2.png"))
             cerr << "Erro ao ler background..." << endl;
     }
 
@@ -50,7 +38,6 @@ Menu::Menu(float width, float height)
     currentMenu = MAIN_MENU;
 
 }
-
 Menu::~Menu()
 {
     //dtor
@@ -182,5 +169,5 @@ void Menu::addMenuItem(int _menu, string _title, bool isPrimary, sf::Font _font)
     menu_text[_menu][index].setFont(font);
     menu_text[_menu][index].setFillColor(isPrimary ? sf::Color::Red : sf::Color::White);
     menu_text[_menu][index].setString(_title);
-    menu_text[_menu][index].setPosition(sf::Vector2f(600/2 -50, 100 * (index+1)));
+    menu_text[_menu][index].setPosition(sf::Vector2f(600/2 -35, 75 * (index+1)));
 }

@@ -99,6 +99,6 @@ void Sylathus::attack(){
     attackTimer.restart();
 
     bSprite.setPosition(sSprite.getPosition().x-50, sSprite.getPosition().y+75);
-    
+
     cout << "Sylathus atacou!" << endl;
 }
