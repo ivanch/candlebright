@@ -10,6 +10,13 @@
 #include "List/CharacterList.hpp"
 #include "List/ThingsList.hpp"
 #include "List/ObstacleList.hpp"
+#include "Character/Player.hpp"
+#include "Enemies/Zombie.hpp"
+#include "Enemies/Ghost.hpp"
+#include "Enemies/HellDemon.hpp"
+#include "Enemies/ClothedZombie.hpp"
+#include "Enemies/Sylathus.hpp"
+#include <fstream>
 
 class World : public Entity {
     protected:
@@ -31,6 +38,8 @@ class World : public Entity {
         void draw(Engine* engine);
         void drawAll(Engine* engine);
         void gravity();
+
+        void loadEnemies(int act_world);
 
         void addEntity(Entity* _e) { entities.add(_e); }
         void addThing(Thing* _thing) { things.add(_thing); addEntity(static_cast<Entity*>(_thing)); }

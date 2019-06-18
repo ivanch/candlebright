@@ -31,13 +31,20 @@ class Character : public Thing, public Animatable {
         virtual sf::Clock* getAttackClock(){ return &attackTimer; }
         virtual float getRange(){ return range; }
         virtual float getHealth(){ return health; }
+
+        /*  0 = Player
+            1 = Enemy */
         virtual short getType() { return type; }
+        virtual short getSubType(){ return 0; };
 
         virtual void setState(CharacterState::State _state);
         virtual CharacterState::State getState(){ return currentState->getState(); }
 
         virtual void setFacing(Facing _facing) { facing = _facing; }
         virtual short getFacing() { return facing; }
+
+        virtual void setPos(sf::Vector2f _pos) = 0;
+        virtual void setHealth(float _health){ health = _health; }
 
     protected:
         sf::Vector2f velocity;
@@ -57,8 +64,5 @@ class Character : public Thing, public Animatable {
         sf::Clock attackTimer;
         float attackSpeed; // Intervalo entre os ataques em milissegundos
 
-        /*  0 = Player
-            1 = Enemy
-            2 = Boss */
         short type;
 };

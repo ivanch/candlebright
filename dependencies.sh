@@ -5,6 +5,7 @@
 [ ! -d ./obj/Enemies ] && mkdir obj/Enemies
 [ ! -d ./obj/Character ] && mkdir obj/Character
 [ ! -d ./obj/Obstacles ] && mkdir obj/Obstacles
+[ ! -d ./Save ] && mkdir Save
 
 if [ ! -d sfml ]
 then

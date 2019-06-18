@@ -11,8 +11,8 @@ class Game {
         Engine engine;
         sf::RenderWindow* window;
 
-        Player player1;
-        Player player2;
+        Player* player1;
+        Player* player2;
         World* world;
         sf::View view;
 
@@ -37,6 +37,7 @@ class Game {
         void setView(sf::View _view){ this->view=_view; }
 
         void saveGame();
+        void loadPlayers();
 
         void draw(sf::RenderWindow& window);
 };

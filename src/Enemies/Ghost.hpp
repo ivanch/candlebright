@@ -19,4 +19,6 @@ class Ghost : public Enemy {
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void death(){}
+
+        virtual short getSubType(){ return 3; }
 };

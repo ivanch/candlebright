@@ -5,8 +5,9 @@ World::~World(){}
 
 void World::update(){
     col_mngr.checkCollisions(&things);
-    for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
-        itr->getData()->update();
+    //for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
+    for(auto itr = entities.begin(); itr != entities.end(); ++itr){
+        (*itr)->update();
     }
 
     set<Character*> bufferKill;
@@ -75,8 +76,11 @@ void World::update(){
 
 void World::drawAll(Engine* engine){
     draw(engine);
-    for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
+    /*for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
         itr->getData()->draw(engine);
+    }*/
+    for(auto itr = entities.begin(); itr != entities.end(); ++itr){
+        (*itr)->draw(engine);
     }
 }
 
@@ -95,4 +99,71 @@ void World::gravity(){
 
 float World::getDistance(sf::Vector2f p1, sf::Vector2f p2){
     return sqrt(pow(p1.x-p2.x,2.0) + pow(p1.y-p2.y,2.0));
+}
+
+void World::loadEnemies(int act_world){
+    /* Remove todos os Characters */
+    while(!characters.characters.empty()){
+        entities.remove(*characters.begin());
+        things.remove(*characters.begin());
+        characters.remove(*characters.begin());
+    }
+
+    /* Carrega os Inimigos */
+    string line;
+    ifstream file("Save/GameSave.txt");
+    Enemy* enemy;
+    if(file.is_open())
+    {
+        getline(file,line);
+        if(act_world != std::stoi(line))
+        {
+            cerr << "Mundo não condizente com o jogo já salvo." << endl;
+            return;
+        }
+        while (getline(file,line))
+        {
+            int type = std::stoi(line.substr(0, line.find(',') + 1));
+            if(type != 1) continue;
+
+            line = line.substr(line.find(',') + 1, line.size());
+            int subtype = std::stoi(line.substr(0, line.find(',') + 1));
+
+            line = line.substr(line.find(',') + 1, line.size());
+            float health = std::stoi(line.substr(0, line.find(',') + 1));
+
+            line = line.substr(line.find(',') + 1, line.size());
+            float px = std::stof(line.substr(0, line.find(',') + 1));
+            line = line.substr(line.find(',') + 1, line.size());
+            float py = std::stof(line);
+
+            if(type == 1) // Inimigo
+            {
+                if(subtype == 1)
+                {
+                    enemy = new Zombie();
+                }
+                else if(subtype == 2)
+                {
+                    enemy = new ClothedZombie();
+                }
+                else if(subtype == 3)
+                {
+                    enemy = new Ghost();
+                }
+                else if(subtype == 4)
+                {
+                    enemy = new HellDemon();
+                }
+                else if(subtype == 5)
+                {
+                    enemy = new Sylathus();
+                }
+            }
+            enemy->setPos({px,py});
+            enemy->setHealth(health);
+            addCharacter(enemy);
+        }
+        file.close();
+    }
 }

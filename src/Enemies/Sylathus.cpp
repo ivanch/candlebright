@@ -12,7 +12,7 @@ Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, {160,96}){
 
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
-    type = 2;
+    type = 1;
     attackChance = 0.1 / 60; // 10%
     damage = 1;
     attackSpeed = 50;
