@@ -1,8 +1,10 @@
-#include "includes.hpp"
+#pragma once
+
+#include "../includes.hpp"
 #include "Entity.hpp"
-#include "World1.hpp"
-#include "World2.hpp"
-#include "Character/Player.hpp"
+#include "../Phases/City.hpp"
+#include "../Phases/Cemitery.hpp"
+#include "../Character/Player.hpp"
 #include "Engine.hpp"
 #include "Menu.hpp"
 #include <fstream>
@@ -13,7 +15,7 @@ class Game {
 
         Player* player1;
         Player* player2;
-        World* world;
+        Phase* world;
         sf::View view;
 
         int act_world;
@@ -25,6 +27,8 @@ class Game {
 
         sf::Clock timer;
 
+        sf::Clock spawnTimer;
+        int spawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
 
     public:
         Game();

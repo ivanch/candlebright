@@ -1,6 +1,6 @@
-#include "World2.hpp"
+#include "Cemitery.hpp"
 
-World_2::World_2(){
+Cemitery::Cemitery(){
     sf::Sprite* ground2 = new sf::Sprite(*getTexture("sprites/ground2.png"));
     Platform* p;
     p = new Platform({1440,100},{0,720}, ground2); // Chão
@@ -42,4 +42,4 @@ World_2::World_2(){
     Music* background_music = new Music("songs/cemitery_theme.ogg");
     background_music->run();
 }
-World_2::~World_2(){}
+Cemitery::~Cemitery(){}

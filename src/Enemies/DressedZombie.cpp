@@ -1,6 +1,6 @@
-#include "ClothedZombie.hpp"
+#include "DressedZombie.hpp"
 
-ClothedZombie::ClothedZombie(sf::Vector2f pos){
+Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 1.5;
@@ -21,45 +21,49 @@ ClothedZombie::ClothedZombie(sf::Vector2f pos){
     anim = new AnimManager(&eSprite, {20,50});
     anim->addSheet("walk", "sprites/Clothed-Zombie/new-clothed-zombie-walking.png");
 }
-ClothedZombie::~ClothedZombie(){}
+Dressed_Zombie::~Dressed_Zombie(){}
 
-void ClothedZombie::move(sf::Vector2f vec){
+void Dressed_Zombie::move(sf::Vector2f vec){
     eSprite.move(vec);
 }
 
-void ClothedZombie::setPos(sf::Vector2f newPos) {
+void Dressed_Zombie::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f ClothedZombie::getPos(){
+sf::Vector2f Dressed_Zombie::getPos(){
     return eSprite.getPosition();
 }
 
-void ClothedZombie::draw(Engine* engine) {
+void Dressed_Zombie::draw(Engine* engine) {
     engine->draw(eSprite);
 }
 
-sf::FloatRect ClothedZombie::getRect(){
+sf::FloatRect Dressed_Zombie::getRect(){
     return eSprite.getGlobalBounds();
 }
-void ClothedZombie::fall(){
+void Dressed_Zombie::fall(){
     if(currentState->getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
 
-void ClothedZombie::moveRight(){
+void Dressed_Zombie::moveRight(){
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
 }
 
-void ClothedZombie::moveLeft(){
+void Dressed_Zombie::moveLeft(){
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
 }
 
-void ClothedZombie::update(){
+void Dressed_Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
+    
+    if( getState() == CharacterState::STATE_FALLING && collidingDown ){
+        setState(CharacterState::STATE_IDLE);
+    }
     
     if(facing == Facing::FACING_LEFT){
         if(!collidingLeft)
@@ -96,7 +100,7 @@ void ClothedZombie::update(){
     }
 }
 
-void ClothedZombie::takeDamage(Thing* _issuer, float _damage){
+void Dressed_Zombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
     moveSpeed -= moveSpeed * 0.05;
@@ -106,6 +110,6 @@ void ClothedZombie::takeDamage(Thing* _issuer, float _damage){
     }
 }
 
-void ClothedZombie::attack(){
+void Dressed_Zombie::attack(){
     /* Outro bichão que não ataca */
 }

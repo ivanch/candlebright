@@ -14,7 +14,7 @@
 |---|---|---|
 | Apresentar menu de opções aos usuários do Jogo | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe Menu e seu respectivo objeto. |
 | Permitir um ou dois jogadores aos usuários do Jogo, sendo que no último caso seria para que os dois joguem de maneira concomitante. | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe Jogador, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
-| Disponibilizar ao menos duas fases que podem ser jogadas sequencialmente ou selecionadas. | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *World_1* e *World_2*, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
+| Disponibilizar ao menos duas fases que podem ser jogadas sequencialmente ou selecionadas. | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *City* e *Cemitery*, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
 | Ter três tipos distintos de inimigos (o que pode incluir Chefão, vide abaixo). | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Clothed_Zombie*, *Ghost*, *Hell_Demon*, *Sylathus* e *Zombie*, os quais são instanciados através das classes de fase |
 | Ter a cada fase ao menos dois tipos de inimigos com número aleatório de instâncias, podendo ser  várias instâncias e sendo pelo menos 5 instâncias por tipo. | A fazer | --- |
 | Ter inimigo Chefão na última fase | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Sylathus*, instanciada em *Cemitery* (segunda fase). |
@@ -22,8 +22,8 @@
 | Ter em cada fase ao menos dois tipos de obstáculos com número aleatório de instâncias (i.e., objetos) sendo pelo menos 5 instâncias por tipo. | Requisito previsto inicialmente e realizado. | --- |
 | Ter representação gráfica de cada instância | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe abstrata *Entity*, que possui um método virtual puro chamado *draw*, responsável por desenhar a entidade na tela |
 | Ter em cada fase um cenário de jogo com os obstáculos. | Requisito previsto inicialmente e realizado. | --- |
-| Gerenciar colisões entre jogador e inimigos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *CollisionManager* e *World*. |
-| Gerenciar colisões entre jogador e obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *CollisionManager* e *World*. |
+| Gerenciar colisões entre jogador e inimigos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *CollisionManager* e *Phase*. |
+| Gerenciar colisões entre jogador e obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *CollisionManager* e *Phase*. |
 | Permitir cadastrar/salvar dados do usuário, manter pontuação durante jogo, salvar pontuação e gerar lista de pontuação (ranking). | A fazer | --- |
 | Permitir pausar o jogo | Requisito previsto inicialmente e realizado. | Requisito cumprido via função *update* dentro da classe *Game* |
 | Permitir salvar jogada | A fazer | --- |

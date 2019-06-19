@@ -1,6 +1,6 @@
-#include "World1.hpp"
+#include "City.hpp"
 
-World_1::World_1(){
+City::City(){
     Platform* p;
     p = new Platform({1510,80},{0,733}, new sf::Sprite (*getTexture("sprites/ground.png"))); // Chão
     addThing(p);
@@ -33,15 +33,15 @@ World_1::World_1(){
     Enemy* e;
     e = new Zombie({150,650});
     addCharacter(e);
-    e = new ClothedZombie({250,550});
+    e = new Dressed_Zombie({250,550});
     addCharacter(e);
     e = new Ghost({50,550});
     addCharacter(e);
     e = new Ghost({300,550});
     addCharacter(e);
-    e = new HellDemon({200,350});
+    e = new Hell_Demon({200,350});
     addCharacter(e);
-    e = new HellDemon({400,600});
+    e = new Hell_Demon({400,600});
 
 
     sf::Texture* backgroundTexture = new sf::Texture;
@@ -58,4 +58,4 @@ World_1::World_1(){
     Music* background_music = new Music("songs/city_theme.ogg");
     background_music->run();
 }
-World_1::~World_1(){}
+City::~City(){}

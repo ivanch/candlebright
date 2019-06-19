@@ -1,5 +1,5 @@
 #pragma once
-#include "includes.hpp"
+#include "../includes.hpp"
 #include "Entity.hpp"
 #include <time.h>
 #define MAIN_MENU       0
@@ -24,7 +24,7 @@ class Menu : public Entity
         void update(Engine* engine);
         bool isEnabled(){ return enabled; }
 
-        const int getSelectedWorld() const { return world; }
+        const int getSelectedPhase() const { return world; }
         const int getSelectedPlayers() const { return players; }
 
     protected:

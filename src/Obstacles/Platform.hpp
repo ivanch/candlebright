@@ -1,9 +1,9 @@
 #pragma once
-#include "includes.hpp"
-#include "Thing.hpp"
-#include "Engine.hpp"
+#include "../includes.hpp"
+#include "Obstacle.hpp"
+#include "../System/Engine.hpp"
 
-class Platform : public Thing {
+class Platform : public Obstacle {
     private:
         sf::RectangleShape rect;
         sf::Color color;
@@ -30,5 +30,7 @@ class Platform : public Thing {
         virtual sf::FloatRect getRect();
         virtual void draw(Engine* engine);
         virtual void update();
+
+        virtual float getDamage(){ return 0; }
 
 };

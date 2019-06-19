@@ -1,6 +1,6 @@
 #pragma once
 #include "includes.hpp"
-#include "Entity.hpp"
+#include "System/Entity.hpp"
 
 class Thing : public Entity {
     protected:

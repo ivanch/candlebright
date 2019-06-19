@@ -1,6 +1,6 @@
 #pragma once
-#include "includes.hpp"
-#include "List/ThingsList.hpp"
+#include "../includes.hpp"
+#include "../List/ThingsList.hpp"
 
 #define LIMIT   10 /* Limite no eixo X ao qual "pode passar" */
 class CollisionManager {

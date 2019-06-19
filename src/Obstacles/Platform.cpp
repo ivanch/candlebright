@@ -10,6 +10,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
     sprite = NULL;
     texture = NULL;
     moving = false;
+    type = 0;
 }
 Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     originalPos(pos){
@@ -21,6 +22,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     sprite = NULL;
     moving = false;
     texture = _tex;
+    type = 0;
 }
 Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
     originalPos(pos){
@@ -29,6 +31,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
     sprite->setScale(size.x/_spr->getLocalBounds().width, size.y/_spr->getLocalBounds().height);
     texture = NULL;
     moving = false;
+    type = 0;
 }
 Platform::~Platform(){}
 

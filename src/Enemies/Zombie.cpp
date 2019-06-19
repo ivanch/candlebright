@@ -60,6 +60,10 @@ void Zombie::moveLeft(){
 
 void Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
+
+    if( getState() == CharacterState::STATE_FALLING && collidingDown ){
+        setState(CharacterState::STATE_IDLE);
+    }
     
     if(facing == Facing::FACING_LEFT){
         if(!collidingLeft)

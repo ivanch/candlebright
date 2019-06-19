@@ -44,7 +44,7 @@ sf::FloatRect Ghost::getRect(){
     return eSprite.getGlobalBounds();
 }
 void Ghost::fall(){
-    // Ghost não cai cai balão
+    move({0, 0.05});
 }
 
 void Ghost::moveRight(){

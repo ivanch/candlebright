@@ -1,9 +1,9 @@
-#include "World.hpp"
+#include "Phase.hpp"
 
-World::World(){}
-World::~World(){}
+Phase::Phase(){}
+Phase::~Phase(){}
 
-void World::update(){
+void Phase::update(){
     col_mngr.checkCollisions(&things);
     //for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
     for(auto itr = entities.begin(); itr != entities.end(); ++itr){
@@ -36,7 +36,7 @@ void World::update(){
         for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
             if((*itr2)->getType() != 0) continue; // Só afeta players
 
-            if((*itr)->getType() == 1){ // Fogo
+            if((*itr)->getType() == 2){ // Fogo
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 50.0) continue; // Range
 
                 (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
@@ -44,7 +44,7 @@ void World::update(){
                 if((*itr2)->getHealth() <= 0){
                     bufferKill.insert(*itr2);
                 }
-            }else if((*itr)->getType() == 2){ // Black Hole
+            }else if((*itr)->getType() == 3){ // Black Hole
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 200.0) continue; // Range
 
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < 50.0){
@@ -74,7 +74,7 @@ void World::update(){
     }
 }
 
-void World::drawAll(Engine* engine){
+void Phase::drawAll(Engine* engine){
     draw(engine);
     /*for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
         itr->getData()->draw(engine);
@@ -84,11 +84,11 @@ void World::drawAll(Engine* engine){
     }
 }
 
-void World::draw(Engine* engine){
+void Phase::draw(Engine* engine){
     engine->draw(*background);
 }
 
-void World::gravity(){
+void Phase::gravity(){
     for(auto itr = things.begin(); itr != things.end(); ++itr){
         Thing* obj1 = *itr;
         if(!obj1->isCollidingDown()){
@@ -97,11 +97,11 @@ void World::gravity(){
     }
 }
 
-float World::getDistance(sf::Vector2f p1, sf::Vector2f p2){
+float Phase::getDistance(sf::Vector2f p1, sf::Vector2f p2){
     return sqrt(pow(p1.x-p2.x,2.0) + pow(p1.y-p2.y,2.0));
 }
 
-void World::loadEnemies(int act_world){
+void Phase::loadEnemies(int act_world){
     /* Remove todos os Characters */
     while(!characters.characters.empty()){
         entities.remove(*characters.begin());
@@ -145,7 +145,7 @@ void World::loadEnemies(int act_world){
                 }
                 else if(subtype == 2)
                 {
-                    enemy = new ClothedZombie({px,py});
+                    enemy = new Dressed_Zombie({px,py});
                 }
                 else if(subtype == 3)
                 {
@@ -153,7 +153,7 @@ void World::loadEnemies(int act_world){
                 }
                 else if(subtype == 4)
                 {
-                    enemy = new HellDemon({px,py});
+                    enemy = new Hell_Demon({px,py});
                 }
                 else if(subtype == 5)
                 {
@@ -165,4 +165,68 @@ void World::loadEnemies(int act_world){
         }
         file.close();
     }
+}
+
+sf::Vector2f Phase::getRandomPosition(const sf::View& view){
+    sf::Vector2f pos = {0,0};
+
+    float   left    = view.getCenter().x - view.getSize().x/2,
+            right   = view.getCenter().x + view.getSize().x/2;
+
+    float   top     = view.getCenter().y - view.getSize().y/2,
+            bottom  = view.getCenter().y + view.getSize().y/2;
+
+    float   random_x,
+            random_y;
+
+    int     tries = 0;
+
+    while(tries < 1000){
+        tries++;
+
+        random_x = left + static_cast <float> (rand()) / ( static_cast <float> ( RAND_MAX/(right-left) ));
+        random_y = top  + static_cast <float> (rand()) / ( static_cast <float> ( RAND_MAX/(bottom-top) ));
+
+        pos = {random_x, random_y};
+
+        /* Determina melhor Y */
+        bool _best_y_success = false;
+        float _best_distance = -1.0;
+        float _best_y = 0.0;
+        for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
+            if((*itr)->getType() != 0) continue; // Spawn apenas em cima de plataformas
+            if((*itr)->getRect().left > random_x && (*itr)->getRect().left+(*itr)->getRect().width < random_x) continue; // random_x fora das bordas da Plataforma
+            float _dist = getDistance(pos,(*itr)->getPos());
+            if(_dist < _best_distance || _best_distance == -1.0){
+                _best_y = (*itr)->getRect().top+5.0;
+                _best_distance = _dist;
+            }
+            _best_y_success = true;
+        }
+        if(!_best_y_success) continue;
+        /* Melhor Y determinado */
+
+        pos = {random_x, _best_y};
+
+        /* Testa posição de Personagens */
+        bool _char_test_success = true;
+        for(auto itr = characters.begin(); itr != characters.end(); ++itr){
+            if(getDistance(pos,(*itr)->getPos()) < 25.0){
+                _char_test_success = false;
+                break;
+            }
+        }
+        if(!_char_test_success) continue;
+        /* Passou pelo teste de Personagens */
+
+        break;
+    }
+
+    if(tries == 1000){
+        cerr << "Erro ao tentar achar alguma posição aleatória dentro do mapa" << endl;
+        return {0,0};
+    }
+
+    cout << pos.y << endl;
+    return pos;
 }

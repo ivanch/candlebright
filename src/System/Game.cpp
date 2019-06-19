@@ -8,6 +8,8 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
 
     player1 = new Player(1);
     player2 = new Player(2);
+
+    spawnDelay = 5; // Spawna um inimigo na tela a cada 15 segundos
 }
 Game::~Game(){}
 
@@ -18,11 +20,11 @@ void Game::run(){
         menu.draw(&engine);
         engine.render();
     }
-    if(menu.getSelectedWorld() == 1){
-        world = new World_1;
+    if(menu.getSelectedPhase() == 1){
+        world = new City;
         act_world = 1;
-    }else if(menu.getSelectedWorld() == 2){
-        world = new World_2;
+    }else if(menu.getSelectedPhase() == 2){
+        world = new Cemitery;
         act_world = 2;
     }
 
@@ -91,14 +93,6 @@ void Game::loadPlayers(){
     }
 }
 void Game::update(){
-    sf::IntRect gordolaRect(0,0,40,47);
-    sf::Clock gordolaClock;
-    sf::Texture gordolaTexture;
-    gordolaTexture.loadFromFile("sprites/GordolaSheet.png");
-
-    sf::Sprite gordola(gordolaTexture, gordolaRect);
-    gordola.setPosition({280,670});
-
     while (engine.isWindowOpen()){
         engine.clearWindow();
         if(menu.isEnabled()){
@@ -109,6 +103,7 @@ void Game::update(){
                 cerr << "Mundo não inicializado" << endl;
                 return;
             }
+            /* Movimentação do View */
             if(player1->getPos().x >= (view.getCenter().x+view.getSize().x/2)-50 && player2->getPos().x <= (view.getCenter().x-view.getSize().x/2)+50)
                 player1->setCollidingRight(true);
             else if(player1->getPos().x <= (view.getCenter().x-view.getSize().x/2)+50  && player2->getPos().x >= (view.getCenter().x+view.getSize().x/2)-50)
@@ -118,16 +113,43 @@ void Game::update(){
             if(player1->getPos().x - (view.getCenter().x+((view.getSize().x)/2))  < -550)
                 view.move({-1.5,0});
             engine.getWindow()->setView(view);
-            world->gravity();
+
+            /* Pausa o jogo */
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::P) && timer.getElapsedTime().asSeconds() > 0.2)
             {
                 game_paused = !game_paused;
                 timer.restart();
             }
-            if(!game_paused)
-                world->update(); // Atualiza as entidades do mundo
-            world->drawAll(&engine); // Desenha todas entidades do mundo
 
+            if(!game_paused){
+                /* Atualizações no mundo */
+                world->gravity();
+                world->update(); // Atualiza as entidades do mundo
+                world->drawAll(&engine); // Desenha todas entidades do mundo
+
+                /* Spawn aleatório */
+                if(spawnTimer.getElapsedTime().asSeconds() >= spawnDelay){
+                    Enemy* e;
+                    int r = rand()%4;
+                    sf::Vector2f pos = world->getRandomPosition(view);
+
+                    if(r == 0){ // Zombie
+                        e = new Zombie(pos);
+                    }else if(r == 1){ // Clothed Zombie
+                        e = new Dressed_Zombie(pos);
+                    }else if(r == 2){ // Ghost
+                        e = new Ghost(pos);
+                    }else if(r == 3){ // Hell Demon
+                        e = new Hell_Demon(pos);
+                    }
+
+                    world->addCharacter(e);
+
+                    spawnTimer.restart();
+                }
+            }
+
+            /* Botão pra carregar e salvar */
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::F5)&& timer.getElapsedTime().asSeconds() > 1)
             {
                 saveGame();

@@ -1,24 +1,24 @@
 #pragma once
-#include "includes.hpp"
-#include "Engine.hpp"
-#include "Entity.hpp"
-#include "Thing.hpp"
-#include "Music.hpp"
+#include "../includes.hpp"
+#include "../System/Engine.hpp"
+#include "../System/Entity.hpp"
+#include "../Thing.hpp"
+#include "../System/Music.hpp"
 #include "CollisionManager.hpp"
-#include "List/LinkedList.hpp"
-#include "List/EntityList.hpp"
-#include "List/CharacterList.hpp"
-#include "List/ThingsList.hpp"
-#include "List/ObstacleList.hpp"
-#include "Character/Player.hpp"
-#include "Enemies/Zombie.hpp"
-#include "Enemies/Ghost.hpp"
-#include "Enemies/HellDemon.hpp"
-#include "Enemies/ClothedZombie.hpp"
-#include "Enemies/Sylathus.hpp"
+#include "../List/LinkedList.hpp"
+#include "../List/EntityList.hpp"
+#include "../List/CharacterList.hpp"
+#include "../List/ThingsList.hpp"
+#include "../List/ObstacleList.hpp"
+#include "../Character/Player.hpp"
+#include "../Enemies/Zombie.hpp"
+#include "../Enemies/Ghost.hpp"
+#include "../Enemies/HellDemon.hpp"
+#include "../Enemies/DressedZombie.hpp"
+#include "../Enemies/Sylathus.hpp"
 #include <fstream>
 
-class World : public Entity {
+class Phase : public Entity {
     protected:
         sf::Sprite* background;
         EntityList entities;
@@ -30,8 +30,8 @@ class World : public Entity {
         float getDistance(sf::Vector2f p1, sf::Vector2f p2);
 
     public:
-        World();
-        ~World();
+        Phase();
+        ~Phase();
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
         void update(); // Atualizar a lista de entidades dentro do mundo
@@ -47,4 +47,6 @@ class World : public Entity {
         void addObstacle(Obstacle* _obs){ obstacles.add(_obs); addThing(static_cast<Thing*>(_obs)); }
 
         CharacterList* getCharList(){ return &characters;}
+
+        sf::Vector2f getRandomPosition(const sf::View& view);
 };

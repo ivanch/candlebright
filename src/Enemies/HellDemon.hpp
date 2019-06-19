@@ -2,10 +2,10 @@
 #include "../includes.hpp"
 #include "Enemy.hpp"
 
-class HellDemon : public Enemy {    
+class Hell_Demon : public Enemy {    
     public:
-        HellDemon(sf::Vector2f pos = {0,0});
-        ~HellDemon();
+        Hell_Demon(sf::Vector2f pos = {0,0});
+        ~Hell_Demon();
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();

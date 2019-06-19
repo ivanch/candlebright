@@ -192,7 +192,7 @@ void Player::attack(){
     anim->play("attack", true);
 }
 
-sf::Vector2f Player::getPos(){
+sf::Vector2f Player::getPos() {
     return pSprite.getPosition();
 }
 

@@ -19,6 +19,12 @@ class Obstacle : public Thing {
 
         virtual float getDamage() = 0;
         virtual float getAttackRate(){ return attackRate; }
+        
+        /*  0 = Platform
+            1 = Wall
+            2 = Fire
+            3 = Black Hole
+        */
         short getType(){ return type; }
         virtual sf::Clock* getAttackClock(){ return &attackClock; }
 

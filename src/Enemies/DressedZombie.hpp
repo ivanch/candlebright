@@ -2,10 +2,10 @@
 #include "../includes.hpp"
 #include "Enemy.hpp"
 
-class ClothedZombie : public Enemy {    
+class Dressed_Zombie : public Enemy {    
     public:
-        ClothedZombie(sf::Vector2f pos = {0,0});
-        ~ClothedZombie();
+        Dressed_Zombie(sf::Vector2f pos = {0,0});
+        ~Dressed_Zombie();
         void setPos(sf::Vector2f newPos);
         void moveRight();
         void moveLeft();
