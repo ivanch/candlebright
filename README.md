@@ -1,32 +1,32 @@
 # Joguinho!
 
 ## A fazer
-* [x] Efetivar ataque dos inimigos
-* [ ] Persistência de objetos (salvar e carregar jogo)
+* [x] Persistência de objetos (salvar e carregar jogo)
 * [ ] Persistência de objetos (salvar e carregar ranking)
 * [x] Mostrar vida na tela (parcial)
-* [x] Obstáculos
+* [ ] Criar o mapa 1 (cidade)
+* [ ] Criar o mapa 2 (cemitério)
 
 
 ## Requisitos do jogo
 
 | Conceito | Situação | Implementação |
 |---|---|---|
-| Apresentar menu de opções aos usuários do Jogo | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe Menu e seu respectivo objeto. |
-| Permitir um ou dois jogadores aos usuários do Jogo, sendo que no último caso seria para que os dois joguem de maneira concomitante. | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe Jogador, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
-| Disponibilizar ao menos duas fases que podem ser jogadas sequencialmente ou selecionadas. | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *World_1* e *World_2*, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
-| Ter três tipos distintos de inimigos (o que pode incluir Chefão, vide abaixo). | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Clothed_Zombie*, *Ghost*, *Hell_Demon*, *Sylathus* e *Zombie*, os quais são instanciados através das classes de fase |
-| Ter a cada fase ao menos dois tipos de inimigos com número aleatório de instâncias, podendo ser  várias instâncias e sendo pelo menos 5 instâncias por tipo. | A fazer | --- |
+| Apresentar menu de opções aos usuários do Jogo | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Menu* e seu respectivo objeto. |
+| Permitir um ou dois jogadores aos usuários do Jogo, sendo que no último caso seria para que os dois joguem de maneira concomitante. | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Jogador*, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
+| Disponibilizar ao menos duas fases que podem ser jogadas sequencialmente ou selecionadas. | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *City* e *Cemitery*, cujos objetos são agregados em `Game`, podendo ser um ou dois efetivamente. |
+| Ter três tipos distintos de inimigos (o que pode incluir Chefão, vide abaixo). | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *Clothed_Zombie*, *Ghost*, *Hell_Demon*, *Sylathus* e *Zombie*, com seus respectivos objetos sendo instanciados em `Game` e em cada Fase. |
+| Ter a cada fase ao menos dois tipos de inimigos com número aleatório de instâncias, podendo ser  várias instâncias e sendo pelo menos 5 instâncias por tipo. | Requisito previsto inicialmente e realizado. | Requisito cumprido através das construtoras de *City* e *Cemitery*, que instanciam os inimigos apenas uma vez. As intancias aleatórias foram feitas através da função *update* dentro da classe *Game*. |
 | Ter inimigo Chefão na última fase | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Sylathus*, instanciada em *Cemitery* (segunda fase). |
-| Ter três tipos de obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Black_Hole*, *Fire* e *Wall*. |
-| Ter em cada fase ao menos dois tipos de obstáculos com número aleatório de instâncias (i.e., objetos) sendo pelo menos 5 instâncias por tipo. | Requisito previsto inicialmente e realizado. | --- |
+| Ter três tipos de obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *Black_Hole*, *Fire* e *Wall*. |
+| Ter em cada fase ao menos dois tipos de obstáculos com número aleatório de instâncias (i.e., objetos) sendo pelo menos 5 instâncias por tipo. | A fazer. | --- |
 | Ter representação gráfica de cada instância | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe abstrata *Entity*, que possui um método virtual puro chamado *draw*, responsável por desenhar a entidade na tela |
-| Ter em cada fase um cenário de jogo com os obstáculos. | Requisito previsto inicialmente e realizado. | --- |
-| Gerenciar colisões entre jogador e inimigos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *CollisionManager* e *World*. |
-| Gerenciar colisões entre jogador e obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *CollisionManager* e *World*. |
+| Ter em cada fase um cenário de jogo com os obstáculos. | Requisito previsto inicialmente e realizado. | Requisito cumprido através da criação de obstáculos dentro da construtora das classes *City* e *Cemitery*. |
+| Gerenciar colisões entre jogador e inimigos | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *CollisionManager* e *Phase*. |
+| Gerenciar colisões entre jogador e obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *CollisionManager* e *Phase*. |
 | Permitir cadastrar/salvar dados do usuário, manter pontuação durante jogo, salvar pontuação e gerar lista de pontuação (ranking). | A fazer | --- |
-| Permitir pausar o jogo | Requisito previsto inicialmente e realizado. | Requisito cumprido via função *update* dentro da classe *Game* |
-| Permitir salvar jogada | A fazer | --- |
+| Permitir pausar o jogo | Requisito previsto inicialmente e realizado. | Requisito cumprido via função *update* dentro da classe *Game*. |
+| Permitir salvar jogada | Requisito previsto inicialmente e realizado. | Requisito cumprido através da função *saveGame* dentro da classe *Game*. |
 
 ## Conceitos elementares
 
@@ -45,18 +45,18 @@
 | Conceito | Uso | Onde |
 |---|---|---|
 | Associação direcional | Sim | --- |
-| Associação bidirecional | Não | --- |
+| Associação bidirecional | Sim | `Character.hpp` e `CharacterState.hpp` |
 | Agregação via associação | ? | --- |
 | Agregação propriamente dita | ? | --- |
 | Herança elementar | Sim | --- |
 | Herança em diversos níveis | Sim | --- |
-| Herança múltipla | Sim | *Animatable* e *Character* |
+| Herança múltipla | Sim | `Character.hpp` |
 
 ## Conceitos ponteiros, generalizações e exceções
 
 | Conceito | Uso | Onde |
 |---|---|---|
-| Operador `this` | Sim | --- |
+| Operador `this` | Sim | `LinkedList.hpp` |
 | Alocação de memória `new` & `delete` | Sim | `LinkedList.hpp` |
 | *Templates* | Sim | `LinkedList.hpp` |
 | Uso de tratamento de exceções | Sim | `AnimManager.hpp/cpp` |
@@ -65,23 +65,23 @@
 
 | Conceito | Uso | Onde |
 |---|---|---|
-| Construtoras e métodos | Sim | --- |
+| Construtoras e métodos | Sim | `Platform.hpp` |
 | Operadores (2 tipos ao menos) | A fazer | `LinkedList.hpp` |
 
 ## Conceitos de sobrecarga de persistência de objetos
  
 | Conceito | Uso | Onde |
 |---|---|---|
-| Persistência de objetos | A fazer | --- |
-| Persistência de relacionamento de objetos | A fazer | --- |
+| Persistência de objetos | Sim | `Game.cpp` |
+| Persistência de relacionamento de objetos | Não | --- |
 
 ## Conceitos de virtualidade
 
 | Conceito | Uso | Onde |
 |---|---|---|
-| Métodos virtuais | Sim | --- |
+| Métodos virtuais | Sim | `Character.hpp` |
 | Polimorfismo | Sim | --- |
-| Métodos virtuais puros | Sim | --- |
+| Métodos virtuais puros | Sim | `Entity.hpp` |
 | Coesão e desacoplamento | Supostamente | --- |
 
 ## Conceitos de operadores estáticos
@@ -91,7 +91,7 @@
 | *Namespace* criada pelos autores | A fazer (?) | --- |
 | Classes aninhadas | Sim | `LinkedList.hpp` |
 | Atributos estáticos e métodos estáticos | A fazer | --- |
-| Uso extensivo de constante parâmetro, retorno, método | A fazer | --- |
+| Uso extensivo de constante em parâmetro, retorno, método | A fazer | --- |
 
 ## Conceitos de STL e String OO
 
@@ -116,7 +116,6 @@
 | *RAD - Rapid Application Development* (formulários, botões, etc) | Não | --- |
 
 ## Conceitos de biblioteca gráfica/visual com interdisciplinaridades por meio da utilização de conceitos de matemática e/ou física.
-## Conceitos de biblioteca gráfica/visual
 | Conceito | Uso | Onde |
 |---|---|---|
 | Ensino médio | ? | --- |
@@ -127,7 +126,7 @@
 |---|---|---|
 | Compreensão, melhoria e rastreabilidade de cumprimento de requisitos | Sim | --- |
 | Diagrama de classes em UML | Sim | --- |
-| Uso efetivo de padrões de projeto | Sim | CharacterState |
+| Uso efetivo de padrões de projeto | Sim | `CharacterState.hpp/cpp` |
 | Testes a luz da tabela de requisitos e do diagrama de classes | ? | --- |
 
 ## Conceitos de engenharia de software
