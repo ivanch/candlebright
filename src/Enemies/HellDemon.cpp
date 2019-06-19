@@ -97,6 +97,7 @@ void HellDemon::update(){
             anim->play("attack1", true);
             if(anim->getCount() > 10){
                 anim->stop();
+                setState(CharacterState::STATE_IDLE);
             }
         }
     }else{
@@ -122,7 +123,6 @@ void HellDemon::takeDamage(Thing* _issuer, float _damage){
 }
 
 void HellDemon::attack(){
-    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     setState(CharacterState::STATE_ATTACKING);
 
     anim->play("attack1", true);

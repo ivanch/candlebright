@@ -16,6 +16,6 @@ bool AttackingState::idle(Character* _char){
 
 bool AttackingState::falling(Character* _char){
     delete _char->getCharacterState();
-    _char->setCharacterState(new AttackingState());
+    _char->setCharacterState(new FallingState());
     return true;
 }

@@ -96,11 +96,10 @@ void Sylathus::takeDamage(Thing* _issuer, float _damage){
 }
 
 void Sylathus::attack(){
-    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
     setState(CharacterState::STATE_ATTACKING);
-    attackTimer.restart();
 
     bSprite.setPosition(sSprite.getPosition().x-50, sSprite.getPosition().y+75);
+    attackTimer.restart();
 
     cout << "Sylathus atacou!" << endl;
 }

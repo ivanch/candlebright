@@ -160,7 +160,6 @@ void World::loadEnemies(int act_world){
                     enemy = new Sylathus({px,py});
                 }
             }
-            enemy->setPos({px,py});
             enemy->setHealth(health);
             addCharacter(enemy);
         }

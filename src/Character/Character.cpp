@@ -15,26 +15,19 @@ bool Character::setState(CharacterState::State _newState){
         //delete currentState;
     }else{
         currentState = new IdleState();
-        return true;
     }
     switch (_newState){
         case CharacterState::STATE_IDLE:
-            //currentState = new IdleState();
             return currentState->idle(this);
         case CharacterState::STATE_WALKING:
-            //currentState = new WalkingState();
             return currentState->walking(this);
         case CharacterState::STATE_JUMPING:
-            //currentState = new JumpingState();
             return currentState->jumping(this);
         case CharacterState::STATE_FALLING:
-            //currentState = new FallingState();
             return currentState->falling(this);
         case CharacterState::STATE_ATTACKING:
-            //currentState = new AttackingState();
             return currentState->attacking(this);
         default:
-            //currentState = new IdleState();
             return currentState->idle(this);
     }
 }

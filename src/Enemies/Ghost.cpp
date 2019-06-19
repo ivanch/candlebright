@@ -88,6 +88,10 @@ void Ghost::update(){
         if(animClock.getElapsedTime().asMilliseconds() >= 450){
             animClock.restart();
             anim->play("attack", true);
+            if(anim->getCount() >= 4){
+                anim->stop();
+                setState(CharacterState::STATE_IDLE);
+            }
         }
     }else{
         if(animClock.getElapsedTime().asMilliseconds() >= 200){

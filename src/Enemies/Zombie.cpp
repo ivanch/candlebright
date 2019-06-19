@@ -61,20 +61,18 @@ void Zombie::moveLeft(){
 void Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
     
-    if(getState() != CharacterState::STATE_ATTACKING){
-        if(facing == Facing::FACING_LEFT){
-            if(!collidingLeft)
-                eSprite.move({-moveSpeed,0});
-            else
-                facing = Facing::FACING_RIGHT;
-            if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
-        }else{
-            if(!collidingRight)
-                eSprite.move({moveSpeed,0});
-            else
-                facing = Facing::FACING_LEFT;
-            if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
-        }
+    if(facing == Facing::FACING_LEFT){
+        if(!collidingLeft)
+            eSprite.move({-moveSpeed,0});
+        else
+            facing = Facing::FACING_RIGHT;
+        if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
+    }else{
+        if(!collidingRight)
+            eSprite.move({moveSpeed,0});
+        else
+            facing = Facing::FACING_LEFT;
+        if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
     }
 
     if(collidingUp){
@@ -102,7 +100,7 @@ void Zombie::update(){
 void Zombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
-    moveSpeed += moveSpeed * 0.1;
+    moveSpeed += moveSpeed * 0.05;
     if(health <= 0){
         cout << "Morreu" << endl;
         //delete this;
@@ -110,12 +108,5 @@ void Zombie::takeDamage(Thing* _issuer, float _damage){
 }
 
 void Zombie::attack(){
-    /*
-
-    // Atacar sem animação é meio tenso. //
-
-    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
-    setState(CharacterState::STATE_ATTACKING);
-    attackTimer.restart();
-    */
+    /* Zumbi não ataca, é mais ou menos um obstáculo */
 }

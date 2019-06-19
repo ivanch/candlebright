@@ -51,13 +51,11 @@ void ClothedZombie::fall(){
 void ClothedZombie::moveRight(){
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
-    setState(CharacterState::STATE_WALKING);
 }
 
 void ClothedZombie::moveLeft(){
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
-    setState(CharacterState::STATE_WALKING);
 }
 
 void ClothedZombie::update(){
@@ -101,8 +99,7 @@ void ClothedZombie::update(){
 void ClothedZombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
     move({15,-5});
-    moveSpeed -= moveSpeed * 0.1;
-    damage += damage * 0.1;
+    moveSpeed -= moveSpeed * 0.05;
     if(health <= 0){
         cout << "Morreu" << endl;
         //delete this;
@@ -110,12 +107,5 @@ void ClothedZombie::takeDamage(Thing* _issuer, float _damage){
 }
 
 void ClothedZombie::attack(){
-    /*
-
-    // Atacar sem animação é meio tenso. //
-
-    if(attackTimer.getElapsedTime().asSeconds() < 1/attackSpeed) return;
-    setState(CharacterState::STATE_ATTACKING);
-    attackTimer.restart();
-    */
+    /* Outro bichão que não ataca */
 }
