@@ -1,13 +1,13 @@
 #include "ClothedZombie.hpp"
 
-ClothedZombie::ClothedZombie(sf::Vector2f pos, string _name){
+ClothedZombie::ClothedZombie(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 1.5;
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
-    health = 100;
+    health = 150;
     damage = 5.0;
     range = 10.0;
     attackChance = 0.1 / 60; // Chance de ataques por segundo
@@ -51,11 +51,13 @@ void ClothedZombie::fall(){
 void ClothedZombie::moveRight(){
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void ClothedZombie::moveLeft(){
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void ClothedZombie::update(){

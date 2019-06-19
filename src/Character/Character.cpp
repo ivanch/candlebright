@@ -8,30 +8,33 @@ Character::~Character(){
 
 }
 
-void Character::setState(CharacterState::State newState){
+bool Character::setState(CharacterState::State _newState){
     if(currentState != nullptr){
-        if(newState == currentState->getState()) return;
-        if(anim->isLocked()) return;
-        delete currentState;
+        if(_newState == currentState->getState()) return true; // Não há necessidade de "renovar" o estado
+        if(anim->isLocked()) return false; // Personagem ocupado com uma animação, não sobrepor
+        //delete currentState;
+    }else{
+        currentState = new IdleState();
+        return true;
     }
-    switch (newState){
+    switch (_newState){
         case CharacterState::STATE_IDLE:
-            currentState = new IdleState();
-            break;
+            //currentState = new IdleState();
+            return currentState->idle(this);
         case CharacterState::STATE_WALKING:
-            currentState = new WalkingState();
-            break;
+            //currentState = new WalkingState();
+            return currentState->walking(this);
         case CharacterState::STATE_JUMPING:
-            currentState = new JumpingState();
-            break;
+            //currentState = new JumpingState();
+            return currentState->jumping(this);
         case CharacterState::STATE_FALLING:
-            currentState = new FallingState();
-            break;
+            //currentState = new FallingState();
+            return currentState->falling(this);
         case CharacterState::STATE_ATTACKING:
-            currentState = new AttackingState();
-            break;
+            //currentState = new AttackingState();
+            return currentState->attacking(this);
         default:
-            currentState = new IdleState();
-            break;
+            //currentState = new IdleState();
+            return currentState->idle(this);
     }
 }

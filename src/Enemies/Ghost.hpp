@@ -4,7 +4,7 @@
 
 class Ghost : public Enemy {    
     public:
-        Ghost(sf::Vector2f pos = {0,0}, string _name = "");
+        Ghost(sf::Vector2f pos = {0,0});
         ~Ghost();
         void setPos(sf::Vector2f newPos);
         void moveRight();

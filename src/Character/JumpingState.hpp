@@ -8,5 +8,5 @@ class JumpingState : public CharacterState {
         JumpingState();
         virtual ~JumpingState();
 
-        virtual void falling(Character* _char);
+        virtual bool falling(Character* _char);
 };

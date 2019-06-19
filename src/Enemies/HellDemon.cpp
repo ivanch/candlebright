@@ -1,8 +1,6 @@
 #include "HellDemon.hpp"
 
-HellDemon::HellDemon(sf::Vector2f pos, string _name){
-    //eSprite.setSize({20,50});
-    //eSprite.setFillColor(sf::Color::Red);
+HellDemon::HellDemon(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 0.25;
@@ -68,19 +66,21 @@ void HellDemon::moveLeft(){
 
 void HellDemon::update(){
     sf::Vector2f pos = eSprite.getPosition();
-        
-    if(facing == Facing::FACING_LEFT){
-        if(!collidingLeft)
-            moveLeft();
-        else
-            facing = Facing::FACING_RIGHT;
-        if(abs(pos.x) < abs(originalPos.x-5)) facing = Facing::FACING_RIGHT;
-    }else{
-        if(!collidingRight)
-            moveRight();
-        else
-            facing = Facing::FACING_LEFT;
-        if(abs(pos.x) > abs(originalPos.x+5)) facing = Facing::FACING_LEFT;
+    
+    if(getState() != CharacterState::STATE_ATTACKING){
+        if(facing == Facing::FACING_LEFT){
+            if(!collidingLeft)
+                moveLeft();
+            else
+                facing = Facing::FACING_RIGHT;
+            if(abs(pos.x) < abs(originalPos.x-5)) facing = Facing::FACING_RIGHT;
+        }else{
+            if(!collidingRight)
+                moveRight();
+            else
+                facing = Facing::FACING_LEFT;
+            if(abs(pos.x) > abs(originalPos.x+5)) facing = Facing::FACING_LEFT;
+        }
     }
     if(collidingUp){
         velocity.y = 0;

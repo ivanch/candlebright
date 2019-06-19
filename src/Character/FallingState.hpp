@@ -8,5 +8,5 @@ class FallingState : public CharacterState {
         FallingState();
         virtual ~FallingState();
 
-        virtual void idle(Character* _char);
+        virtual bool idle(Character* _char);
 };

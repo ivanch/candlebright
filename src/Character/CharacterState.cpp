@@ -6,22 +6,27 @@ CharacterState::CharacterState(State _state): state(_state){
 
 CharacterState::~CharacterState(){}
 
-void CharacterState::idle(Character* _char){
+bool CharacterState::idle(Character* _char){
     cerr << "Mudança de CharacterState ilegal de " << getState() << " para idle" << endl;
+    return false;
 }
 
-void CharacterState::walking(Character* _char){
+bool CharacterState::walking(Character* _char){
     cerr << "Mudança de CharacterState ilegal de " << getState() << " para walking" << endl;
+    return false;
 }
 
-void CharacterState::jumping(Character* _char){
+bool CharacterState::jumping(Character* _char){
     cerr << "Mudança de CharacterState ilegal de " << getState() << " para jumping" << endl;
+    return false;
 }
 
-void CharacterState::falling(Character* _char){
+bool CharacterState::falling(Character* _char){
     cerr << "Mudança de CharacterState ilegal de " << getState() << " para falling" << endl;
+    return false;
 }
 
-void CharacterState::attacking(Character* _char){
+bool CharacterState::attacking(Character* _char){
     cerr << "Mudança de CharacterState ilegal de " << getState() << " para attacking" << endl;
+    return false;
 }

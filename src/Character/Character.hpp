@@ -37,8 +37,12 @@ class Character : public Thing, public Animatable {
         virtual short getType() { return type; }
         virtual short getSubType(){ return 0; };
 
-        virtual void setState(CharacterState::State _state);
+        /* CharacterState com enum */
+        virtual bool setState(CharacterState::State _newState);
         virtual CharacterState::State getState(){ return currentState->getState(); }
+        /* CharacterState no âmbito POO */
+        virtual CharacterState* getCharacterState(){ return currentState; }
+        virtual void setCharacterState(CharacterState* _newState){ currentState = _newState; }
 
         virtual void setFacing(Facing _facing) { facing = _facing; }
         virtual short getFacing() { return facing; }

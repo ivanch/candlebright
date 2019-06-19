@@ -72,6 +72,7 @@ void Player::jump(){
     velocity.y -= 2.50;
     move({0,-2.50});
     setState(CharacterState::STATE_JUMPING);
+    //setState(CharacterState::STATE_ATTACKING);
 }
 
 void Player::update(){
@@ -185,8 +186,7 @@ sf::FloatRect Player::getRect(){
 }
 
 void Player::attack(){
-    if( currentState->getState() == CharacterState::STATE_ATTACKING ) return;
-    setState(CharacterState::STATE_ATTACKING);
+    if(!setState(CharacterState::STATE_ATTACKING)) return;
     whipExpanding = true;
     animClock.restart();
     anim->play("attack", true);

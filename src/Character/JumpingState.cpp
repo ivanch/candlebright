@@ -8,6 +8,8 @@ JumpingState::~JumpingState(){
 
 }
 
-void JumpingState::falling(Character* _char){
-    _char->setState(STATE_FALLING);
+bool JumpingState::falling(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new FallingState());
+    return true;
 }

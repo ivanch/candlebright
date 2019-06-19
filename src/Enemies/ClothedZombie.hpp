@@ -4,7 +4,7 @@
 
 class ClothedZombie : public Enemy {    
     public:
-        ClothedZombie(sf::Vector2f pos = {0,0}, string _name = "");
+        ClothedZombie(sf::Vector2f pos = {0,0});
         ~ClothedZombie();
         void setPos(sf::Vector2f newPos);
         void moveRight();

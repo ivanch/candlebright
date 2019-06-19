@@ -1,8 +1,6 @@
 #include "Ghost.hpp"
 
-Ghost::Ghost(sf::Vector2f pos, string _name){
-    //eSprite.setSize({20,50});
-    //eSprite.setFillColor(sf::Color::Red);
+Ghost::Ghost(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 0.5;
@@ -65,19 +63,21 @@ void Ghost::moveLeft(){
 
 void Ghost::update(){
     sf::Vector2f pos = eSprite.getPosition();
-        
-    if(facing == Facing::FACING_LEFT){
-        if(!collidingLeft)
-            moveLeft();
-        else
-            facing = Facing::FACING_RIGHT;
-        if(abs(pos.x) < abs(originalPos.x-30)) facing = Facing::FACING_RIGHT;
-    }else{
-        if(!collidingRight)
-            moveRight();
-        else
-            facing = Facing::FACING_LEFT;
-        if(abs(pos.x) > abs(originalPos.x+30)) facing = Facing::FACING_LEFT;
+
+    if(getState() != CharacterState::STATE_ATTACKING){
+        if(facing == Facing::FACING_LEFT){
+            if(!collidingLeft)
+                moveLeft();
+            else
+                facing = Facing::FACING_RIGHT;
+            if(abs(pos.x) < abs(originalPos.x-30)) facing = Facing::FACING_RIGHT;
+        }else{
+            if(!collidingRight)
+                moveRight();
+            else
+                facing = Facing::FACING_LEFT;
+            if(abs(pos.x) > abs(originalPos.x+30)) facing = Facing::FACING_LEFT;
+        }
     }
 
     if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterState::STATE_WALKING){

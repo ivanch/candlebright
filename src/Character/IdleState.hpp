@@ -8,8 +8,8 @@ class IdleState : public CharacterState {
         IdleState();
         virtual ~IdleState();
 
-        virtual void jumping(Character* _char);
-        virtual void walking(Character* _char);
-        virtual void falling(Character* _char);
-        virtual void attacking(Character* _char);
+        virtual bool jumping(Character* _char);
+        virtual bool walking(Character* _char);
+        virtual bool falling(Character* _char);
+        virtual bool attacking(Character* _char);
 };

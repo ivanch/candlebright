@@ -8,6 +8,8 @@ FallingState::~FallingState(){
 
 }
 
-void FallingState::idle(Character* _char){
-    _char->setState(STATE_IDLE);
+bool FallingState::idle(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new IdleState());
+    return true;
 }

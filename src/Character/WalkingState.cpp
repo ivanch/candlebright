@@ -8,14 +8,26 @@ WalkingState::~WalkingState(){
 
 }
 
-void WalkingState::jumping(Character* _char){
-    _char->setState(STATE_JUMPING);
+bool WalkingState::idle(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new IdleState());
+    return true;
 }
 
-void WalkingState::falling(Character* _char){
-    _char->setState(STATE_FALLING);
+bool WalkingState::jumping(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new JumpingState());
+    return true;
 }
 
-void WalkingState::attacking(Character* _char){
-    _char->setState(STATE_ATTACKING);
+bool WalkingState::falling(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new FallingState());
+    return true;
+}
+
+bool WalkingState::attacking(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new AttackingState());
+    return true;
 }

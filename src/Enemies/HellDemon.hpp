@@ -4,7 +4,7 @@
 
 class HellDemon : public Enemy {    
     public:
-        HellDemon(sf::Vector2f pos = {0,0}, string _name = "");
+        HellDemon(sf::Vector2f pos = {0,0});
         ~HellDemon();
         void setPos(sf::Vector2f newPos);
         void moveRight();

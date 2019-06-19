@@ -8,18 +8,26 @@ IdleState::~IdleState(){
 
 }
 
-void IdleState::jumping(Character* _char){
-    _char->setState(STATE_JUMPING);
+bool IdleState::jumping(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new JumpingState());
+    return true;
 }
 
-void IdleState::walking(Character* _char){
-    _char->setState(STATE_WALKING);
+bool IdleState::walking(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new WalkingState());
+    return true;
 }
 
-void IdleState::falling(Character* _char){
-    _char->setState(STATE_FALLING);
+bool IdleState::falling(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new FallingState());
+    return true;
 }
 
-void IdleState::attacking(Character* _char){
-    _char->setState(STATE_ATTACKING);
+bool IdleState::attacking(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new AttackingState());
+    return true;
 }

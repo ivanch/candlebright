@@ -7,21 +7,21 @@ class Character;
 class CharacterState {    
     public:
         enum State {
-            STATE_IDLE,
-            STATE_WALKING,
-            STATE_JUMPING,
-            STATE_FALLING,
-            STATE_ATTACKING
+            STATE_IDLE,         //  0
+            STATE_WALKING,      //  1
+            STATE_JUMPING,      //  2
+            STATE_FALLING,      //  3
+            STATE_ATTACKING     //  4
         };
 
         CharacterState(State _state);
         virtual ~CharacterState();
 
-        virtual void idle(Character* _char);
-        virtual void walking(Character* _char);
-        virtual void jumping(Character* _char);
-        virtual void falling(Character* _char);
-        virtual void attacking(Character* _char);
+        virtual bool idle(Character* _char);
+        virtual bool walking(Character* _char);
+        virtual bool jumping(Character* _char);
+        virtual bool falling(Character* _char);
+        virtual bool attacking(Character* _char);
 
         State getState(){ return state; }
     

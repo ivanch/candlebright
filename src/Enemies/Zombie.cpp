@@ -1,8 +1,6 @@
 #include "Zombie.hpp"
 
-Zombie::Zombie(sf::Vector2f pos, string _name){
-    //eSprite.setSize({20,50});
-    //eSprite.setFillColor(sf::Color::Red);
+Zombie::Zombie(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 1.5;
@@ -63,19 +61,22 @@ void Zombie::moveLeft(){
 void Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
     
-    if(facing == Facing::FACING_LEFT){
-        if(!collidingLeft)
-            eSprite.move({-moveSpeed,0});
-        else
-            facing = Facing::FACING_RIGHT;
-        if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
-    }else{
-        if(!collidingRight)
-            eSprite.move({moveSpeed,0});
-        else
-            facing = Facing::FACING_LEFT;
-        if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
+    if(getState() != CharacterState::STATE_ATTACKING){
+        if(facing == Facing::FACING_LEFT){
+            if(!collidingLeft)
+                eSprite.move({-moveSpeed,0});
+            else
+                facing = Facing::FACING_RIGHT;
+            if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
+        }else{
+            if(!collidingRight)
+                eSprite.move({moveSpeed,0});
+            else
+                facing = Facing::FACING_LEFT;
+            if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
+        }
     }
+
     if(collidingUp){
         velocity.y = 0;
         setState(CharacterState::STATE_FALLING);

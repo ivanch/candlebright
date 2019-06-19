@@ -8,10 +8,14 @@ AttackingState::~AttackingState(){
 
 }
 
-void AttackingState::idle(Character* _char){
-    _char->setState(STATE_IDLE);
+bool AttackingState::idle(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new IdleState());
+    return true;
 }
 
-void AttackingState::falling(Character* _char){
-    _char->setState(STATE_FALLING);
+bool AttackingState::falling(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new AttackingState());
+    return true;
 }

@@ -141,23 +141,23 @@ void World::loadEnemies(int act_world){
             {
                 if(subtype == 1)
                 {
-                    enemy = new Zombie();
+                    enemy = new Zombie({px,py});
                 }
                 else if(subtype == 2)
                 {
-                    enemy = new ClothedZombie();
+                    enemy = new ClothedZombie({px,py});
                 }
                 else if(subtype == 3)
                 {
-                    enemy = new Ghost();
+                    enemy = new Ghost({px,py});
                 }
                 else if(subtype == 4)
                 {
-                    enemy = new HellDemon();
+                    enemy = new HellDemon({px,py});
                 }
                 else if(subtype == 5)
                 {
-                    enemy = new Sylathus();
+                    enemy = new Sylathus({px,py});
                 }
             }
             enemy->setPos({px,py});
