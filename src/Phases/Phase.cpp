@@ -22,7 +22,7 @@ void Phase::update(){
                 if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de costas
                 if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de costas
                 
-                (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
+                (*itr2)->takeDamage((*itr)->getDamage());
 
                 if((*itr2)->getHealth() <= 0){
                     bufferKill.insert(*itr2);
@@ -39,7 +39,7 @@ void Phase::update(){
             if((*itr)->getType() == 2){ // Fogo
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > (*itr)->getRange()) continue; // Range
 
-                (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
+                (*itr2)->takeDamage((*itr)->getDamage());
 
                 if((*itr2)->getHealth() <= 0){
                     bufferKill.insert(*itr2);
@@ -48,7 +48,7 @@ void Phase::update(){
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > (*itr)->getRange()) continue; // Range
 
                 if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < (*itr)->getRange()*0.2){
-                    (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
+                    (*itr2)->takeDamage((*itr)->getDamage());
 
                     if((*itr2)->getHealth() <= 0){
                         bufferKill.insert(*itr2);
@@ -74,7 +74,7 @@ void Phase::update(){
     }
 }
 
-void Phase::drawAll(Engine* engine){
+void Phase::drawAll(Engine& engine){
     draw(engine);
     /*for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
         itr->getData()->draw(engine);
@@ -84,8 +84,8 @@ void Phase::drawAll(Engine* engine){
     }
 }
 
-void Phase::draw(Engine* engine){
-    engine->draw(*background);
+void Phase::draw(Engine& engine){
+    engine.draw(*background);
 }
 
 void Phase::gravity(){
@@ -110,7 +110,7 @@ void Phase::loadEnemies(int act_world){
     }
 
     /* Carrega os Inimigos */
-    string line;
+    std::string line;
     ifstream file("Save/GameSave.txt");
     Enemy* enemy;
     if(file.is_open())
@@ -118,7 +118,7 @@ void Phase::loadEnemies(int act_world){
         getline(file,line);
         if(act_world != std::stoi(line))
         {
-            cerr << "Mundo não condizente com o jogo já salvo." << endl;
+            std::cerr << "Mundo não condizente com o jogo já salvo." << std::endl;
             return;
         }
         while (getline(file,line))
@@ -235,7 +235,7 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
     }
 
     if(tries == 1000){
-        cerr << "Erro ao tentar achar alguma posição aleatória dentro do mapa" << endl;
+        std::cerr << "Erro ao tentar achar alguma posição aleatória dentro do mapa" << std::endl;
         return {0,0};
     }
 

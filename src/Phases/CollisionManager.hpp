@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "../List/ThingsList.hpp"
 
 #define LIMIT   4

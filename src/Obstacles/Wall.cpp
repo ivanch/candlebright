@@ -23,12 +23,12 @@ void Wall::update(){
     
 }
 
-void Wall::draw(Engine* engine){
+void Wall::draw(Engine& engine){
     if(texture != NULL) rect.setTexture(texture);
-    else engine->draw(rect);
+    else engine.draw(rect);
 }
 
-sf::FloatRect Wall::getRect(){
+const sf::FloatRect Wall::getRect() const {
     return rect.getGlobalBounds();
 }
 

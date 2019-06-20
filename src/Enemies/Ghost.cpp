@@ -32,11 +32,11 @@ void Ghost::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f Ghost::getPos(){
+const sf::Vector2f Ghost::getPos() const {
     return eSprite.getPosition();
 }
 
-sf::FloatRect Ghost::getRect(){
+const sf::FloatRect Ghost::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Ghost::fall(){
@@ -106,12 +106,12 @@ void Ghost::update(){
     healthBar.setPos({getPos().x-25,getPos().y+60});
 }
 
-void Ghost::draw(Engine* engine) {
-    engine->draw(eSprite);
+void Ghost::draw(Engine& engine) {
+    engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Ghost::takeDamage(Thing* _issuer, float _damage){
+void Ghost::takeDamage(float _damage){
     health -= damage;
     healthBar.setHealth(health);
     move({0,-1});

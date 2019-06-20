@@ -14,7 +14,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
 }
 Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     originalPos(pos){
-    cout<<_tex<<endl;
+    std::cout<<_tex<<std::endl;
     rect = sf::RectangleShape(size);
     if(_tex!=NULL){
     rect.setTexture(_tex);}
@@ -35,9 +35,9 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
 }
 Platform::~Platform(){}
 
-void Platform::draw(Engine* engine){
-    if(sprite != NULL) engine->draw(*sprite);
-    else engine->draw(rect);
+void Platform::draw(Engine& engine){
+    if(sprite != NULL) engine.draw(*sprite);
+    else engine.draw(rect);
 }
 
 void Platform::update(){
@@ -47,7 +47,7 @@ void Platform::update(){
     if(texture != NULL) rect.setTexture(texture);
 }
 
-sf::FloatRect Platform::getRect(){
+const sf::FloatRect Platform::getRect() const {
     if(sprite == NULL) return rect.getGlobalBounds();
     else return sprite->getGlobalBounds();
 }
@@ -63,6 +63,10 @@ void Platform::setMove(sf::Vector2f _move){
 
 void Platform::setMoving(bool _moving){
     moving = _moving;
+}
+
+const sf::Vector2f Platform::getPos() const {
+    return rect.getPosition();
 }
 
 void Platform::fmove(){

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
+#include <iostream>
 
 class Character;
 

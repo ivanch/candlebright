@@ -3,7 +3,7 @@
 
 class CharacterList {
     public:
-        set<Character*> characters;
+        std::set<Character*> characters;
 
         virtual void add(Character* _el){
             characters.insert(_el);

@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "Obstacle.hpp"
 #include "../System/Engine.hpp"
 
@@ -27,11 +27,11 @@ class Platform : public Obstacle {
         void setMoveSpeed(sf::Vector2f _vel);
         void setMove(sf::Vector2f _move);
         void setMoving(bool _moving);
-        virtual sf::FloatRect getRect();
-        virtual void draw(Engine* engine);
+        virtual void draw(Engine& engine);
         virtual void update();
+        virtual const sf::FloatRect getRect() const;
+        virtual const sf::Vector2f getPos() const;
 
         virtual float getDamage(){ return 0; }
-        virtual sf::Vector2f getPos(){ return rect.getPosition(); }
 
 };

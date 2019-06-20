@@ -98,7 +98,7 @@ void Player::update(){
     }
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-        cout << isCollidingLeft() << ", " << isCollidingUp() << ", " << isCollidingDown() << ", " << isCollidingRight() << endl;
+        std::cout << isCollidingLeft() << ", " << isCollidingUp() << ", " << isCollidingDown() << ", " << isCollidingRight() << std::endl;
     }
 
     /* Gerencia o estado do jogador */
@@ -202,9 +202,9 @@ void Player::update(){
     healthBar.setPos({getPos().x-25,getPos().y+75});
 }
 
-void Player::draw(Engine* engine) {
-    engine->draw(pSprite);
-    if(whipSize > 0) engine->draw(wSprite);
+void Player::draw(Engine& engine) {
+    engine.draw(pSprite);
+    if(whipSize > 0) engine.draw(wSprite);
     healthBar.draw(engine);
 }
 
@@ -214,7 +214,7 @@ void Player::fall(){
     }
 }
 
-sf::FloatRect Player::getRect(){
+const sf::FloatRect Player::getRect() const {
     return pSprite.getGlobalBounds();
 }
 
@@ -226,13 +226,13 @@ void Player::attack(){
     anim->play("attack", true);
 }
 
-sf::Vector2f Player::getPos() {
+const sf::Vector2f Player::getPos() const {
     return pSprite.getPosition();
 }
 
-void Player::takeDamage(Thing* _issuer, float _damage){
+void Player::takeDamage(float _damage){
     health -= damage;
     healthBar.setHealth(health);
     move({0, -0.1});
-    cout << "Levou dano" << endl;
+    std::cout << "Levou dano" << std::endl;
 }

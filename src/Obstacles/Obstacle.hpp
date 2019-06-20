@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "../Thing.hpp"
 
 class Obstacle : public Thing {

@@ -1,5 +1,8 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
+#include <fstream>
+#include <math.h>
+
 #include "../System/Engine.hpp"
 #include "../System/Entity.hpp"
 #include "../Thing.hpp"
@@ -16,7 +19,6 @@
 #include "../Enemies/HellDemon.hpp"
 #include "../Enemies/DressedZombie.hpp"
 #include "../Enemies/Sylathus.hpp"
-#include <fstream>
 
 class Phase : public Entity {
     protected:
@@ -35,8 +37,8 @@ class Phase : public Entity {
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
         void update(); // Atualizar a lista de entidades dentro do mundo
-        void draw(Engine* engine);
-        void drawAll(Engine* engine);
+        void draw(Engine& engine);
+        void drawAll(Engine& engine);
         void gravity();
 
         void loadEnemies(int act_world);

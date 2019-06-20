@@ -18,7 +18,7 @@ AnimManager::~AnimManager(){
     animes.clear();
 }
 
-void AnimManager::play(string name, bool lock){
+void AnimManager::play(std::string name, bool lock){
     if(name == current){
         sprite->setTextureRect(rect);
         if(modes[name] == 0){
@@ -59,7 +59,7 @@ void AnimManager::play(string name, bool lock){
         try {
             animes.at(name);
         }catch (const std::out_of_range& oor) {
-            std::cerr << "Out of Range error: " << oor.what() << endl;
+            std::cerr << "Out of Range error: " << oor.what() << std::endl;
         }
         if(locked){
             return;
@@ -90,12 +90,12 @@ void AnimManager::setScale(sf::Vector2f _scale){
     scale = _scale;
 }
 
-void AnimManager::addSheet(string name, string filename, int mode){
+void AnimManager::addSheet(std::string name, std::string filename, int mode){
     if(mode < 0 || mode > 4) mode = 0;
     sf::Texture* tex = new sf::Texture;
     if(!tex->loadFromFile(filename)){
-        cerr << "Não foi possível ler textura do arquivo: " << filename << endl;
+        std::cerr << "Não foi possível ler textura do arquivo: " << filename << std::endl;
     }
-    animes.insert(pair<string, sf::Texture*>(name, tex));
-    modes.insert(pair<string, int>(name, mode));
+    animes.insert(std::pair<std::string, sf::Texture*>(name, tex));
+    modes.insert(std::pair<std::string, int>(name, mode));
 }

@@ -32,7 +32,7 @@ Cemitery::Cemitery(){
     background = new sf::Sprite;
 
     if (!backgroundTexture->loadFromFile("sprites/background2.png")){
-        cerr << "Erro ao ler background..." << endl;
+        std::cerr << "Erro ao ler background..." << std::endl;
     }
 
     backgroundTexture->setSmooth(true);

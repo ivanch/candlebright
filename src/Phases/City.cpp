@@ -42,7 +42,7 @@ City::City(){
     background = new sf::Sprite;
 
     if (!backgroundTexture->loadFromFile("sprites/background1.png")){
-        cerr << "Erro ao ler background..." << endl;
+        std::cerr << "Erro ao ler background..." << std::endl;
     }
 
     backgroundTexture->setSmooth(true);

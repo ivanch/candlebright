@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "Phase.hpp"
 #include "../Enemies/Zombie.hpp"
 #include "../Enemies/Ghost.hpp"

@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "Enemy.hpp"
 #include "../Animatable.hpp"
 
@@ -18,12 +18,12 @@ class Sylathus : public Enemy {
         void moveRight();
         void moveLeft();
 
-        virtual sf::Vector2f getPos();
-        virtual sf::FloatRect getRect();
-        virtual void takeDamage(Thing* _issuer, float _damage);
+        virtual const sf::Vector2f getPos() const;
+        virtual const sf::FloatRect getRect() const;
+        virtual void takeDamage(float _damage);
         virtual void fall();
         virtual void update();
-        virtual void draw(Engine* engine);
+        virtual void draw(Engine& engine);
         virtual void move(sf::Vector2f vec);
         virtual void attack();
         virtual void death(){}

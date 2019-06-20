@@ -1,13 +1,15 @@
 #pragma once
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <fstream>
 
-#include "../includes.hpp"
 #include "Entity.hpp"
 #include "../Phases/City.hpp"
 #include "../Phases/Cemitery.hpp"
 #include "../Character/Player.hpp"
 #include "Engine.hpp"
 #include "Menu.hpp"
-#include <fstream>
+
 class Game {
     private:
         Engine engine;

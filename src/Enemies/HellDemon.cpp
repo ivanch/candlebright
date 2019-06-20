@@ -33,11 +33,11 @@ void Hell_Demon::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f Hell_Demon::getPos(){
+const sf::Vector2f Hell_Demon::getPos() const {
     return eSprite.getPosition();
 }
 
-sf::FloatRect Hell_Demon::getRect(){
+const sf::FloatRect Hell_Demon::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Hell_Demon::fall(){
@@ -117,12 +117,12 @@ void Hell_Demon::update(){
     healthBar.setPos({getPos().x-25,getPos().y+60});
 }
 
-void Hell_Demon::draw(Engine* engine) {
-    engine->draw(eSprite);
+void Hell_Demon::draw(Engine& engine) {
+    engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Hell_Demon::takeDamage(Thing* _issuer, float _damage){
+void Hell_Demon::takeDamage(float _damage){
     health -= damage;
     healthBar.setHealth(health);
     move({0,-1});

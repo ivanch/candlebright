@@ -12,10 +12,10 @@ class Music : public Thread {
         bool loop;
         sf::SoundBuffer buffer;
         sf::Music music;
-        string filename;
+        std::string filename;
 
     public:
-        Music(string filename);
+        Music(std::string filename);
         ~Music();
         void setVolume(float _vol){ vol = _vol; }
         void setLoop(bool _loop){ loop = _loop; }

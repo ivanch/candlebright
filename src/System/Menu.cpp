@@ -3,7 +3,7 @@ Menu::Menu(float width, float height)
 {
     if(!font.loadFromFile("fonts/OldLondon.ttf"))
     {
-        cerr<<"Erro ao ler fonte"<<endl;
+        std::cerr<<"Erro ao ler fonte"<<std::endl;
     }
 
     sf::Texture* textureMenu = new sf::Texture;
@@ -11,31 +11,30 @@ Menu::Menu(float width, float height)
     int menu_opt;
     srand(time(NULL));
     menu_opt=rand()%2;
-    cout<<menu_opt;
+    std::cout<<menu_opt;
     if(menu_opt==0){
         if (!textureMenu->loadFromFile("sprites/menubg1.png"))
-            cerr << "Erro ao ler background..." << endl;
+            std::cerr << "Erro ao ler background..." << std::endl;
     }
     else if(menu_opt==1){
         if (!textureMenu->loadFromFile("sprites/menubg2.png"))
-            cerr << "Erro ao ler background..." << endl;
+            std::cerr << "Erro ao ler background..." << std::endl;
     }
 
     spriteMenu->setTexture(*textureMenu);
 
-    addMenuItem(MAIN_MENU, "Jogar", true, font);
-    addMenuItem(MAIN_MENU, "Opcoes", false, font);
-    addMenuItem(MAIN_MENU, "Sair", false, font);
+    addMenuItem(MENU_MAIN, "Jogar", true, font);
+    addMenuItem(MENU_MAIN, "Sair", false, font);
 
-    addMenuItem(WORLD_MENU, "Cidade (1)", true, font);
-    addMenuItem(WORLD_MENU, "Cemiterio (2)", false, font);
+    addMenuItem(MENU_PHASES, "Cidade (1)", true, font);
+    addMenuItem(MENU_PHASES, "Cemiterio (2)", false, font);
 
-    addMenuItem(PLAYER_MENU, "1 Jogador", true, font);
-    addMenuItem(PLAYER_MENU, "2 Jogadores", false, font);
+    addMenuItem(MENU_PLAYERS, "1 Jogador", true, font);
+    addMenuItem(MENU_PLAYERS, "2 Jogadores", false, font);
 
     enabled = true;
     selectedItem = 0;
-    currentMenu = MAIN_MENU;
+    currentMenu = MENU_MAIN;
 
 }
 Menu::~Menu()
@@ -43,10 +42,10 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::draw(Engine* engine){
-    engine->draw(*spriteMenu);
+void Menu::draw(Engine& engine){
+    engine.draw(*spriteMenu);
     for(int i=0; i<getMenuItems(currentMenu); i++){
-        engine->draw(menu_text[currentMenu][i]);
+        engine.draw(menu_text[currentMenu][i]);
     }
 }
 
@@ -72,93 +71,48 @@ void Menu::moveDown(){
 void Menu::update(Engine* engine){
     sf::Event event;
     while (engine->getWindow()->pollEvent(event)){
-        switch(event.type)
-        {
-            case sf::Event::KeyReleased:
-                switch(event.key.code)
-                {
-                    case sf::Keyboard::Up:
-                        moveUp();
+        if(event.type == sf::Event::KeyReleased){
+            if(event.key.code == sf::Keyboard::Up){
+                moveUp();
+            }else if(event.key.code == sf::Keyboard::Down){
+                moveDown();
+            }else if(event.key.code == sf::Keyboard::Enter){
+                switch (currentMenu){
+                    case MENU_MAIN:
+                        if(selectedItem == 0) currentMenu = MENU_PHASES;
+                        else if(selectedItem == 2) engine->getWindow()->close();
+                        selectedItem = 0;
                         break;
-                    case sf::Keyboard::Down:
-                        moveDown();
+                    case MENU_PHASES:
+                        if(selectedItem == 0) world = 1;
+                        else if(selectedItem == 1) world = 2;
+                        currentMenu = MENU_PLAYERS;
+                        selectedItem = 0;
                         break;
-                    case sf::Keyboard::Return:
-                        switch(getEnter())
-                        {
-                            case 0:
-                                {
-                                    switch(currentMenu){
-                                        case PLAYER_MENU: {
-                                            enabled = false;
-                                            players = 1;
-                                        }
-                                        break;
-                                        case WORLD_MENU: {
-                                            currentMenu = PLAYER_MENU;
-                                            selectedItem = 0;
-                                            world = 1;
-                                        }
-                                        break;
-                                        case MAIN_MENU: {
-                                            currentMenu = WORLD_MENU;
-                                            selectedItem = 0;
-                                        }
-                                        break;
-                                        default: break;
-                                    }
-                                }
-                                break;
-                            case 1:
-                                    switch(currentMenu){
-                                        case PLAYER_MENU: {
-                                            enabled = false;
-                                            players = 2;
-                                        }
-                                        break;
-                                        case WORLD_MENU: {
-                                            currentMenu = PLAYER_MENU;
-                                            selectedItem = 0;
-                                            world = 2;
-                                        }
-                                        break;
-                                        case MAIN_MENU: {
-                                            //currentMenu = SETTINGS_MENU;
-                                            selectedItem = 0;
-                                        }
-                                        break;
-                                        default: break;
-                                    }
-                                break;
-                            case 2:
-                                engine->getWindow()->close();
-                                break;
-                            default:
-                              break;
-                        }
+                    case MENU_PLAYERS:
+                        if(selectedItem == 0) players = 1;
+                        else if(selectedItem == 1) players = 2;
+                        enabled = false;
                         break;
                     default:
                         break;
                 }
-                break;
-            case sf::Event::Closed:
-                engine->getWindow()->close();
-                break;
-            default:
-                break;
+            }
+        }else if(event.type == sf::Event::Closed){
+            engine->getWindow()->close();
         }
     }
 }
 
 int Menu::getMenuItems(int _menu){
-    if(_menu == MAIN_MENU) return 3;
-    else if(_menu == WORLD_MENU) return 2;
-    else if(_menu == PLAYER_MENU) return 2;
+    if(_menu == MENU_MAIN) return 3;
+    else if(_menu == MENU_PHASES) return 2;
+    else if(_menu == MENU_PLAYERS) return 2;
 
     return -1;
 }
 
-void Menu::addMenuItem(int _menu, string _title, bool isPrimary, sf::Font _font){
+void Menu::addMenuItem(int _menu, std::string _title, bool isPrimary, sf::Font _font){
     int index = 0;
     for(int i = 0; i < MAX_ITEMS; i++){
         if(menu_text[_menu][i].getFont() == NULL){

@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 
 template <class T>
 class LinkedList

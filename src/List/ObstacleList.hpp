@@ -4,7 +4,7 @@
 
 class ObstaclesList {
     public:
-        list<Obstacle*> obstacles;
+        std::list<Obstacle*> obstacles;
 
         virtual void add(Obstacle* _el){
             obstacles.push_back(_el);

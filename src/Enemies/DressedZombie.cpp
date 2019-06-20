@@ -33,11 +33,11 @@ void Dressed_Zombie::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f Dressed_Zombie::getPos(){
+const sf::Vector2f Dressed_Zombie::getPos() const {
     return eSprite.getPosition();
 }
 
-sf::FloatRect Dressed_Zombie::getRect(){
+const sf::FloatRect Dressed_Zombie::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Dressed_Zombie::fall(){
@@ -105,12 +105,12 @@ void Dressed_Zombie::update(){
     healthBar.setPos({getPos().x-20,getPos().y+50});
 }
 
-void Dressed_Zombie::draw(Engine* engine) {
-    engine->draw(eSprite);
+void Dressed_Zombie::draw(Engine& engine) {
+    engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Dressed_Zombie::takeDamage(Thing* _issuer, float _damage){
+void Dressed_Zombie::takeDamage(float _damage){
     health -= damage;
     healthBar.setHealth(health);
     move({0,-1});

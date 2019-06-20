@@ -33,11 +33,11 @@ void Zombie::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f Zombie::getPos(){
+const sf::Vector2f Zombie::getPos() const {
     return eSprite.getPosition();
 }
 
-sf::FloatRect Zombie::getRect(){
+const sf::FloatRect Zombie::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Zombie::fall(){
@@ -105,12 +105,12 @@ void Zombie::update(){
     healthBar.setPos({getPos().x-20,getPos().y+50});
 }
 
-void Zombie::draw(Engine* engine) {
-    engine->draw(eSprite);
+void Zombie::draw(Engine& engine) {
+    engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Zombie::takeDamage(Thing* _issuer, float _damage){
+void Zombie::takeDamage(float _damage){
     health -= damage;
     healthBar.setHealth(health);
     move({0,-1});

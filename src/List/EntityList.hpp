@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "../System/Entity.hpp"
 #include "LinkedList.hpp"
 
@@ -18,7 +18,7 @@ class EntityList
             entity_list.removeNth(_el);
         }*/
 
-        list<Entity*> entities;
+        std::list<Entity*> entities;
 
         virtual void add(Entity* _el){
             entities.push_back(_el);

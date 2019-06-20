@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "Obstacle.hpp"
 #include "../Thing.hpp"
 
@@ -13,8 +13,8 @@ class Wall : public Obstacle {
         Wall(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
         ~Wall();
         virtual void update();
-        virtual void draw(Engine* engine);
-        virtual sf::FloatRect getRect();
+        virtual void draw(Engine& engine);
+        virtual const sf::FloatRect getRect() const;
 
         virtual float getDamage();
 };

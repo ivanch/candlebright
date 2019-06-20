@@ -25,14 +25,14 @@ void Black_Hole::update(){
     }
 }
 
-void Black_Hole::draw(Engine* engine){
-    engine->draw(oSprite);
+void Black_Hole::draw(Engine& engine){
+    engine.draw(oSprite);
 }
 
 float Black_Hole::getDamage(){
     return damage;
 }
 
-sf::Vector2f Black_Hole::getPos(){
+const sf::Vector2f Black_Hole::getPos() const {
     return position;
 }

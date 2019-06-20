@@ -1,8 +1,8 @@
 #include "Music.hpp"
 
-Music::Music(string filename){
+Music::Music(std::string filename){
     if(!music.openFromFile(filename))
-        cerr << "Erro ao ler música do arquivo: " << filename << endl;
+        std::cerr << "Erro ao ler música do arquivo: " << filename << std::endl;
     music.setLoop(true);
     music.setVolume(10.0);
 }

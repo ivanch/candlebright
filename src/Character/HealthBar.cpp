@@ -14,7 +14,8 @@ HealthBar::HealthBar(sf::Vector2f pos){
 HealthBar::~HealthBar(){}
 
 void HealthBar::setHealth(float health){
-    foreground.setSize({health/(100.0/size.x),5});
+    float rate = 100.0/size.x;
+    foreground.setSize({health/rate,5});
 }
 
 void HealthBar::setPos(sf::Vector2f _pos){
@@ -29,7 +30,7 @@ void HealthBar::setSize(sf::Vector2f _size){
     foreground.setSize(size);
 }
 
-void HealthBar::draw(Engine* engine){
-    engine->draw(background);
-    engine->draw(foreground);
+void HealthBar::draw(Engine& engine){
+    engine.draw(background);
+    engine.draw(foreground);
 }

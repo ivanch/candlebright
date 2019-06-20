@@ -1,6 +1,5 @@
 #pragma once
-#include "SFML/Graphics/Drawable.hpp"
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 
 class Engine {
     private:

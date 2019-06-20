@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "../System/Engine.hpp"
 
 class HealthBar {
@@ -17,5 +17,5 @@ class HealthBar {
         void setSize(sf::Vector2f _size);
         void setHealth(float health);
 
-        void draw(Engine* engine);
+        void draw(Engine& engine);
 };

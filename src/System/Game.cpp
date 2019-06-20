@@ -18,7 +18,7 @@ void Game::run(){
     while(menu.isEnabled()){ // Roda o menu primeiro...
         engine.clearWindow();
         menu.update(&engine);
-        menu.draw(&engine);
+        menu.draw(engine);
         engine.render();
     }
     if(menu.getSelectedPhase() == 1){
@@ -43,18 +43,18 @@ void Game::saveGame()
 
     if(file.is_open())
     {
-        file << act_world << endl;
+        file << act_world << std::endl;
         for(auto itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
-            file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y - 30.f << endl;
+            file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y - 30.f << std::endl;
         }
-        cout << "Game Saved" << endl;
+        std::cout << "Game Saved" << std::endl;
 
     }
     file.close();
 }
 void Game::loadPlayers(){
     /* Carrega os Players */
-    string line;
+    std::string line;
     ifstream file("Save/GameSave.txt");
     Player* temp_player;
     int player_count = 0;
@@ -63,7 +63,7 @@ void Game::loadPlayers(){
         getline(file,line);
         if(act_world != std::stoi(line))
         {
-            cerr << "Mundo não condizente com o jogo previamente salvo." << endl;
+            std::cerr << "Mundo não condizente com o jogo previamente salvo." << std::endl;
             return;
         }
         while (getline(file,line))
@@ -71,8 +71,7 @@ void Game::loadPlayers(){
             int type = std::stoi(line.substr(0, line.find(',') + 1));
             if(type != 0) continue;
 
-            line = line.substr(line.find(',') + 1, line.size());
-            int subtype = std::stoi(line.substr(0, line.find(',') + 1));
+            line = line.substr(line.find(',') + 1, line.size()); // Pula sub-tipo
 
             line = line.substr(line.find(',') + 1, line.size());
             float health = std::stoi(line.substr(0, line.find(',') + 1));
@@ -98,10 +97,10 @@ void Game::update(){
         engine.clearWindow();
         if(menu.isEnabled()){
             menu.update(&engine);
-            menu.draw(&engine);
+            menu.draw(engine);
         }else{
             if(world == NULL){
-                cerr << "Mundo não inicializado" << endl;
+                std::cerr << "Mundo não inicializado" << std::endl;
                 return;
             }
             /* Movimentação do View */
@@ -126,7 +125,6 @@ void Game::update(){
                 /* Atualizações no mundo */
                 world->gravity();
                 world->update(); // Atualiza as entidades do mundo
-                world->drawAll(&engine); // Desenha todas entidades do mundo
 
                 /* Spawn aleatório de inimigos */
                 if(enemySpawnTimer.getElapsedTime().asSeconds() >= enemySpawnDelay){
@@ -164,6 +162,8 @@ void Game::update(){
                     obstacleSpawnTimer.restart();
                 }
             }
+
+            world->drawAll(engine); // Desenha todas entidades do mundo
 
             /* Botão pra carregar e salvar */
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::F5)&& timer.getElapsedTime().asSeconds() > 1)

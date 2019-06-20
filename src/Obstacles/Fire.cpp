@@ -23,14 +23,14 @@ void Fire::update(){
     }
 }
 
-void Fire::draw(Engine* engine){
-    engine->draw(oSprite);
+void Fire::draw(Engine& engine){
+    engine.draw(oSprite);
 }
 
 float Fire::getDamage(){
     return damage;
 }
 
-sf::Vector2f Fire::getPos(){
+const sf::Vector2f Fire::getPos() const {
     return position;
 }
