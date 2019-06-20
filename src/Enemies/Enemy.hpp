@@ -14,4 +14,5 @@ class Enemy : public Character {
     public:
         virtual void attack() = 0;
         virtual void setPos(sf::Vector2f _pos){ eSprite.setPosition(_pos); }
+        virtual sf::Vector2f getPos(){ return eSprite.getPosition(); }
 };

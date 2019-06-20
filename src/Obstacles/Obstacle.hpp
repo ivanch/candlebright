@@ -8,6 +8,7 @@ class Obstacle : public Thing {
         float damage;
         float attackRate; // Milisegundo por ataque
         float size;
+        float range;
         sf::Clock attackClock;
         sf::Sprite oSprite;
         sf::Texture* texture;
@@ -27,5 +28,6 @@ class Obstacle : public Thing {
         */
         short getType(){ return type; }
         virtual sf::Clock* getAttackClock(){ return &attackClock; }
+        virtual float getRange(){ return range; };
 
 };

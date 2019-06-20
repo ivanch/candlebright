@@ -37,10 +37,6 @@ sf::Vector2f Hell_Demon::getPos(){
     return eSprite.getPosition();
 }
 
-void Hell_Demon::draw(Engine* engine) {
-    engine->draw(eSprite);
-}
-
 sf::FloatRect Hell_Demon::getRect(){
     return eSprite.getGlobalBounds();
 }
@@ -71,7 +67,7 @@ void Hell_Demon::update(){
         setState(CharacterState::STATE_IDLE);
     }
     
-    if(getState() != CharacterState::STATE_ATTACKING){
+    if(getState() == CharacterState::STATE_WALKING){
         if(facing == Facing::FACING_LEFT){
             if(!collidingLeft)
                 moveLeft();
@@ -104,7 +100,7 @@ void Hell_Demon::update(){
                 setState(CharacterState::STATE_IDLE);
             }
         }
-    }else{
+    }else if(getState() == CharacterState::STATE_WALKING){
         if(animClock.getElapsedTime().asMilliseconds() >= 75){
             animClock.restart();
             anim->play("walk");
@@ -115,15 +111,21 @@ void Hell_Demon::update(){
             anim->setScale({1,1});
         }
     }
+
+    if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
+
+    healthBar.setPos({getPos().x-25,getPos().y+60});
+}
+
+void Hell_Demon::draw(Engine* engine) {
+    engine->draw(eSprite);
+    healthBar.draw(engine);
 }
 
 void Hell_Demon::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
-    move({15,-5});
-    if(health <= 0){
-        cout << "Morreu" << endl;
-        //delete this;
-    }
+    healthBar.setHealth(health);
+    move({0,-1});
 }
 
 void Hell_Demon::attack(){

@@ -28,7 +28,7 @@ Menu::Menu(float width, float height)
     addMenuItem(MAIN_MENU, "Sair", false, font);
 
     addMenuItem(WORLD_MENU, "Cidade (1)", true, font);
-    addMenuItem(WORLD_MENU, "Cemitério (2)", false, font);
+    addMenuItem(WORLD_MENU, "Cemiterio (2)", false, font);
 
     addMenuItem(PLAYER_MENU, "1 Jogador", true, font);
     addMenuItem(PLAYER_MENU, "2 Jogadores", false, font);

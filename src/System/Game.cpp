@@ -44,7 +44,7 @@ void Game::saveGame()
     {
         file << act_world << endl;
         for(auto itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
-            file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y << endl;
+            file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y - 30.f << endl;
         }
         cout << "Game Saved" << endl;
 
@@ -62,7 +62,7 @@ void Game::loadPlayers(){
         getline(file,line);
         if(act_world != std::stoi(line))
         {
-            cerr << "Mundo não condizente com o jogo já salvo." << endl;
+            cerr << "Mundo não condizente com o jogo previamente salvo." << endl;
             return;
         }
         while (getline(file,line))
@@ -132,18 +132,18 @@ void Game::update(){
                     Enemy* e;
                     int r = rand()%4;
                     sf::Vector2f pos = world->getRandomPosition(view);
-
-                    if(r == 0){ // Zombie
-                        e = new Zombie(pos);
-                    }else if(r == 1){ // Clothed Zombie
-                        e = new Dressed_Zombie(pos);
-                    }else if(r == 2){ // Ghost
-                        e = new Ghost(pos);
-                    }else if(r == 3){ // Hell Demon
-                        e = new Hell_Demon(pos);
+                    if(pos.x != 0 && pos.y != 0){
+                        if(r == 0){ // Zombie
+                            e = new Zombie(pos);
+                        }else if(r == 1){ // Clothed Zombie
+                            e = new Dressed_Zombie(pos);
+                        }else if(r == 2){ // Ghost
+                            e = new Ghost(pos);
+                        }else if(r == 3){ // Hell Demon
+                            e = new Hell_Demon({pos.x,pos.y-5.0});
+                        }
+                        world->addCharacter(e);
                     }
-
-                    world->addCharacter(e);
 
                     spawnTimer.restart();
                 }

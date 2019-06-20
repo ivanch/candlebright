@@ -36,10 +36,6 @@ sf::Vector2f Ghost::getPos(){
     return eSprite.getPosition();
 }
 
-void Ghost::draw(Engine* engine) {
-    engine->draw(eSprite);
-}
-
 sf::FloatRect Ghost::getRect(){
     return eSprite.getGlobalBounds();
 }
@@ -64,7 +60,7 @@ void Ghost::moveLeft(){
 void Ghost::update(){
     sf::Vector2f pos = eSprite.getPosition();
 
-    if(getState() != CharacterState::STATE_ATTACKING){
+    if(getState() == CharacterState::STATE_WALKING){
         if(facing == Facing::FACING_LEFT){
             if(!collidingLeft)
                 moveLeft();
@@ -104,15 +100,21 @@ void Ghost::update(){
             anim->setScale({1,1});
         }
     }
+
+    if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
+
+    healthBar.setPos({getPos().x-25,getPos().y+60});
+}
+
+void Ghost::draw(Engine* engine) {
+    engine->draw(eSprite);
+    healthBar.draw(engine);
 }
 
 void Ghost::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
-    move({15,-5});
-    if(health <= 0){
-        cout << "Morreu" << endl;
-        //delete this;
-    }
+    healthBar.setHealth(health);
+    move({0,-1});
 }
 
 void Ghost::attack(){

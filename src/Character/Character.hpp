@@ -10,6 +10,7 @@
 #include "AttackingState.hpp"
 #include "../System/Engine.hpp"
 #include "../Animatable.hpp"
+#include "HealthBar.hpp"
 
 class Character : public Thing, public Animatable {
     public:
@@ -61,6 +62,8 @@ class Character : public Thing, public Animatable {
         float maxSlideY;
         float damage;
         float range;
+
+        HealthBar healthBar;
 
         CharacterState* currentState;
         short facing;

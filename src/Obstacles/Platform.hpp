@@ -32,5 +32,6 @@ class Platform : public Obstacle {
         virtual void update();
 
         virtual float getDamage(){ return 0; }
+        virtual sf::Vector2f getPos(){ return rect.getPosition(); }
 
 };

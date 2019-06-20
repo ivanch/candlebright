@@ -15,11 +15,13 @@ Zombie::Zombie(sf::Vector2f pos){
     finalJumpHeight = 0;
     type = 1;
 
-    setState(CharacterState::STATE_WALKING);
+    setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
 
     anim = new AnimManager(&eSprite, {20,50});
     anim->addSheet("walk", "sprites/Zombie/new-zombie-walking.png");
+
+    healthBar.setSize({40.0,5});
 }
 Zombie::~Zombie(){}
 
@@ -35,10 +37,6 @@ sf::Vector2f Zombie::getPos(){
     return eSprite.getPosition();
 }
 
-void Zombie::draw(Engine* engine) {
-    engine->draw(eSprite);
-}
-
 sf::FloatRect Zombie::getRect(){
     return eSprite.getGlobalBounds();
 }
@@ -51,40 +49,42 @@ void Zombie::fall(){
 void Zombie::moveRight(){
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void Zombie::moveLeft(){
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
 
-    if( getState() == CharacterState::STATE_FALLING && collidingDown ){
+    if(getState() == CharacterState::STATE_FALLING && collidingDown){
         setState(CharacterState::STATE_IDLE);
     }
-    
-    if(facing == Facing::FACING_LEFT){
-        if(!collidingLeft)
-            eSprite.move({-moveSpeed,0});
-        else
-            facing = Facing::FACING_RIGHT;
-        if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
-    }else{
-        if(!collidingRight)
-            eSprite.move({moveSpeed,0});
-        else
-            facing = Facing::FACING_LEFT;
-        if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
-    }
 
-    if(collidingUp){
+    if(getState() == CharacterState::STATE_JUMPING && collidingUp){
         velocity.y = 0;
         setState(CharacterState::STATE_FALLING);
     }
 
     if(currentState->getState() == CharacterState::STATE_WALKING){
+        if(facing == Facing::FACING_LEFT){
+            if(!collidingLeft)
+                moveLeft();
+            else
+                facing = Facing::FACING_RIGHT;
+            if(abs(pos.x) < abs(originalPos.x-100)) facing = Facing::FACING_RIGHT;
+        }else{
+            if(!collidingRight)
+                moveRight();
+            else
+                facing = Facing::FACING_LEFT;
+            if(abs(pos.x) > abs(originalPos.x+100)) facing = Facing::FACING_LEFT;
+        }
+
         if(animClock.getElapsedTime().asMilliseconds() >= 150){
             animClock.restart();
             anim->play("walk");
@@ -99,16 +99,22 @@ void Zombie::update(){
     if(((float) rand()) / (float) RAND_MAX <= attackChance){
         attack();
     }
+    
+    if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
+
+    healthBar.setPos({getPos().x-20,getPos().y+50});
+}
+
+void Zombie::draw(Engine* engine) {
+    engine->draw(eSprite);
+    healthBar.draw(engine);
 }
 
 void Zombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
-    move({15,-5});
+    healthBar.setHealth(health);
+    move({0,-1});
     moveSpeed += moveSpeed * 0.05;
-    if(health <= 0){
-        cout << "Morreu" << endl;
-        //delete this;
-    }
 }
 
 void Zombie::attack(){

@@ -62,7 +62,6 @@ void AnimManager::play(string name, bool lock){
             std::cerr << "Out of Range error: " << oor.what() << endl;
         }
         if(locked){
-            play(current, lock);
             return;
         }
         locked = lock;
@@ -77,6 +76,10 @@ void AnimManager::play(string name, bool lock){
 void AnimManager::stop(){
     current = "NULL";
     locked = false;
+}
+
+void AnimManager::defineRect(){
+    sprite->setTextureRect(rect);
 }
 
 void AnimManager::setScale(sf::Vector2f _scale){

@@ -12,14 +12,8 @@ City::City(){
     p->setMoveSpeed({0.5,0});
     addThing(p);
 
-    p = new Platform({50,2},{-50,700}, sf::Color::Magenta); // Platforma rosa
-    p->setMoving(true);
-    p->setMove({0,100});
-    p->setMoveSpeed({0,0.5});
-    addThing(p);
-
     Obstacle* o;
-    o = new Wall({10,50},{100,650}, sf::Color::Cyan);
+    o = new Wall({10,50},{100,700}, sf::Color::Cyan);
     addObstacle(o);
     o = new Wall({20,50},{50,500}, sf::Color::Cyan);
     addObstacle(o);

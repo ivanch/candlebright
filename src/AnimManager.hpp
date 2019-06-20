@@ -35,6 +35,7 @@ class AnimManager {
         void stop();
         
         void setScale(sf::Vector2f _scale);
+        void defineRect();
         void setTime(float milliseconds){ delay = milliseconds; };
         int getStage(){ return (int)rect.left/rect.width; }
         int getCount(){ return count; }

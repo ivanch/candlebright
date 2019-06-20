@@ -37,11 +37,6 @@ sf::Vector2f Sylathus::getPos(){
     return sSprite.getPosition();
 }
 
-void Sylathus::draw(Engine* engine) {
-    engine->draw(sSprite);
-    if(breathAnim.isLocked()) engine->draw(bSprite);
-}
-
 sf::FloatRect Sylathus::getRect(){
     return sSprite.getGlobalBounds();
 }
@@ -86,13 +81,16 @@ void Sylathus::update(){
     }
 }
 
+void Sylathus::draw(Engine* engine) {
+    engine->draw(sSprite);
+    if(breathAnim.isLocked()) engine->draw(bSprite);
+    healthBar.draw(engine);
+}
+
 void Sylathus::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
-    move({15,-5});
-    if(health <= 0){
-        cout << "Morreu" << endl;
-        //this->~Sylathus();
-    }
+    healthBar.setHealth(health);
+    move({0,-1});
 }
 
 void Sylathus::attack(){

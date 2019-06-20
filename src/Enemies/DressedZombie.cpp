@@ -15,11 +15,13 @@ Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
     finalJumpHeight = 0;
     type = 1;
 
-    setState(CharacterState::STATE_WALKING);
+    setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
 
     anim = new AnimManager(&eSprite, {20,50});
     anim->addSheet("walk", "sprites/Clothed-Zombie/new-clothed-zombie-walking.png");
+
+    healthBar.setSize({40.0,5});
 }
 Dressed_Zombie::~Dressed_Zombie(){}
 
@@ -35,10 +37,6 @@ sf::Vector2f Dressed_Zombie::getPos(){
     return eSprite.getPosition();
 }
 
-void Dressed_Zombie::draw(Engine* engine) {
-    engine->draw(eSprite);
-}
-
 sf::FloatRect Dressed_Zombie::getRect(){
     return eSprite.getGlobalBounds();
 }
@@ -51,11 +49,13 @@ void Dressed_Zombie::fall(){
 void Dressed_Zombie::moveRight(){
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void Dressed_Zombie::moveLeft(){
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
+    setState(CharacterState::STATE_WALKING);
 }
 
 void Dressed_Zombie::update(){
@@ -64,26 +64,27 @@ void Dressed_Zombie::update(){
     if( getState() == CharacterState::STATE_FALLING && collidingDown ){
         setState(CharacterState::STATE_IDLE);
     }
-    
-    if(facing == Facing::FACING_LEFT){
-        if(!collidingLeft)
-            eSprite.move({-moveSpeed,0});
-        else
-            facing = Facing::FACING_RIGHT;
-        if(abs(pos.x) < abs(originalPos.x-150)) facing = Facing::FACING_RIGHT;
-    }else{
-        if(!collidingRight)
-            eSprite.move({moveSpeed,0});
-        else
-            facing = Facing::FACING_LEFT;
-        if(abs(pos.x) > abs(originalPos.x+150)) facing = Facing::FACING_LEFT;
-    }
+
     if(collidingUp){
         velocity.y = 0;
         setState(CharacterState::STATE_FALLING);
     }
 
     if(currentState->getState() == CharacterState::STATE_WALKING){
+        if(facing == Facing::FACING_LEFT){
+            if(!collidingLeft)
+                moveLeft();
+            else
+                facing = Facing::FACING_RIGHT;
+            if(abs(pos.x) < abs(originalPos.x-150)) facing = Facing::FACING_RIGHT;
+        }else{
+            if(!collidingRight)
+                moveRight();
+            else
+                facing = Facing::FACING_LEFT;
+            if(abs(pos.x) > abs(originalPos.x+150)) facing = Facing::FACING_LEFT;
+        }
+
         if(animClock.getElapsedTime().asMilliseconds() >= 125){
             animClock.restart();
             anim->play("walk");
@@ -98,16 +99,22 @@ void Dressed_Zombie::update(){
     if(((float) rand()) / (float) RAND_MAX <= attackChance){
         attack();
     }
+
+    if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
+
+    healthBar.setPos({getPos().x-20,getPos().y+50});
+}
+
+void Dressed_Zombie::draw(Engine* engine) {
+    engine->draw(eSprite);
+    healthBar.draw(engine);
 }
 
 void Dressed_Zombie::takeDamage(Thing* _issuer, float _damage){
     health -= damage;
-    move({15,-5});
+    healthBar.setHealth(health);
+    move({0,-1});
     moveSpeed -= moveSpeed * 0.05;
-    if(health <= 0){
-        cout << "Morreu" << endl;
-        //delete this;
-    }
 }
 
 void Dressed_Zombie::attack(){

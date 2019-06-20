@@ -37,7 +37,7 @@ void Phase::update(){
             if((*itr2)->getType() != 0) continue; // Só afeta players
 
             if((*itr)->getType() == 2){ // Fogo
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 50.0) continue; // Range
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > (*itr)->getRange()) continue; // Range
 
                 (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
 
@@ -45,9 +45,9 @@ void Phase::update(){
                     bufferKill.insert(*itr2);
                 }
             }else if((*itr)->getType() == 3){ // Black Hole
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 200.0) continue; // Range
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > (*itr)->getRange()) continue; // Range
 
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < 50.0){
+                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < (*itr)->getRange()*0.2){
                     (*itr2)->takeDamage(static_cast<Thing*>(*itr), (*itr)->getDamage());
 
                     if((*itr2)->getHealth() <= 0){
@@ -190,33 +190,45 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         pos = {random_x, random_y};
 
         /* Determina melhor Y */
-        bool _best_y_success = false;
-        float _best_distance = -1.0;
-        float _best_y = 0.0;
+        bool best_y_success = false;
+        float best_distance = -1.0;
+        float best_y = 0.0;
         for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
             if((*itr)->getType() != 0) continue; // Spawn apenas em cima de plataformas
-            if((*itr)->getRect().left > random_x && (*itr)->getRect().left+(*itr)->getRect().width < random_x) continue; // random_x fora das bordas da Plataforma
-            float _dist = getDistance(pos,(*itr)->getPos());
-            if(_dist < _best_distance || _best_distance == -1.0){
-                _best_y = (*itr)->getRect().top+5.0;
-                _best_distance = _dist;
+            if(random_x < (*itr)->getRect().left && random_x > (*itr)->getRect().left+(*itr)->getRect().width) continue; // random_x fora das bordas da Plataforma
+            float dist = abs(pos.y-(*itr)->getPos().x);
+            if(dist > best_distance || best_distance == -1.0){
+                best_y = (*itr)->getRect().top-30.0;
+                best_distance = dist;
             }
-            _best_y_success = true;
+            best_y_success = true;
         }
-        if(!_best_y_success) continue;
+        if(!best_y_success) continue;
         /* Melhor Y determinado */
 
-        pos = {random_x, _best_y};
+        pos = {random_x, best_y};
+
+        /* Testa posição de outros Obstáculos */
+        bool obstacles_test_success = true;
+        for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
+            if((*itr)->getType() == 0 || (*itr)->getType() == 1) continue; // Ignora plataformas
+            if(getDistance(pos,(*itr)->getPos()) < (*itr)->getRange() + 15.0){
+                obstacles_test_success = false;
+                break;
+            }   
+        }
+        if(!obstacles_test_success) continue;
+        /* Passou pelo teste de Obstáculos */
 
         /* Testa posição de Personagens */
-        bool _char_test_success = true;
+        bool char_test_success = true;
         for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-            if(getDistance(pos,(*itr)->getPos()) < 25.0){
-                _char_test_success = false;
+            if(getDistance(pos,(*itr)->getPos()) < 100.0){
+                char_test_success = false;
                 break;
             }
         }
-        if(!_char_test_success) continue;
+        if(!char_test_success) continue;
         /* Passou pelo teste de Personagens */
 
         break;
@@ -227,6 +239,6 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         return {0,0};
     }
 
-    cout << pos.y << endl;
+    cout << pos.x << ", " << pos.y << endl;
     return pos;
 }

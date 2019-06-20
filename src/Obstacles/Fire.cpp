@@ -3,15 +3,16 @@
 Fire::Fire(sf::Vector2f pos, float _size){
     oSprite.setPosition(pos);
     position = pos;
-    type = 1;
+    type = 2;
 
     anim = new AnimManager(&oSprite, {20,60});
     anim->addSheet("fire", "sprites/Obstacle/new-Fire.png");
+    anim->defineRect();
     // Computa o ataque, taxa de ataque, dano e tamanho
     anim->setScale({_size/25, _size/30}); // Tamanho
     damage = _size/500;
     attackRate = _size/50 * 250;
-    cout << damage << ", " << attackRate << endl;
+    range = oSprite.getGlobalBounds().width + oSprite.getGlobalBounds().width*0.05;
 }
 Fire::~Fire(){}
 
