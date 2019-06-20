@@ -1,6 +1,6 @@
 #include "HellDemon.hpp"
 
-HellDemon::HellDemon(sf::Vector2f pos){
+Hell_Demon::Hell_Demon(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
     moveSpeed = 0.25;
@@ -23,51 +23,51 @@ HellDemon::HellDemon(sf::Vector2f pos){
     anim->addSheet("attack1", "sprites/Hell-Demon/new-hell-beast-burn.png");
     anim->addSheet("attack2", "sprites/Hell-Demon/new-hell-beast-breath.png", 3);
 }
-HellDemon::~HellDemon(){}
+Hell_Demon::~Hell_Demon(){}
 
-void HellDemon::move(sf::Vector2f vec){
+void Hell_Demon::move(sf::Vector2f vec){
     eSprite.move(vec);
 }
 
-void HellDemon::setPos(sf::Vector2f newPos) {
+void Hell_Demon::setPos(sf::Vector2f newPos) {
     eSprite.setPosition(newPos);
 }
 
-sf::Vector2f HellDemon::getPos(){
+const sf::Vector2f Hell_Demon::getPos() const {
     return eSprite.getPosition();
 }
 
-void HellDemon::draw(Engine* engine) {
-    engine->draw(eSprite);
-}
-
-sf::FloatRect HellDemon::getRect(){
+const sf::FloatRect Hell_Demon::getRect() const {
     return eSprite.getGlobalBounds();
 }
-void HellDemon::fall(){
+void Hell_Demon::fall(){
     if(currentState->getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
 
-void HellDemon::moveRight(){
+void Hell_Demon::moveRight(){
     if(anim->isLocked()) return;
     move({moveSpeed,0});
     setFacing(Facing::FACING_RIGHT);
     setState(CharacterState::STATE_WALKING);
 }
 
-void HellDemon::moveLeft(){
+void Hell_Demon::moveLeft(){
     if(anim->isLocked()) return;
     move({-moveSpeed,0});
     setFacing(Facing::FACING_LEFT);
     setState(CharacterState::STATE_WALKING);
 }
 
-void HellDemon::update(){
+void Hell_Demon::update(){
     sf::Vector2f pos = eSprite.getPosition();
     
-    if(getState() != CharacterState::STATE_ATTACKING){
+    if( getState() == CharacterState::STATE_FALLING && collidingDown ){
+        setState(CharacterState::STATE_IDLE);
+    }
+    
+    if(getState() == CharacterState::STATE_WALKING){
         if(facing == Facing::FACING_LEFT){
             if(!collidingLeft)
                 moveLeft();
@@ -100,7 +100,7 @@ void HellDemon::update(){
                 setState(CharacterState::STATE_IDLE);
             }
         }
-    }else{
+    }else if(getState() == CharacterState::STATE_WALKING){
         if(animClock.getElapsedTime().asMilliseconds() >= 75){
             animClock.restart();
             anim->play("walk");
@@ -111,18 +111,24 @@ void HellDemon::update(){
             anim->setScale({1,1});
         }
     }
+
+    if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
+
+    healthBar.setPos({getPos().x-25,getPos().y+60});
 }
 
-void HellDemon::takeDamage(Thing* _issuer, float _damage){
+void Hell_Demon::draw(Engine& engine) {
+    engine.draw(eSprite);
+    healthBar.draw(engine);
+}
+
+void Hell_Demon::takeDamage(float _damage){
     health -= damage;
-    move({15,-5});
-    if(health <= 0){
-        cout << "Morreu" << endl;
-        //delete this;
-    }
+    healthBar.setHealth(health);
+    move({0,-1});
 }
 
-void HellDemon::attack(){
+void Hell_Demon::attack(){
     setState(CharacterState::STATE_ATTACKING);
 
     anim->play("attack1", true);

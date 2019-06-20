@@ -6,7 +6,6 @@ LDFLAGS = -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -l
 CFLAGS = -Isfml/include -std=c++11 -Wall -pthread 
 CSOURCE = $(wildcard src/*.cpp src/*/**.cpp)
 OBJ=$(subst src, obj, $(CSOURCE:.cpp=.o))
-VAL_FLAGS = --track-origins=yes --leak-check=full
 
 .PHONY: default
 default: dependencies $(CSOURCE) $(EXEC)
@@ -22,10 +21,10 @@ $(OBJDIR)/%.o: src/%.cpp
 
 .PHONY: debug
 debug:
-	$(CC) -c $(CSOURCE) $(LDFLAGS) $(SFML) -ggdb
+	$(CC) -c $(CSOURCE) $(LDFLAGS) $(CFLAGS) -ggdb
 	mv *.o $(OBJDIR)/
 	$(CC) $(OBJDIR)/*.o -o $(BINDIR)/$(EXEC)-debug $(LDFLAGS) $(SFML) $(CFLAGS)
-	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug $(VAL_FLAGS)
+	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug
 
 .PHONY: clean
 clean:

@@ -1,6 +1,6 @@
 #pragma once
-#include "includes.hpp"
-#include "Entity.hpp"
+#include <SFML/Graphics.hpp>
+#include "System/Entity.hpp"
 
 class Thing : public Entity {
     protected:
@@ -18,8 +18,8 @@ class Thing : public Entity {
         }
         ~Thing() { }
         virtual void fall(){}
-        virtual sf::FloatRect getRect(){ return {0,0,0,0}; }
-        virtual sf::Vector2f getPos(){ return {0,0}; }
+        virtual const sf::FloatRect getRect() const { return {0,0,0,0}; }
+        virtual const sf::Vector2f getPos() const { return {0,0}; }
 
         void setCollidingUp(bool _isColliding){ collidingUp = _isColliding; }
         void setCollidingRight(bool _isColliding){ collidingRight = _isColliding; }

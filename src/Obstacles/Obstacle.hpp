@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "../Thing.hpp"
 
 class Obstacle : public Thing {
@@ -8,6 +8,7 @@ class Obstacle : public Thing {
         float damage;
         float attackRate; // Milisegundo por ataque
         float size;
+        float range;
         sf::Clock attackClock;
         sf::Sprite oSprite;
         sf::Texture* texture;
@@ -19,7 +20,14 @@ class Obstacle : public Thing {
 
         virtual float getDamage() = 0;
         virtual float getAttackRate(){ return attackRate; }
+        
+        /*  0 = Platform
+            1 = Wall
+            2 = Fire
+            3 = Black Hole
+        */
         short getType(){ return type; }
         virtual sf::Clock* getAttackClock(){ return &attackClock; }
+        virtual float getRange(){ return range; };
 
 };

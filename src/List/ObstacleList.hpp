@@ -1,11 +1,10 @@
 #pragma once
 #include "../Obstacles/Obstacle.hpp"
-#include "List.hpp"
 #include <list>
 
-class ObstaclesList : public List<Obstacle*> {
+class ObstaclesList {
     public:
-        list<Obstacle*> obstacles;
+        std::list<Obstacle*> obstacles;
 
         virtual void add(Obstacle* _el){
             obstacles.push_back(_el);

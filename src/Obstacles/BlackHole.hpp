@@ -1,5 +1,5 @@
 #pragma once
-#include "../includes.hpp"
+#include <SFML/Graphics.hpp>
 #include "Obstacle.hpp"
 #include "../Animatable.hpp"
 
@@ -10,7 +10,7 @@ class Black_Hole : public Obstacle, public Animatable {
 
         virtual float getDamage();
         virtual void update();
-        virtual void draw(Engine* engine);
-        virtual sf::Vector2f getPos();
+        virtual void draw(Engine& engine);
+        virtual const sf::Vector2f getPos() const;
     
 };

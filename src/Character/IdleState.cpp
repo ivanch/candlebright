@@ -8,6 +8,12 @@ IdleState::~IdleState(){
 
 }
 
+bool IdleState::idle(Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new IdleState());
+    return true;
+}
+
 bool IdleState::jumping(Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new JumpingState());

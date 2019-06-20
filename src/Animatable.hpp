@@ -1,7 +1,7 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include "AnimManager.hpp"
-#include "includes.hpp"
 
 class Animatable {
     protected:

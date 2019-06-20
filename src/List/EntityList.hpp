@@ -1,10 +1,9 @@
 #pragma once
-#include "../includes.hpp"
-#include "../Entity.hpp"
+#include <SFML/Graphics.hpp>
+#include "../System/Entity.hpp"
 #include "LinkedList.hpp"
-#include "List.hpp"
 
-class EntityList : public List<Entity*>
+class EntityList 
 {
     public:
         EntityList(){ }
@@ -19,7 +18,7 @@ class EntityList : public List<Entity*>
             entity_list.removeNth(_el);
         }*/
 
-        list<Entity*> entities;
+        std::list<Entity*> entities;
 
         virtual void add(Entity* _el){
             entities.push_back(_el);
