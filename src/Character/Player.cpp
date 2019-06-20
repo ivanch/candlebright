@@ -73,18 +73,17 @@ void Player::jump(){
     setState(CharacterState::STATE_JUMPING);
 }
 
-void Player::update(){    
+void Player::update(){
+    /* Gerencia os botões apertados */
     if(sf::Keyboard::isKeyPressed(key_right)) {
         if(velocity.x < maxSlideX)
             velocity.x += 10;
         if(velocity.x > maxSlideX) velocity.x = maxSlideX;
-    }
-    else if(sf::Keyboard::isKeyPressed(key_left)) {
+    }else if(sf::Keyboard::isKeyPressed(key_left)) {
         if(velocity.x > -maxSlideX)
             velocity.x -= 10;
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
-    }
-    else if(sf::Keyboard::isKeyPressed(key_jump) && !collidingUp && collidingDown){
+    }else if(sf::Keyboard::isKeyPressed(key_jump) && !collidingUp && collidingDown){
         if(currentState->getState() != CharacterState::STATE_JUMPING){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
@@ -98,17 +97,11 @@ void Player::update(){
             setState(CharacterState::STATE_IDLE);
     }
 
-    if(velocity.x > 0.001){
-        velocity.x -= 1 * abs(velocity.x*0.09);
-        moveRight();
-    }else if(velocity.x < -0.001){
-        velocity.x += 1 * abs(velocity.x*0.09);
-        moveLeft();
-    }
-    if(velocity.y > 0.001){
-        jump();
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
+        cout << isCollidingLeft() << ", " << isCollidingUp() << ", " << isCollidingDown() << ", " << isCollidingRight() << endl;
     }
 
+    /* Gerencia o estado do jogador */
     if(pSprite.getPosition().y < finalJumpHeight + 15 || collidingLeft || collidingRight){
         setState(CharacterState::STATE_FALLING);
         velocity.y = 0;
@@ -125,6 +118,18 @@ void Player::update(){
     }else if(getState() == CharacterState::STATE_JUMPING && collidingUp){
         setState(CharacterState::STATE_FALLING);
         velocity.y = 0;
+    }
+
+    /* Gerencia a movimentação do jogador */
+    if(velocity.x > 0.001){
+        velocity.x -= 1 * abs(velocity.x*0.09);
+        moveRight();
+    }else if(velocity.x < -0.001){
+        velocity.x += 1 * abs(velocity.x*0.09);
+        moveLeft();
+    }
+    if(velocity.y > 0.001){
+        jump();
     }
 
     if(pSprite.getPosition().y > 800)

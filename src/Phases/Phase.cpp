@@ -196,9 +196,9 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
             if((*itr)->getType() != 0) continue; // Spawn apenas em cima de plataformas
             if(random_x < (*itr)->getRect().left && random_x > (*itr)->getRect().left+(*itr)->getRect().width) continue; // random_x fora das bordas da Plataforma
-            float dist = abs(pos.y-(*itr)->getPos().x);
+            float dist = abs(pos.y-(*itr)->getRect().top);
             if(dist > best_distance || best_distance == -1.0){
-                best_y = (*itr)->getRect().top-30.0;
+                best_y = (*itr)->getRect().top;
                 best_distance = dist;
             }
             best_y_success = true;
@@ -239,6 +239,6 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         return {0,0};
     }
 
-    cout << pos.x << ", " << pos.y << endl;
+
     return pos;
 }

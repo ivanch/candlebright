@@ -13,7 +13,7 @@ Black_Hole::Black_Hole(sf::Vector2f pos, float _size){
     anim->setScale({_size/35,_size/33}); // Tamanho
     damage = _size/300;
     attackRate = _size/30 * 50;
-    range = oSprite.getGlobalBounds().width + oSprite.getGlobalBounds().width*0.5;
+    range = oSprite.getGlobalBounds().width + oSprite.getGlobalBounds().width*4;
 }
 Black_Hole::~Black_Hole(){}
 

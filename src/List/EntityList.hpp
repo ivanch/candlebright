@@ -2,9 +2,8 @@
 #include "../includes.hpp"
 #include "../System/Entity.hpp"
 #include "LinkedList.hpp"
-#include "List.hpp"
 
-class EntityList : public List<Entity*>
+class EntityList 
 {
     public:
         EntityList(){ }

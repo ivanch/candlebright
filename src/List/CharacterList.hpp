@@ -1,8 +1,7 @@
 #include "../Character/Character.hpp"
-#include "List.hpp"
 #include <set>
 
-class CharacterList : public List<Character*> {
+class CharacterList {
     public:
         set<Character*> characters;
 

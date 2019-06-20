@@ -10,8 +10,8 @@ Fire::Fire(sf::Vector2f pos, float _size){
     anim->defineRect();
     // Computa o ataque, taxa de ataque, dano e tamanho
     anim->setScale({_size/25, _size/30}); // Tamanho
-    damage = _size/500;
-    attackRate = _size/50 * 250;
+    damage = _size/750;
+    attackRate = _size/50 * 300;
     range = oSprite.getGlobalBounds().width + oSprite.getGlobalBounds().width*0.05;
 }
 Fire::~Fire(){}

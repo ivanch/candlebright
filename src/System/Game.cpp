@@ -9,7 +9,8 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
     player1 = new Player(1);
     player2 = new Player(2);
 
-    spawnDelay = 5; // Spawna um inimigo na tela a cada 15 segundos
+    enemySpawnDelay = 30; // Spawna um inimigo na tela a cada 30 segundos
+    obstacleSpawnDelay = 60; // Spawna um obstáculo a cada 60 segundos
 }
 Game::~Game(){}
 
@@ -127,25 +128,40 @@ void Game::update(){
                 world->update(); // Atualiza as entidades do mundo
                 world->drawAll(&engine); // Desenha todas entidades do mundo
 
-                /* Spawn aleatório */
-                if(spawnTimer.getElapsedTime().asSeconds() >= spawnDelay){
+                /* Spawn aleatório de inimigos */
+                if(enemySpawnTimer.getElapsedTime().asSeconds() >= enemySpawnDelay){
                     Enemy* e;
                     int r = rand()%4;
                     sf::Vector2f pos = world->getRandomPosition(view);
                     if(pos.x != 0 && pos.y != 0){
                         if(r == 0){ // Zombie
-                            e = new Zombie(pos);
+                            e = new Zombie({pos.x,pos.y-50});
                         }else if(r == 1){ // Clothed Zombie
-                            e = new Dressed_Zombie(pos);
+                            e = new Dressed_Zombie({pos.x,pos.y-50});
                         }else if(r == 2){ // Ghost
-                            e = new Ghost(pos);
+                            e = new Ghost({pos.x,pos.y-60});
                         }else if(r == 3){ // Hell Demon
-                            e = new Hell_Demon({pos.x,pos.y-5.0});
+                            e = new Hell_Demon({pos.x,pos.y-60});
                         }
                         world->addCharacter(e);
                     }
+                    enemySpawnTimer.restart();
+                }
 
-                    spawnTimer.restart();
+                if(obstacleSpawnTimer.getElapsedTime().asSeconds() >= obstacleSpawnDelay){
+                    Obstacle* o;
+                    int r = rand()%100;
+                    sf::Vector2f pos = world->getRandomPosition(view);
+                    if(pos.x != 0 && pos.y != 0){
+                        int _size = 5 + rand()%(55-5); // 5 ~ 50
+                        if(r <= 80){ // Fogo (80% de chance)
+                            o = new Fire({pos.x,pos.y-(_size)}, _size);
+                        }else if(r > 80){ // Black Hole (20% de chance)
+                            o = new Black_Hole({pos.x,pos.y}, _size);
+                        }
+                        world->addObstacle(o);
+                    }
+                    obstacleSpawnTimer.restart();
                 }
             }
 

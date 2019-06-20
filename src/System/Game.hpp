@@ -27,8 +27,11 @@ class Game {
 
         sf::Clock timer;
 
-        sf::Clock spawnTimer;
-        int spawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+        sf::Clock enemySpawnTimer;
+        int enemySpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+
+        sf::Clock obstacleSpawnTimer;
+        int obstacleSpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
 
     public:
         Game();

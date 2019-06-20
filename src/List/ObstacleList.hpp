@@ -1,9 +1,8 @@
 #pragma once
 #include "../Obstacles/Obstacle.hpp"
-#include "List.hpp"
 #include <list>
 
-class ObstaclesList : public List<Obstacle*> {
+class ObstaclesList {
     public:
         list<Obstacle*> obstacles;
 
