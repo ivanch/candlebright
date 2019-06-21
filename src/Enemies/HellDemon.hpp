@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.hpp"
 
-class Hell_Demon : public Enemy {    
+class Hell_Demon : public Enemy {
     public:
         Hell_Demon(sf::Vector2f pos = {0,0});
         ~Hell_Demon();
@@ -20,4 +20,6 @@ class Hell_Demon : public Enemy {
         virtual void attack();
 
         virtual short getSubType(){ return 4; }
+    protected:
+        unsigned int score;
 };

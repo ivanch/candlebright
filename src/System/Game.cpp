@@ -10,7 +10,7 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
 
     enemySpawnDelay = 30; // Spawna um inimigo na tela a cada 30 segundos
     obstacleSpawnDelay = 60; // Spawna um obstáculo a cada 60 segundos
-    
+
     sf::Font* font = new sf::Font;
     if(!font->loadFromFile("fonts/ancient.ttf")){
         std::cerr<<"Erro ao ler fonte"<<std::endl;
@@ -54,6 +54,10 @@ void Game::saveGame()
         file << act_world << std::endl;
         for(auto itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
             file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y - 30.f << std::endl;
+        if((*itr)->getType() == 0){
+            std::cout<<Player::getScore();
+            file << Player::getScore() << std::endl;
+        }
         }
         std::cout << "Game Saved" << std::endl;
 
@@ -102,6 +106,14 @@ void Game::loadPlayers(){
 }
 void Game::update(){
     while (engine.isWindowOpen()){
+        if(player1->getIsDead())
+        {
+            std::cout<<Player::getScore();
+
+            std::ofstream file("Save/Ranking.txt");
+            file << Player::getScore();
+
+        }
         engine.clearWindow();
         if(menu.isEnabled()){
             menu.update(&engine);
@@ -183,7 +195,6 @@ void Game::update(){
                 loadPlayers();
                 timer.restart();
             }
-
             world->drawAll(engine); // Desenha todas entidades do mundo
         }
         engine.render();

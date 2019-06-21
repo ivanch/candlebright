@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Enemy.hpp"
 
-class Zombie : public Enemy {    
+class Zombie : public Enemy {
     public:
         Zombie(sf::Vector2f pos = {0,0});
         ~Zombie();
@@ -20,4 +20,6 @@ class Zombie : public Enemy {
         virtual void attack();
 
         virtual short getSubType(){ return 1; }
+    protected:
+        unsigned int score;
 };

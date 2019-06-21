@@ -8,6 +8,7 @@ Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, {160,96}){
     maxSlideX = 0.001;
     maxSlideY = 80;
     finalJumpHeight = 0;
+    score = 10;
 
     health = 500;
     damage = 1;

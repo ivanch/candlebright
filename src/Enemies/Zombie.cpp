@@ -14,6 +14,7 @@ Zombie::Zombie(sf::Vector2f pos){
     attackSpeed = 0.5;
     finalJumpHeight = 0;
     type = 1;
+    score = 1;
 
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
@@ -95,11 +96,11 @@ void Zombie::update(){
             anim->setScale({1,1});
         }
     }
-    
+
     if(((float) rand()) / (float) RAND_MAX <= attackChance){
         attack();
     }
-    
+
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
 
     healthBar.setPos({getPos().x-20,getPos().y+50});

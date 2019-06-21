@@ -9,7 +9,8 @@ Hell_Demon::Hell_Demon(sf::Vector2f pos){
     maxSlideY = 80;
     finalJumpHeight = 0;
     type = 1;
-    
+    score = 3;
+
     health = 100;
     damage = 5.0;
     range = 10.0;
@@ -63,11 +64,11 @@ void Hell_Demon::moveLeft(){
 
 void Hell_Demon::update(){
     sf::Vector2f pos = eSprite.getPosition();
-    
+
     if( getState() == CharacterState::STATE_FALLING && collidingDown ){
         setState(CharacterState::STATE_IDLE);
     }
-    
+
     if(getState() == CharacterState::STATE_WALKING){
         if(facing == Facing::FACING_LEFT){
             if(!collidingLeft)
@@ -91,7 +92,7 @@ void Hell_Demon::update(){
     if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterState::STATE_WALKING){
         attack();
     }
-    
+
     if(getState() == CharacterState::STATE_ATTACKING){
         if(animClock.getElapsedTime().asMilliseconds() >= 200){
             animClock.restart();

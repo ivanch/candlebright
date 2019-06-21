@@ -29,4 +29,6 @@ class Sylathus : public Enemy {
         virtual void attack();
 
         virtual short getSubType(){ return 5; }
+    protected:
+        unsigned int score;
 };

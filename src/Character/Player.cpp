@@ -1,5 +1,7 @@
 #include "Player.hpp"
 
+unsigned int Player::score = 0;
+
 Player::Player(int _template){
     health = 100;
     moveSpeed = 1.5;
@@ -10,6 +12,7 @@ Player::Player(int _template){
     range = 100.0;
     attackSpeed = 100;
     finalJumpHeight = 0;
+    score = 0;
     isDead = false;
 
     anim = new AnimManager(&pSprite, {30,75});
@@ -125,10 +128,10 @@ void Player::update(){
 
     /* Gerencia a movimentação do jogador */
     if(velocity.x > 0.001){
-        velocity.x -= 1 * abs(velocity.x*0.09);
+        velocity.x -= 1 * std::abs(velocity.x*0.09);
         moveRight();
     }else if(velocity.x < -0.001){
-        velocity.x += 1 * abs(velocity.x*0.09);
+        velocity.x += 1 * std::abs(velocity.x*0.09);
         moveLeft();
     }
     if(velocity.y > 0.001){
@@ -183,7 +186,7 @@ void Player::update(){
             }else if(!whipExpanding){
                 if(whipSize > 0) whipSize -= 5;
             }
-    
+
             if(anim->isLocked()){
                 if(facing == FACING_RIGHT)
                     wSprite.setScale({whipSize/range,1});

@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
+#include "../Character/Player.hpp"
 #include "../Character/Character.hpp"
 
 class Enemy : public Character {
@@ -11,6 +12,8 @@ class Enemy : public Character {
         sf::Vector2f moving;
         std::string name;
         float attackChance; // Chance de ataque a cada 1/60 segundos
+        unsigned int score;
+
 
     public:
         Enemy();
@@ -18,6 +21,6 @@ class Enemy : public Character {
         virtual void attack() = 0;
         virtual void setPos(sf::Vector2f _pos);
         virtual const sf::Vector2f getPos();
-        
+
         static unsigned int enemyCount;
 };

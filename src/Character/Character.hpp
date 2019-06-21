@@ -53,13 +53,12 @@ class Character : public Animatable {
         virtual const short getFacing() const;
 
         virtual void setHealth(float _health);
-        
+
         virtual void death(){}
 
     protected:
         sf::Vector2f velocity;
         float health;
-        unsigned int score;
         float moveSpeed;
         float jumpHeight;
         float finalJumpHeight;

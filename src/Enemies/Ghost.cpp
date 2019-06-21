@@ -9,7 +9,8 @@ Ghost::Ghost(sf::Vector2f pos){
     maxSlideY = 80;
     finalJumpHeight = 0;
     type = 1;
-    
+    score = 4;
+
     health = 100;
     damage = 5.0;
     range = 10.0;
@@ -80,7 +81,7 @@ void Ghost::update(){
     if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterState::STATE_WALKING){
         attack();
     }
-    
+
     if(getState() == CharacterState::STATE_ATTACKING){
         if(animClock.getElapsedTime().asMilliseconds() >= 450){
             animClock.restart();

@@ -9,6 +9,7 @@ Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
     maxSlideY = 80;
     finalJumpHeight = 0;
     type = 1;
+    score = 2;
 
     health = 150;
     damage = 5.0;
@@ -62,7 +63,7 @@ void Dressed_Zombie::moveLeft(){
 
 void Dressed_Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
-    
+
     if( getState() == CharacterState::STATE_FALLING && collidingDown ){
         setState(CharacterState::STATE_IDLE);
     }
@@ -97,7 +98,7 @@ void Dressed_Zombie::update(){
             anim->setScale({1,1});
         }
     }
-    
+
     if(((float) rand()) / (float) RAND_MAX <= attackChance){
         attack();
     }

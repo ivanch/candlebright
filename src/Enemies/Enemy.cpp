@@ -4,9 +4,11 @@ unsigned int Enemy::enemyCount = 0;
 
 Enemy::Enemy(){
     enemyCount++;
+    score = 0;
 }
 Enemy::~Enemy(){
     enemyCount--;
+    Player::setScore(Player::getScore()+score);
 }
 
 void Enemy::setPos(sf::Vector2f _pos){
