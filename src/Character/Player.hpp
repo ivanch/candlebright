@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 #include "Character.hpp"
+#include "../Enemies/Enemy.hpp"
 
 class Player : public Character {
     private:
@@ -19,6 +20,8 @@ class Player : public Character {
         sf::Keyboard::Key key_left;
         sf::Keyboard::Key key_jump;
         sf::Keyboard::Key key_attack;
+
+        bool isDead;
 
     public:
         Player(int _template=-1);
@@ -37,5 +40,5 @@ class Player : public Character {
         virtual void attack();
         virtual void fall();
         virtual void takeDamage(float _damage);
-        virtual void death(){}
+        virtual void death();
 };

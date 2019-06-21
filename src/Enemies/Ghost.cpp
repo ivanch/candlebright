@@ -7,13 +7,14 @@ Ghost::Ghost(sf::Vector2f pos){
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
+    finalJumpHeight = 0;
+    type = 1;
+    
     health = 100;
     damage = 5.0;
     range = 10.0;
     attackChance = 0.15 / 60; // 15%
     attackSpeed = 250;
-    finalJumpHeight = 0;
-    type = 1;
 
     setState(CharacterState::STATE_WALKING);
     facing = FACING_RIGHT;
@@ -112,7 +113,7 @@ void Ghost::draw(Engine& engine) {
 }
 
 void Ghost::takeDamage(float _damage){
-    health -= damage;
+    health -= _damage;
     healthBar.setHealth(health);
     move({0,-1});
 }

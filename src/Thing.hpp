@@ -16,7 +16,7 @@ class Thing : public Entity {
             collidingLeft = false;
             collidingDown = false;
         }
-        ~Thing() { }
+        virtual ~Thing() { }
         virtual void fall(){}
         virtual const sf::FloatRect getRect() const { return {0,0,0,0}; }
         virtual const sf::Vector2f getPos() const { return {0,0}; }

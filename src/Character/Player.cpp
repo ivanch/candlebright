@@ -7,9 +7,10 @@ Player::Player(int _template){
     maxSlideX = 0.001;
     maxSlideY = 100;
     damage = 5.0;
-    range = 20.0;
+    range = 100.0;
     attackSpeed = 100;
     finalJumpHeight = 0;
+    isDead = false;
 
     anim = new AnimManager(&pSprite, {30,75});
     anim->addSheet("idle", "sprites/Player/new-idle.png");
@@ -74,6 +75,8 @@ void Player::jump(){
 }
 
 void Player::update(){
+    if(isDead) return;
+
     /* Gerencia os botões apertados */
     if(sf::Keyboard::isKeyPressed(key_right)) {
         if(velocity.x < maxSlideX)
@@ -172,13 +175,13 @@ void Player::update(){
             if(animClock.getElapsedTime().asMilliseconds() >= 50){
                 animClock.restart();
                 anim->play("attack", true);
+            }
 
-                if(whipExpanding){
-                    whipSize += 5;
-                    if(whipSize >= range) whipExpanding = false;
-                }else if(!whipExpanding){
-                    if(whipSize > 0) whipSize -= 5;
-                }
+            if(whipExpanding){
+                whipSize += 5;
+                if(whipSize >= range) whipExpanding = false;
+            }else if(!whipExpanding){
+                if(whipSize > 0) whipSize -= 5;
             }
     
             if(anim->isLocked()){
@@ -188,6 +191,7 @@ void Player::update(){
                 wSprite.setPosition(pSprite.getPosition().x+5, pSprite.getPosition().y+15);
             }else{ // Acabou animação do ataque
                 anim->stop();
+                whipSize = 0;
                 setState(CharacterState::STATE_IDLE);
             }
             break;
@@ -200,6 +204,9 @@ void Player::update(){
     }
 
     healthBar.setPos({getPos().x-25,getPos().y+75});
+    if(Enemy::enemyCount == 1){
+        range = 200;
+    }
 }
 
 void Player::draw(Engine& engine) {
@@ -235,4 +242,8 @@ void Player::takeDamage(float _damage){
     healthBar.setHealth(health);
     move({0, -0.1});
     std::cout << "Levou dano" << std::endl;
+}
+
+void Player::death(){
+    isDead = true;
 }

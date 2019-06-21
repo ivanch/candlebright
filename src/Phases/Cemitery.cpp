@@ -11,7 +11,7 @@ Cemitery::Cemitery(){
     addThing(p);
 
     Obstacle* o;
-    o = new Wall({10,50},{100,650}, sf::Color::Cyan);
+    o = new Wall({10,40},{100,720}, sf::Color::Cyan);
     addObstacle(o);
 
     Enemy* e;

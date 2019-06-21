@@ -1,5 +1,7 @@
-#include "../Character/Character.hpp"
+#pragma once
+
 #include <set>
+#include "../Character/Character.hpp"
 
 class CharacterList {
     public:
@@ -11,7 +13,7 @@ class CharacterList {
         virtual void remove(Character* _el){
             characters.erase(_el);
         }
-        set<Character *>::iterator begin(){ return characters.begin(); }
-        set<Character *>::iterator end(){ return characters.end(); }
+        std::set<Character *>::iterator begin(){ return characters.begin(); }
+        std::set<Character *>::iterator end(){ return characters.end(); }
 
 };

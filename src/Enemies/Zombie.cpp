@@ -111,7 +111,7 @@ void Zombie::draw(Engine& engine) {
 }
 
 void Zombie::takeDamage(float _damage){
-    health -= damage;
+    health -= _damage;
     healthBar.setHealth(health);
     move({0,-1});
     moveSpeed += moveSpeed * 0.05;

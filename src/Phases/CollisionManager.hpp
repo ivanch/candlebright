@@ -1,14 +1,15 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include "../List/ThingsList.hpp"
 
 #define LIMIT   4
 class CollisionManager {
     public:
-        CollisionManager(){}
+        CollisionManager(ThingsList* _things);
         ~CollisionManager(){}
 
-        void checkCollisions(ThingsList* things);
+        void checkCollisions();
 
     private:
         /* Parte de baixo do obj1 com a parte de cima do obj2. */
@@ -19,4 +20,6 @@ class CollisionManager {
         bool intersectsRight(sf::FloatRect obj1, sf::FloatRect obj2);
         /* Lado esquerdo do obj1 com o lado direito do obj2. */
         bool intersectsLeft(sf::FloatRect obj1, sf::FloatRect obj2);
+
+        ThingsList* things;
 };

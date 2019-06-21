@@ -1,15 +1,16 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include "Enemy.hpp"
-#include "../Animatable.hpp"
 
 class Sylathus : public Enemy {
     private:
-        sf::Sprite sSprite;
         sf::Sprite bSprite; // Bafo sprite
 
         AnimManager breathAnim;
         sf::Clock breathClock;
+
+        bool preAttack;
 
     public:
         Sylathus(sf::Vector2f pos = {0,0});
@@ -26,7 +27,6 @@ class Sylathus : public Enemy {
         virtual void draw(Engine& engine);
         virtual void move(sf::Vector2f vec);
         virtual void attack();
-        virtual void death(){}
 
         virtual short getSubType(){ return 5; }
 };

@@ -1,6 +1,7 @@
 #pragma once
-#include "../Obstacles/Obstacle.hpp"
+
 #include <list>
+#include "../Obstacles/Obstacle.hpp"
 
 class ObstaclesList {
     public:

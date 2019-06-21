@@ -3,11 +3,11 @@
 #include <iostream>
 #include <fstream>
 
-#include "Entity.hpp"
 #include "../Phases/City.hpp"
 #include "../Phases/Cemitery.hpp"
 #include "../Character/Player.hpp"
 #include "Engine.hpp"
+#include "Entity.hpp"
 #include "Menu.hpp"
 
 class Game {
@@ -19,6 +19,7 @@ class Game {
         Player* player2;
         Phase* world;
         sf::View view;
+        sf::Text enemyCount;
 
         int act_world;
 

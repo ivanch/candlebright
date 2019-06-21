@@ -9,7 +9,6 @@ Menu::Menu(float width, float height)
     sf::Texture* textureMenu = new sf::Texture;
     spriteMenu = new sf::Sprite;
     int menu_opt;
-    srand(time(NULL));
     menu_opt=rand()%2;
     std::cout<<menu_opt;
     if(menu_opt==0){

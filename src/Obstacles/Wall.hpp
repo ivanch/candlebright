@@ -1,7 +1,8 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
-#include "Obstacle.hpp"
 #include "../Thing.hpp"
+#include "Obstacle.hpp"
 
 class Wall : public Obstacle {
     private:

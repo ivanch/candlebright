@@ -1,7 +1,7 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
 #include "Obstacle.hpp"
-#include "../System/Engine.hpp"
 
 class Platform : public Obstacle {
     private:

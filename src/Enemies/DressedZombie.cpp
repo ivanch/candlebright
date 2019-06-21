@@ -7,13 +7,14 @@ Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
+    finalJumpHeight = 0;
+    type = 1;
+
     health = 150;
     damage = 5.0;
     range = 10.0;
-    attackChance = 0.1 / 60; // Chance de ataques por segundo
-    attackSpeed = 0.5;
-    finalJumpHeight = 0;
-    type = 1;
+    attackChance = 0.1 / 60; // 10%
+    attackSpeed = 200;
 
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
@@ -22,6 +23,7 @@ Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
     anim->addSheet("walk", "sprites/Clothed-Zombie/new-clothed-zombie-walking.png");
 
     healthBar.setSize({40.0,5});
+    healthBar.setMaxHealth(150);
 }
 Dressed_Zombie::~Dressed_Zombie(){}
 
@@ -111,7 +113,7 @@ void Dressed_Zombie::draw(Engine& engine) {
 }
 
 void Dressed_Zombie::takeDamage(float _damage){
-    health -= damage;
+    health -= _damage;
     healthBar.setHealth(health);
     move({0,-1});
     moveSpeed -= moveSpeed * 0.05;

@@ -3,7 +3,6 @@
 Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
     window = engine.getWindow();
     view.reset(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
-    srand (static_cast <unsigned> (time(NULL)));
     game_paused = false;
 
     player1 = new Player(1);
@@ -11,6 +10,15 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
 
     enemySpawnDelay = 30; // Spawna um inimigo na tela a cada 30 segundos
     obstacleSpawnDelay = 60; // Spawna um obstáculo a cada 60 segundos
+    
+    sf::Font* font = new sf::Font;
+    if(!font->loadFromFile("fonts/ancient.ttf")){
+        std::cerr<<"Erro ao ler fonte"<<std::endl;
+    }
+    enemyCount.setString("Inimigos: 0");
+    enemyCount.setFont(*font);
+    enemyCount.setPosition(player1->getPos());
+    enemyCount.setFillColor(sf::Color::Blue);
 }
 Game::~Game(){}
 
@@ -39,7 +47,7 @@ void Game::run(){
 }
 void Game::saveGame()
 {
-    ofstream file("Save/GameSave.txt");
+    std::ofstream file("Save/GameSave.txt");
 
     if(file.is_open())
     {
@@ -55,7 +63,7 @@ void Game::saveGame()
 void Game::loadPlayers(){
     /* Carrega os Players */
     std::string line;
-    ifstream file("Save/GameSave.txt");
+    std::ifstream file("Save/GameSave.txt");
     Player* temp_player;
     int player_count = 0;
     if(file.is_open())
@@ -163,8 +171,6 @@ void Game::update(){
                 }
             }
 
-            world->drawAll(engine); // Desenha todas entidades do mundo
-
             /* Botão pra carregar e salvar */
             if(sf::Keyboard::isKeyPressed(sf::Keyboard::F5)&& timer.getElapsedTime().asSeconds() > 1)
             {
@@ -177,6 +183,8 @@ void Game::update(){
                 loadPlayers();
                 timer.restart();
             }
+
+            world->drawAll(engine); // Desenha todas entidades do mundo
         }
         engine.render();
     }

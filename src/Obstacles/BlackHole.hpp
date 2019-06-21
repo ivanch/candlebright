@@ -1,7 +1,8 @@
 #pragma once
+
 #include <SFML/Graphics.hpp>
-#include "Obstacle.hpp"
 #include "../Animatable.hpp"
+#include "Obstacle.hpp"
 
 class Black_Hole : public Obstacle, public Animatable {    
     public:

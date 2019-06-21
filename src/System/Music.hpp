@@ -1,10 +1,9 @@
 #pragma once
+
+#include <iostream>
+#include <string>
 #include <SFML/Audio.hpp>
 #include "Thread.hpp"
-#include <string>
-#include <iostream>
-
-using namespace std;
 
 class Music : public Thread {
     private:

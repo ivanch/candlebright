@@ -1,6 +1,10 @@
 #include "CollisionManager.hpp"
 
-void CollisionManager::checkCollisions(ThingsList* things){
+CollisionManager::CollisionManager(ThingsList* _things){
+    things = _things;
+}
+
+void CollisionManager::checkCollisions(){
     for(auto itr = things->begin(); itr != things->end(); ++itr){
         Thing* obj1 = *itr;
         obj1->setCollidingUp(false);

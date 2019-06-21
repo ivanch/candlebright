@@ -4,8 +4,8 @@
 
 class Thread {
     private:
-        pthread_t _threadID;
-        pthread_attr_t _threadAttr;
+        pthread_t threadID;
+        pthread_attr_t threadAttr;
         static void* runThread(void* _thread);
 
     protected:

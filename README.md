@@ -1,9 +1,7 @@
 # Joguinho!
 
 ## A fazer
-* [x] Persistência de objetos (salvar e carregar jogo)
 * [ ] Persistência de objetos (salvar e carregar ranking)
-* [x] Mostrar vida na tela (parcial)
 * [ ] Criar o mapa 1 (cidade)
 * [ ] Criar o mapa 2 (cemitério)
 
@@ -19,7 +17,7 @@
 | Ter a cada fase ao menos dois tipos de inimigos com número aleatório de instâncias, podendo ser  várias instâncias e sendo pelo menos 5 instâncias por tipo. | Requisito previsto inicialmente e realizado. | Requisito cumprido através das construtoras de *City* e *Cemitery*, que instanciam os inimigos apenas uma vez. As intancias aleatórias foram feitas através da função *update* dentro da classe *Game*. |
 | Ter inimigo Chefão na última fase | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe *Sylathus*, instanciada em *Cemitery* (segunda fase). |
 | Ter três tipos de obstáculos | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *Black_Hole*, *Fire* e *Wall*. |
-| Ter em cada fase ao menos dois tipos de obstáculos com número aleatório de instâncias (i.e., objetos) sendo pelo menos 5 instâncias por tipo. | A fazer. | --- |
+| Ter em cada fase ao menos dois tipos de obstáculos com número aleatório de instâncias (i.e., objetos) sendo pelo menos 5 instâncias por tipo. | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *Fire*, *Wall*, *Platform* e *Black_Hole*, as quais são instanciadas em *City* e *Cemitery*, também sendo instanciadas de forma aleatória na função *update* em *Game*. |
 | Ter representação gráfica de cada instância | Requisito previsto inicialmente e realizado. | Requisito cumprido via classe abstrata *Entity*, que possui um método virtual puro chamado *draw*, responsável por desenhar a entidade na tela |
 | Ter em cada fase um cenário de jogo com os obstáculos. | Requisito previsto inicialmente e realizado. | Requisito cumprido através da criação de obstáculos dentro da construtora das classes *City* e *Cemitery*. |
 | Gerenciar colisões entre jogador e inimigos | Requisito previsto inicialmente e realizado. | Requisito cumprido através das classes *CollisionManager* e *Phase*. |
@@ -90,7 +88,7 @@
 |---|---|---|
 | *Namespace* criada pelos autores | A fazer (?) | --- |
 | Classes aninhadas | Sim | `LinkedList.hpp` |
-| Atributos estáticos e métodos estáticos | A fazer | --- |
+| Atributos estáticos e métodos estáticos | Em parte | Foi utilizado apenas atributo estático dentro de `Enemy.hpp` |
 | Uso extensivo de constante em parâmetro, retorno, método | A fazer | --- |
 
 ## Conceitos de STL e String OO
@@ -132,7 +130,7 @@
 ## Conceitos de engenharia de software
 | Conceito | Uso | Onde |
 |---|---|---|
-| Versionamento | Sim | git |
-| Reuniões com o professor | Sim | ? |
+| Versionamento | Sim | (Qual?) git |
+| Reuniões com o professor | Sim | (Quantas e onde?) Total de 5 reuniões (especificiar os locais). |
 | Reuniões com o monitor | Não | --- |
-| Revisão do trabalho escrito de outra equipe e vice-versa | A fazer | --- |
+| Revisão do trabalho escrito de outra equipe e vice-versa | A fazer | (Qual?) --- |

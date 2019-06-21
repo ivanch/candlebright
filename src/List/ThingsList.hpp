@@ -1,6 +1,7 @@
 #pragma once
-#include "../Thing.hpp"
+
 #include <list>
+#include "../Thing.hpp"
 
 class ThingsList {
     public:

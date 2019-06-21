@@ -3,17 +3,18 @@
 
 #include "../Thing.hpp"
 #include "../AnimManager.hpp"
+#include "../Animatable.hpp"
+#include "../System/Engine.hpp"
+
+#include "HealthBar.hpp"
 #include "CharacterState.hpp"
 #include "IdleState.hpp"
 #include "WalkingState.hpp"
 #include "JumpingState.hpp"
 #include "FallingState.hpp"
 #include "AttackingState.hpp"
-#include "../System/Engine.hpp"
-#include "../Animatable.hpp"
-#include "HealthBar.hpp"
 
-class Character : public Thing, public Animatable {
+class Character : public Animatable {
     public:
         enum Facing {
             FACING_RIGHT,
@@ -24,39 +25,40 @@ class Character : public Thing, public Animatable {
         virtual ~Character();
         virtual void move(sf::Vector2f _move) = 0;
         virtual void takeDamage(float _damage) = 0;
-        virtual void death() = 0;
         virtual void setPos(sf::Vector2f _pos) = 0;
 
         /* Funções de get */
         virtual const sf::Vector2f getPos() const = 0;
-        virtual const sf::Vector2f getSize() const { return {getRect().width, getRect().height}; }
-        virtual const float getDamage() const { return damage; }
-        virtual const float getAttackSpeed() const { return attackSpeed; }
-        virtual sf::Clock* getAttackClock() { return &attackTimer; }
-        virtual const float getRange() const { return range; }
-        virtual const float getHealth() const { return health; }
+        virtual const sf::Vector2f getSize() const;
+        virtual const float getDamage() const;
+        virtual const float getAttackSpeed() const;
+        virtual sf::Clock* getAttackClock();
+        virtual const float getRange() const;
+        virtual const float getHealth() const;
 
         /*  0 = Player
             1 = Enemy */
-        virtual short getType() { return type; }
+        virtual short getType();
         /* Específico para cada "sub-classe" */
-        virtual short getSubType(){ return 0; };
+        virtual short getSubType();
 
         /* CharacterState com enum */
         virtual bool setState(CharacterState::State _newState);
-        virtual const CharacterState::State getState(){ return currentState->getState(); }
+        virtual const CharacterState::State getState();
         /* CharacterState no âmbito POO */
-        virtual const CharacterState* getCharacterState(){ return currentState; }
-        virtual void setCharacterState(CharacterState* _newState){ currentState = _newState; }
+        virtual const CharacterState* getCharacterState();
+        virtual void setCharacterState(CharacterState* _newState);
 
-        virtual void setFacing(Facing _facing) { facing = _facing; }
-        virtual const short getFacing() { return facing; }
+        virtual void setFacing(Facing _facing);
+        virtual const short getFacing() const;
 
-        virtual void setHealth(float _health){ health = _health; }
+        virtual void setHealth(float _health);
+        
+        virtual void death(){}
 
     protected:
         sf::Vector2f velocity;
-        unsigned int health;
+        float health;
         unsigned int score;
         float moveSpeed;
         float jumpHeight;

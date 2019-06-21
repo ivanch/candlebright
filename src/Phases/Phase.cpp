@@ -1,75 +1,28 @@
 #include "Phase.hpp"
 
-Phase::Phase(){}
+Phase::Phase(): col_mngr(&things){
+
+}
 Phase::~Phase(){}
 
 void Phase::update(){
-    col_mngr.checkCollisions(&things);
+    col_mngr.checkCollisions();
     //for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
     for(auto itr = entities.begin(); itr != entities.end(); ++itr){
         (*itr)->update();
     }
 
-    set<Character*> bufferKill;
-    for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-        if( (*itr)->getState() == CharacterState::STATE_ATTACKING && 
-            (*itr)->getAttackClock()->getElapsedTime().asMilliseconds() >= (*itr)->getAttackSpeed()){
-            for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
-                /* Exclusões */
-                if(itr == itr2) continue; // auto-dano
-                if((*itr)->getType() == (*itr2)->getType()) continue; // Não ataca personagens do mesmo tipo
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > 75.0) continue; // Range
-                if((*itr)->getFacing() == Character::FACING_RIGHT && (*itr2)->getPos().x < (*itr)->getPos().x) continue; // Previnir ataques de costas
-                if((*itr)->getFacing() == Character::FACING_LEFT && (*itr2)->getPos().x > (*itr)->getPos().x) continue; // Previnir ataques de costas
-                
-                (*itr2)->takeDamage((*itr)->getDamage());
-
-                if((*itr2)->getHealth() <= 0){
-                    bufferKill.insert(*itr2);
-                }
-            }
-            (*itr)->getAttackClock()->restart();
-        }
-    }
-    for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
-        if((*itr)->getAttackClock()->getElapsedTime().asMilliseconds() < (*itr)->getAttackRate()) continue; // Attack rate
-        for(auto itr2 = characters.begin(); itr2 != characters.end(); ++itr2){
-            if((*itr2)->getType() != 0) continue; // Só afeta players
-
-            if((*itr)->getType() == 2){ // Fogo
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > (*itr)->getRange()) continue; // Range
-
-                (*itr2)->takeDamage((*itr)->getDamage());
-
-                if((*itr2)->getHealth() <= 0){
-                    bufferKill.insert(*itr2);
-                }
-            }else if((*itr)->getType() == 3){ // Black Hole
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) > (*itr)->getRange()) continue; // Range
-
-                if(getDistance((*itr)->getPos(), (*itr2)->getPos()) < (*itr)->getRange()*0.2){
-                    (*itr2)->takeDamage((*itr)->getDamage());
-
-                    if((*itr2)->getHealth() <= 0){
-                        bufferKill.insert(*itr2);
-                    }
-                }
-                
-                if((*itr2)->getPos().x < (*itr)->getPos().x){ // Player a esquerda do buraco
-                    (*itr2)->move({3,0});
-                }else{
-                    (*itr2)->move({-3,0});
-                }
-            }
-        }
-        (*itr)->getAttackClock()->restart();
-    }
-    
-    for(auto itr = bufferKill.begin(); itr != bufferKill.end(); ++itr){
-        if((*itr)->getHealth() <= 0){
-            entities.remove(*itr);
-            things.remove(*itr);
-            characters.remove(*itr);
+    std::set<Character*> killBuffer;
+    checkAttack(&killBuffer);
+    checkObstacles(&killBuffer);
+    for(auto chr = killBuffer.begin(); chr != killBuffer.end(); ++chr){
+        things.remove(*chr);
+        characters.remove(*chr);
+        if((*chr)->getType() != 0){
+            entities.remove(*chr); // Continua imprimindo jogadores mortos na tela
+            delete *chr;
+        }else{
+            (*chr)->death();
         }
     }
 }
@@ -111,7 +64,7 @@ void Phase::loadEnemies(int act_world){
 
     /* Carrega os Inimigos */
     std::string line;
-    ifstream file("Save/GameSave.txt");
+    std::ifstream file("Save/GameSave.txt");
     Enemy* enemy;
     if(file.is_open())
     {
@@ -193,12 +146,12 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         bool best_y_success = false;
         float best_distance = -1.0;
         float best_y = 0.0;
-        for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
-            if((*itr)->getType() != 0) continue; // Spawn apenas em cima de plataformas
-            if(random_x < (*itr)->getRect().left && random_x > (*itr)->getRect().left+(*itr)->getRect().width) continue; // random_x fora das bordas da Plataforma
-            float dist = abs(pos.y-(*itr)->getRect().top);
+        for(auto plt = obstacles.begin(); plt != obstacles.end(); ++plt){
+            if((*plt)->getType() != 0) continue; // Spawn apenas em cima de plataformas
+            if(random_x < (*plt)->getRect().left && random_x > (*plt)->getRect().left+(*plt)->getRect().width) continue; // random_x fora das bordas da Plataforma
+            float dist = abs(pos.y-(*plt)->getRect().top);
             if(dist > best_distance || best_distance == -1.0){
-                best_y = (*itr)->getRect().top;
+                best_y = (*plt)->getRect().top;
                 best_distance = dist;
             }
             best_y_success = true;
@@ -210,9 +163,9 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
 
         /* Testa posição de outros Obstáculos */
         bool obstacles_test_success = true;
-        for(auto itr = obstacles.begin(); itr != obstacles.end(); ++itr){
-            if((*itr)->getType() == 0 || (*itr)->getType() == 1) continue; // Ignora plataformas
-            if(getDistance(pos,(*itr)->getPos()) < (*itr)->getRange() + 15.0){
+        for(auto obs = obstacles.begin(); obs != obstacles.end(); ++obs){
+            if((*obs)->getType() == 0 || (*obs)->getType() == 1) continue; // Ignora plataformas
+            if(getDistance(pos,(*obs)->getPos()) < (*obs)->getRange() + 15.0){
                 obstacles_test_success = false;
                 break;
             }   
@@ -222,8 +175,8 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
 
         /* Testa posição de Personagens */
         bool char_test_success = true;
-        for(auto itr = characters.begin(); itr != characters.end(); ++itr){
-            if(getDistance(pos,(*itr)->getPos()) < 100.0){
+        for(auto chr = characters.begin(); chr != characters.end(); ++chr){
+            if(getDistance(pos,(*chr)->getPos()) < 100.0){
                 char_test_success = false;
                 break;
             }
@@ -239,6 +192,65 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         return {0,0};
     }
 
-
     return pos;
+}
+
+void Phase::checkAttack(std::set<Character*>* killBuffer){
+    for(auto issuer = characters.begin(); issuer != characters.end(); ++issuer){
+        if( (*issuer)->getState() == CharacterState::STATE_ATTACKING && 
+            (*issuer)->getAttackClock()->getElapsedTime().asMilliseconds() >= (*issuer)->getAttackSpeed()){
+            for(auto damaged = characters.begin(); damaged != characters.end(); ++damaged){
+                /* Exclusões */
+                if(issuer == damaged) continue; // auto-dano
+                if((*issuer)->getType() == (*damaged)->getType()) continue; // Não ataca personagens do mesmo tipo
+                if(getDistance((*issuer)->getPos(), (*damaged)->getPos()) > (*issuer)->getRange()) continue; // Fora do range
+
+                if((*issuer)->getFacing() == Character::FACING_RIGHT && (*damaged)->getPos().x < (*issuer)->getPos().x) continue; // Previnir ataques de costas
+                if((*issuer)->getFacing() == Character::FACING_LEFT  && (*damaged)->getPos().x > (*issuer)->getPos().x) continue; // Previnir ataques de costas
+                
+                (*damaged)->takeDamage((*issuer)->getDamage());
+
+                if((*damaged)->getHealth() <= 0){ // Não adiciona player na lista pra matar
+                    killBuffer->insert(*damaged);
+                }
+            }
+            (*issuer)->getAttackClock()->restart();
+        }
+    }
+}
+
+void Phase::checkObstacles(std::set<Character*>* killBuffer){
+    for(auto obs = obstacles.begin(); obs != obstacles.end(); ++obs){
+        if((*obs)->getAttackClock()->getElapsedTime().asMilliseconds() < (*obs)->getAttackRate()) continue; // Attack rate
+        for(auto chr = characters.begin(); chr != characters.end(); ++chr){
+            if((*chr)->getType() != 0) continue; // Só afeta players
+
+            if((*obs)->getType() == 2){ // Fogo
+                if(getDistance((*obs)->getPos(), (*chr)->getPos()) > (*obs)->getRange()) continue; // Range
+
+                (*chr)->takeDamage((*obs)->getDamage());
+
+                if((*chr)->getHealth() <= 0){
+                    killBuffer->insert(*chr);
+                }
+            }else if((*obs)->getType() == 3){ // Black Hole
+                if(getDistance((*obs)->getPos(), (*chr)->getPos()) > (*obs)->getRange()) continue; // Range
+
+                if(getDistance((*obs)->getPos(), (*chr)->getPos()) < (*obs)->getRange()*0.2){
+                    (*chr)->takeDamage((*obs)->getDamage());
+
+                    if((*chr)->getHealth() <= 0){
+                        killBuffer->insert(*chr);
+                    }
+                }
+                
+                if((*chr)->getPos().x < (*obs)->getPos().x){ // Player a esquerda do buraco
+                    (*chr)->move({3,0});
+                }else{
+                    (*chr)->move({-3,0});
+                }
+            }
+        }
+        (*obs)->getAttackClock()->restart();
+    }
 }

@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "../Character/Character.hpp"
-#include "../Animatable.hpp"
 
 class Enemy : public Character {
     protected:
@@ -14,7 +13,11 @@ class Enemy : public Character {
         float attackChance; // Chance de ataque a cada 1/60 segundos
 
     public:
+        Enemy();
+        virtual ~Enemy();
         virtual void attack() = 0;
-        virtual void setPos(sf::Vector2f _pos){ eSprite.setPosition(_pos); }
-        virtual const sf::Vector2f getPos(){ return eSprite.getPosition(); }
+        virtual void setPos(sf::Vector2f _pos);
+        virtual const sf::Vector2f getPos();
+        
+        static unsigned int enemyCount;
 };

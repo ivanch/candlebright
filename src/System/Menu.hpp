@@ -1,7 +1,8 @@
 #pragma once
+
+#include <time.h>
 #include <SFML/Graphics.hpp>
 #include "Entity.hpp"
-#include <time.h>
 
 #define MAX_MENU        4
 #define MAX_ITEMS       10

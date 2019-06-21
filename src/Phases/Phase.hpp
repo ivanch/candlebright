@@ -3,22 +3,22 @@
 #include <fstream>
 #include <math.h>
 
-#include "../System/Engine.hpp"
-#include "../System/Entity.hpp"
-#include "../Thing.hpp"
-#include "../System/Music.hpp"
-#include "CollisionManager.hpp"
-#include "../List/LinkedList.hpp"
-#include "../List/EntityList.hpp"
-#include "../List/CharacterList.hpp"
-#include "../List/ThingsList.hpp"
-#include "../List/ObstacleList.hpp"
 #include "../Character/Player.hpp"
 #include "../Enemies/Zombie.hpp"
 #include "../Enemies/Ghost.hpp"
 #include "../Enemies/HellDemon.hpp"
 #include "../Enemies/DressedZombie.hpp"
 #include "../Enemies/Sylathus.hpp"
+#include "../List/LinkedList.hpp"
+#include "../List/EntityList.hpp"
+#include "../List/CharacterList.hpp"
+#include "../List/ThingsList.hpp"
+#include "../List/ObstacleList.hpp"
+#include "../System/Engine.hpp"
+#include "../System/Entity.hpp"
+#include "../System/Music.hpp"
+#include "../Thing.hpp"
+#include "CollisionManager.hpp"
 
 class Phase : public Entity {
     protected:
@@ -33,7 +33,7 @@ class Phase : public Entity {
 
     public:
         Phase();
-        ~Phase();
+        virtual ~Phase();
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
         void update(); // Atualizar a lista de entidades dentro do mundo
@@ -51,4 +51,9 @@ class Phase : public Entity {
         CharacterList* getCharList(){ return &characters;}
 
         sf::Vector2f getRandomPosition(const sf::View& view);
+
+        /* Processa os ataques dos personagens */
+        void checkAttack(std::set<Character*>* killBuffer);
+        /* Processa os obstáculos */
+        void checkObstacles(std::set<Character*>* killBuffer);
 };

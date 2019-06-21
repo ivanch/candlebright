@@ -31,3 +31,59 @@ bool Character::setState(CharacterState::State _newState){
             return currentState->idle(this);
     }
 }
+
+const sf::Vector2f Character::Character::getSize() const {
+    return {getRect().width, getRect().height};
+}
+
+const float Character::getDamage() const {
+    return damage;
+}
+
+const float Character::getAttackSpeed() const {
+    return attackSpeed;
+}
+
+sf::Clock* Character::getAttackClock() {
+    return &attackTimer;
+}
+
+const float Character::getRange() const {
+    return range;
+}
+
+const float Character::getHealth() const {
+    return health;
+}
+
+short Character::getType() {
+    return type;
+}
+
+short Character::getSubType(){
+    return 0;
+}
+
+const CharacterState::State Character::getState() {
+    return currentState->getState();
+}
+
+const CharacterState* Character::getCharacterState() {
+    return currentState;
+}
+
+void Character::setCharacterState(CharacterState* _newState) {
+    currentState = _newState;
+}
+
+void Character::setFacing(Facing _facing) {
+    facing = _facing;
+}
+
+const short Character::getFacing() const {
+    return facing;
+}
+
+void Character::setHealth(float _health) {
+    health = _health;
+}

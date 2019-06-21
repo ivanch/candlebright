@@ -18,7 +18,6 @@ class Hell_Demon : public Enemy {
         virtual void draw(Engine& engine);
         virtual void move(sf::Vector2f vec);
         virtual void attack();
-        virtual void death(){}
 
         virtual short getSubType(){ return 4; }
 };
