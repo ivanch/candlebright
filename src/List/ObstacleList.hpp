@@ -14,10 +14,6 @@ class ObstaclesList {
             obstacles.remove(_el);
         }
         void clear(){
-            std::list<Obstacles::Obstacle*>::iterator itr;
-            for(itr = begin(); itr != end(); ++itr){
-                delete *itr;
-            }
             obstacles.clear();
         }
 

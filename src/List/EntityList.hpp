@@ -22,7 +22,7 @@ class EntityList
         }
         void clear(){
             for(int i = 0; i < size(); i++){
-                delete entity_list[i];
+                delete entity_list[i]->getData();
             }
             entity_list.clear();
         }
@@ -32,6 +32,16 @@ class EntityList
 
         Entity* operator[](int chave){
             return entity_list[chave]->getData();
+        }
+
+        void operator[](std::string op){
+            if(op != "update"){
+                std::cerr << "EntityList só suporta a operação 'update'." << std::endl;
+                return;
+            }
+            for(int i = 0; i < size(); i++){
+                entity_list[i]->getData()->update();
+            }
         }
 
     protected:

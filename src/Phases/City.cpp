@@ -49,10 +49,13 @@ Phases::City::City(){
     background->setTexture(*backgroundTexture);
     background->setPosition(sf::Vector2f(0.f, 300.f));
 
-    Music* background_music = new Music("songs/city_theme.ogg");
+    background_music = new Music("songs/city_theme.ogg");
     background_music->run();
 }
-Phases::City::~City(){}
+Phases::City::~City(){
+    background_music->stop();
+    delete background_music;
+}
 
 const sf::Vector2f Phases::City::getSpawnPoint() const {
     return sf::Vector2f(50.f, 600.f);

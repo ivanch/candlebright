@@ -12,9 +12,7 @@ Phase::~Phase(){
 
 void Phase::update(){
     col_mngr.checkCollisions();
-    for(int i = 0; i < entities.size(); i++){
-        entities[i]->update();
-    }
+    entities["update"];
 
     std::set<Character*> killBuffer;
     checkAttack(&killBuffer);

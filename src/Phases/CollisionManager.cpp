@@ -38,7 +38,7 @@ void CollisionManager::checkCollisions(){
 }
 
 /* Parte de baixo do obj1 com a parte de cima do obj2. */
-bool CollisionManager::intersectsDown(sf::FloatRect obj1, sf::FloatRect obj2){
+const bool CollisionManager::intersectsDown(sf::FloatRect obj1, sf::FloatRect obj2) const {
     if( obj1.top+obj1.height >= obj2.top &&
         obj1.top+obj1.height <= obj2.top+LIMIT &&
         obj1.top+obj1.height < obj2.top+obj2.height &&
@@ -48,7 +48,7 @@ bool CollisionManager::intersectsDown(sf::FloatRect obj1, sf::FloatRect obj2){
 }
 
 /* Parte de cima do objeto obj1 com a parte de baixo do obj2. */
-bool CollisionManager::intersectsUp(sf::FloatRect obj1, sf::FloatRect obj2){
+const bool CollisionManager::intersectsUp(sf::FloatRect obj1, sf::FloatRect obj2) const {
     if( obj1.top <= obj2.top+obj2.height &&
         obj1.top >= obj2.top+obj2.height-LIMIT &&
         obj1.top >= obj2.top &&
@@ -58,7 +58,7 @@ bool CollisionManager::intersectsUp(sf::FloatRect obj1, sf::FloatRect obj2){
 }
 
 /* Lado direito do obj1 com o lado esquerdo do obj2. */
-bool CollisionManager::intersectsRight(sf::FloatRect obj1, sf::FloatRect obj2){
+const bool CollisionManager::intersectsRight(sf::FloatRect obj1, sf::FloatRect obj2) const {
     if( obj1.left+obj1.width >= obj2.left &&
         obj1.left+obj1.width <= obj2.left+LIMIT &&
         obj1.left+obj1.width < obj2.left+obj2.width &&
@@ -68,7 +68,7 @@ bool CollisionManager::intersectsRight(sf::FloatRect obj1, sf::FloatRect obj2){
 }
 
 /* Lado esquerdo do obj1 com o lado direito do obj2. */
-bool CollisionManager::intersectsLeft(sf::FloatRect obj1, sf::FloatRect obj2){
+const bool CollisionManager::intersectsLeft(sf::FloatRect obj1, sf::FloatRect obj2) const {
     if( obj1.left <= obj2.left+obj2.width &&
         obj1.left >= obj2.left+obj2.width-LIMIT &&
         obj1.left > obj2.left &&

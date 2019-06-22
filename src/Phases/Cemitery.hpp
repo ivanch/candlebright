@@ -6,11 +6,15 @@
 #include "../Obstacles/Platform.hpp"
 #include "../Obstacles/Wall.hpp"
 #include "../Obstacles/Fire.hpp"
+#include "../Obstacles/BlackHole.hpp"
 #include "Phase.hpp"
 
 namespace Phases {
 
     class Cemitery : public Phase {
+        private:
+            Music* background_music;
+        
         public:
             Cemitery();
             ~Cemitery();

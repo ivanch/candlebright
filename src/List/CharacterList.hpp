@@ -14,10 +14,6 @@ class CharacterList {
             characters.erase(_el);
         }
         void clear(){
-            std::set<Character*>::iterator itr;
-            for(itr = begin(); itr != end(); ++itr){
-                delete *itr;
-            }
             characters.clear();
         }
         std::set<Character *>::iterator begin(){ return characters.begin(); }

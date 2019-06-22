@@ -211,10 +211,14 @@ void Game::nextPhase(){
     if(act_world == 1){
         delete world;
         world = new Phases::Cemitery;
+        act_world = 2;
+
+        player1 = new Player(1);
 
         world->addCharacter(player1); // Sempre haverá um jogador por padrão
         player1->setPos(world->getSpawnPoint());
         if(menu.getSelectedPlayers() == 2){
+            player2 = new Player(2);
             world->addCharacter(player2);
             player2->setPos(sf::Vector2f(world->getSpawnPoint().x,
                                          world->getSpawnPoint().y-100 ) );

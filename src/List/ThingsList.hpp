@@ -14,10 +14,6 @@ class ThingsList {
             things.remove(_el);
         }
         void clear(){
-            std::list<Thing*>::iterator itr;
-            for(itr = begin(); itr != end(); ++itr){
-                delete *itr;
-            }
             things.clear();
         }
 

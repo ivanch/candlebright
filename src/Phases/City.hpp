@@ -14,6 +14,9 @@
 namespace Phases {
 
     class City : public Phase {
+        private:
+            Music* background_music;
+        
         public:
             City();
             ~City();

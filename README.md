@@ -3,7 +3,7 @@
 ## A fazer
 * [ ] Persistência de objetos (salvar e carregar ranking)
 * [x] Criar o mapa 1 (cidade)
-* [ ] Criar o mapa 2 (cemitério)
+* [x] Criar o mapa 2 (cemitério)
 
 
 ## Requisitos do jogo
