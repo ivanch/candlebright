@@ -12,26 +12,27 @@ class EntityList
         EntityList(){ }
         ~EntityList(){ }
 
-        /*LinkedList<Entity> entity_list;
+        LinkedList<Entity> entity_list;
 
-        virtual void add(Entity* _el){
+        void add(Entity* _el){
             entity_list.insertBack(_el);
         }
-        virtual void remove(Entity* _el){
+        void remove(Entity* _el){
             entity_list.removeNth(_el);
-        }*/
-
-        std::list<Entity*> entities;
-
-        virtual void add(Entity* _el){
-            entities.push_back(_el);
         }
-        virtual void remove(Entity* _el){
-            entities.remove(_el);
+        void clear(){
+            for(int i = 0; i < size(); i++){
+                delete entity_list[i];
+            }
+            entity_list.clear();
+        }
+        int size(){
+            return entity_list.getSize();
         }
 
-        std::list<Entity*>::iterator begin(){ return entities.begin(); }
-        std::list<Entity*>::iterator end(){ return entities.end(); }
+        Entity* operator[](int chave){
+            return entity_list[chave]->getData();
+        }
 
     protected:
 

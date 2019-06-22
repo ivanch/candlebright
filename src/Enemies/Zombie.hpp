@@ -4,7 +4,7 @@
 
 class Zombie : public Enemy {
     public:
-        Zombie(sf::Vector2f pos = {0,0});
+        Zombie(sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
         ~Zombie();
         void setPos(sf::Vector2f newPos);
         void moveRight();
@@ -20,6 +20,4 @@ class Zombie : public Enemy {
         virtual void attack();
 
         virtual short getSubType(){ return 1; }
-    protected:
-        unsigned int score;
 };

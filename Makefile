@@ -3,7 +3,7 @@ OBJDIR=obj
 BINDIR=bin
 EXEC=jogo
 LDFLAGS = -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm
-CFLAGS = -Isfml/include -std=c++11 -Wall -pthread 
+CFLAGS = -Isfml/include -std=c++98 -Wall -pthread 
 CSOURCE = $(wildcard src/*.cpp src/*/**.cpp)
 OBJ=$(subst src, obj, $(CSOURCE:.cpp=.o))
 
@@ -14,7 +14,7 @@ default: dependencies $(CSOURCE) $(EXEC)
 run: default execute
 
 $(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o "$@"
+	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o "$(BINDIR)/$@"
 
 $(OBJDIR)/%.o: src/%.cpp
 	$(CC) $(CFLAGS) -o "$@" -c "$<"
@@ -36,5 +36,4 @@ dependencies:
 
 .PHONY: execute
 execute:
-	mv $(EXEC) $(BINDIR)/
 	LD_LIBRARY_PATH=sfml/lib ./$(BINDIR)/$(EXEC)

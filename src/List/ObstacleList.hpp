@@ -5,15 +5,22 @@
 
 class ObstaclesList {
     public:
-        std::list<Obstacle*> obstacles;
+        std::list<Obstacles::Obstacle*> obstacles;
 
-        virtual void add(Obstacle* _el){
+        void add(Obstacles::Obstacle* _el){
             obstacles.push_back(_el);
         }
-        virtual void remove(Obstacle* _el){
+        void remove(Obstacles::Obstacle* _el){
             obstacles.remove(_el);
         }
+        void clear(){
+            std::list<Obstacles::Obstacle*>::iterator itr;
+            for(itr = begin(); itr != end(); ++itr){
+                delete *itr;
+            }
+            obstacles.clear();
+        }
 
-        std::list<Obstacle*>::iterator begin(){ return obstacles.begin(); }
-        std::list<Obstacle*>::iterator end(){ return obstacles.end(); }
+        const std::list<Obstacles::Obstacle*>::iterator begin(){ return obstacles.begin(); }
+        const std::list<Obstacles::Obstacle*>::iterator end(){ return obstacles.end(); }
 };

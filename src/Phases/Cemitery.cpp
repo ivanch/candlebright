@@ -1,29 +1,31 @@
 #include "Cemitery.hpp"
 
-Cemitery::Cemitery(){
+Phases::Cemitery::Cemitery(){
     sf::Sprite* ground2 = new sf::Sprite(*getTexture("sprites/ground2.png"));
-    Platform* p;
-    p = new Platform({1440,100},{0,720}, ground2); // Chão
-    addThing(p);
-    p = new Platform({100,10},{150,625}, sf::Color::Black); // Platforma Preta
-    p->setMove({1000,0});
-    p->setMoveSpeed({1,0});
-    addThing(p);
 
-    Obstacle* o;
-    o = new Wall({10,40},{100,720}, sf::Color::Cyan);
+    Obstacles::Platform* p;
+    p = new Obstacles::Platform(sf::Vector2f(1440.f, 100.f), sf::Vector2f(0.f, 720.f), ground2); // Chão
+    addObstacle(p);
+    p = new Obstacles::Platform(sf::Vector2f(100.f, 10.f), sf::Vector2f(150.f, 625.f), sf::Color::Black); // Platforma Preta
+    p->setMove(sf::Vector2f(1000.f, 0.f));
+    p->setMoveSpeed(sf::Vector2f(1.f, 0.f));
+    addObstacle(p);
+
+    Obstacles::Obstacle* o;
+    o = new Obstacles::Wall(sf::Vector2f(10.f, 40.f), sf::Vector2f(100.f, 720.f), sf::Color::Cyan);
     addObstacle(o);
+    
 
     Enemy* e;
-    e = new Zombie({150,600});
+    e = new Zombie(sf::Vector2f(150.f, 600.f));
     addCharacter(e);
-    e = new Zombie({200,600});
+    e = new Zombie(sf::Vector2f(200.f, 600.f));
     addCharacter(e);
-    e = new Zombie({250,600});
+    e = new Zombie(sf::Vector2f(250.f, 600.f));
     addCharacter(e);
-    e = new Zombie({300,600});
+    e = new Zombie(sf::Vector2f(300.f, 600.f));
     addCharacter(e);
-    e = new Sylathus({500,550});
+    e = new Sylathus(sf::Vector2f(500.f, 550.f));
     addCharacter(e);
 
 
@@ -36,13 +38,13 @@ Cemitery::Cemitery(){
 
     backgroundTexture->setSmooth(true);
     background->setTexture(*backgroundTexture);
-    background->setPosition({0,230});
+    background->setPosition(sf::Vector2f(0.f, 230.f));
 
     Music* background_music = new Music("songs/cemitery_theme.ogg");
     background_music->run();
 }
-Cemitery::~Cemitery(){}
+Phases::Cemitery::~Cemitery(){}
 
-sf::Vector2f Cemitery::getSpawnPoint(){
-    return {50, 600};
+const sf::Vector2f Phases::Cemitery::getSpawnPoint() const {
+    return sf::Vector2f(50.f, 600.f);
 }

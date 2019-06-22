@@ -5,7 +5,7 @@
 
 class Character;
 
-class CharacterState {    
+class CharacterState {
     public:
         enum State {
             STATE_IDLE,         //  0
@@ -18,13 +18,13 @@ class CharacterState {
         CharacterState(State _state);
         virtual ~CharacterState();
 
-        virtual bool idle(Character* _char);
-        virtual bool walking(Character* _char);
-        virtual bool jumping(Character* _char);
-        virtual bool falling(Character* _char);
-        virtual bool attacking(Character* _char);
+        virtual const bool idle(Character* _char);
+        virtual const bool walking(Character* _char);
+        virtual const bool jumping(Character* _char);
+        virtual const bool falling(Character* _char);
+        virtual const bool attacking(Character* _char);
 
-        State getState(){ return state; }
+        const State getState() const { return state; }
     
     private:
         State state;

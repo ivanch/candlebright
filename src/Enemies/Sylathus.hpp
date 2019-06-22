@@ -13,7 +13,7 @@ class Sylathus : public Enemy {
         bool preAttack;
 
     public:
-        Sylathus(sf::Vector2f pos = {0,0});
+        Sylathus(sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
         ~Sylathus();
         void setPos(sf::Vector2f newPos);
         void moveRight();
@@ -29,6 +29,4 @@ class Sylathus : public Enemy {
         virtual void attack();
 
         virtual short getSubType(){ return 5; }
-    protected:
-        unsigned int score;
 };

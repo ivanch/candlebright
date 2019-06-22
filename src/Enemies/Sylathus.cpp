@@ -1,34 +1,34 @@
 #include "Sylathus.hpp"
 
-Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, {160,96}){
+Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)){
     setPos(pos);
     originalPos = pos;
-    moveSpeed = 2.5;
-    jumpHeight = 80;
-    maxSlideX = 0.001;
-    maxSlideY = 80;
-    finalJumpHeight = 0;
+    moveSpeed = 2.5f;
+    jumpHeight = 80.0f;
+    maxSlideX = 0.001f;
+    maxSlideY = 80.0f;
+    finalJumpHeight = 0.0f;
     score = 10;
     type = 1;
 
-    health = 500;
-    damage = 1;
-    range = 175;
-    attackChance = 0.1 / 60; // 10%
-    attackSpeed = 75;
+    health = 500.0f;
+    damage = 1.0f;
+    range = 175.0f;
+    attackChance = 0.1f / 60.0f; // 10%
+    attackSpeed = 75.0f;
     preAttack = false;
 
     setState(CharacterState::STATE_IDLE);
-    facing = FACING_LEFT;
+    setFacingRight(false);
 
-    anim = new AnimManager(&eSprite, {170,120});
+    anim = new AnimManager(&eSprite, sf::Vector2i(170, 120));
     anim->addSheet("idle","sprites/Sylathus/new-demon-idle.png");
     anim->addSheet("attack","sprites/Sylathus/new-demon-attack.png", 2);
 
     breathAnim.addSheet("blue", "sprites/Sylathus/breath-blue.png", 4);
 
-    healthBar.setSize({200,10});
-    healthBar.setMaxHealth(500);
+    healthBar.setSize(sf::Vector2f(200.0f, 10.0f));
+    healthBar.setMaxHealth(health);
 }
 Sylathus::~Sylathus(){}
 
@@ -53,11 +53,11 @@ void Sylathus::fall(){
 }
 
 void Sylathus::moveRight(){
-    move({moveSpeed,0});
+    move(sf::Vector2f(moveSpeed, 0));
 }
 
 void Sylathus::moveLeft(){
-    move({-moveSpeed,0});
+    move(sf::Vector2f(-moveSpeed, 0));
 }
 
 void Sylathus::update(){
@@ -96,7 +96,7 @@ void Sylathus::update(){
         }
     }
 
-    healthBar.setPos({getPos().x-135,getPos().y+120});
+    healthBar.setPos(sf::Vector2f(getPos().x-135, getPos().y+120));
 }
 
 void Sylathus::draw(Engine& engine) {

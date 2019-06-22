@@ -16,11 +16,6 @@
 
 class Character : public Animatable {
     public:
-        enum Facing {
-            FACING_RIGHT,
-            FACING_LEFT
-        };
-
         Character();
         virtual ~Character();
         virtual void move(sf::Vector2f _move) = 0;
@@ -49,8 +44,8 @@ class Character : public Animatable {
         virtual const CharacterState* getCharacterState();
         virtual void setCharacterState(CharacterState* _newState);
 
-        virtual void setFacing(Facing _facing);
-        virtual const short getFacing() const;
+        virtual void setFacingRight(const bool _facingRight = true);
+        virtual const bool isFacingRight() const;
 
         virtual void setHealth(float _health);
 
@@ -68,15 +63,16 @@ class Character : public Animatable {
         float damage;
         float range;
 
+        short type;
+
+        bool facingRight;
+
         HealthBar healthBar;
 
         CharacterState* currentState;
-        short facing;
 
         sf::Clock attackTimer;
         float attackSpeed; // Intervalo entre os ataques em milissegundos
-
-        short type;
 
         bool dead;
 };

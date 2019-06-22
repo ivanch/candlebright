@@ -3,24 +3,24 @@
 Ghost::Ghost(sf::Vector2f pos){
     setPos(pos);
     originalPos = pos;
-    moveSpeed = 0.5;
-    jumpHeight = 80;
-    maxSlideX = 0.001;
-    maxSlideY = 80;
-    finalJumpHeight = 0;
+    moveSpeed = 0.5f;
+    jumpHeight = 80.0f;
+    maxSlideX = 0.001f;
+    maxSlideY = 80.0f;
+    finalJumpHeight = 0.0f;
     type = 1;
     score = 4;
 
-    health = 100;
-    damage = 5.0;
-    range = 10.0;
-    attackChance = 0.15 / 60; // 15%
-    attackSpeed = 250;
+    health = 100.0f;
+    damage = 5.0f;
+    range = 10.0f;
+    attackChance = 0.15f / 60.0f; // 15%
+    attackSpeed = 250.0f;
 
     setState(CharacterState::STATE_WALKING);
-    facing = FACING_RIGHT;
+    setFacingRight();
 
-    anim = new AnimManager(&eSprite, {35,60});
+    anim = new AnimManager(&eSprite, sf::Vector2i(35, 60));
     anim->addSheet("walk", "sprites/Ghost/new-ghost-idle.png");
     anim->addSheet("attack", "sprites/Ghost/new-ghost-shriek.png", 3);
 }
@@ -42,20 +42,20 @@ const sf::FloatRect Ghost::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Ghost::fall(){
-    move({0, 0.05});
+    move(sf::Vector2f(0, 0.05));
 }
 
 void Ghost::moveRight(){
     if(anim->isLocked()) return;
-    move({moveSpeed,0});
-    setFacing(Facing::FACING_RIGHT);
+    move(sf::Vector2f(moveSpeed, 0));
+    setFacingRight();
     setState(CharacterState::STATE_WALKING);
 }
 
 void Ghost::moveLeft(){
     if(anim->isLocked()) return;
-    move({-moveSpeed,0});
-    setFacing(Facing::FACING_LEFT);
+    move(sf::Vector2f(-moveSpeed, 0));
+    setFacingRight(false);
     setState(CharacterState::STATE_WALKING);
 }
 
@@ -63,18 +63,18 @@ void Ghost::update(){
     sf::Vector2f pos = eSprite.getPosition();
 
     if(getState() == CharacterState::STATE_WALKING){
-        if(facing == Facing::FACING_LEFT){
+        if(!isFacingRight()){
             if(!collidingLeft)
                 moveLeft();
             else
-                facing = Facing::FACING_RIGHT;
-            if(abs(pos.x) < abs(originalPos.x-30)) facing = Facing::FACING_RIGHT;
+                setFacingRight();
+            if(abs(pos.x) < abs(originalPos.x-30)) setFacingRight();
         }else{
             if(!collidingRight)
                 moveRight();
             else
-                facing = Facing::FACING_LEFT;
-            if(abs(pos.x) > abs(originalPos.x+30)) facing = Facing::FACING_LEFT;
+                setFacingRight(false);
+            if(abs(pos.x) > abs(originalPos.x+30)) setFacingRight(false);
         }
     }
 
@@ -96,16 +96,16 @@ void Ghost::update(){
             animClock.restart();
             anim->play("walk");
         }
-        if(facing == FACING_RIGHT){
-            anim->setScale({-1,1});
+        if(isFacingRight()){
+            anim->setScale(sf::Vector2f(-1.f, 1.f));
         }else{
-            anim->setScale({1,1});
+            anim->setScale(sf::Vector2f(1.f, 1.f));
         }
     }
 
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
 
-    healthBar.setPos({getPos().x-25,getPos().y+60});
+    healthBar.setPos(sf::Vector2f(getPos().x-25, getPos().y+60));
 }
 
 void Ghost::draw(Engine& engine) {
@@ -116,7 +116,7 @@ void Ghost::draw(Engine& engine) {
 void Ghost::takeDamage(float _damage){
     health -= _damage;
     healthBar.setHealth(health);
-    move({0,-1});
+    move(sf::Vector2f(0.f, -1.f));
 }
 
 void Ghost::attack(){

@@ -8,8 +8,8 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
     player1 = new Player(1);
     player2 = new Player(2);
 
-    enemySpawnDelay = 30; // Spawna um inimigo na tela a cada 30 segundos
-    obstacleSpawnDelay = 60; // Spawna um obstáculo a cada 60 segundos
+    enemySpawnDelay = 25; // Spawna um inimigo na tela a cada 25 segundos
+    obstacleSpawnDelay = 45; // Spawna um obstáculo a cada 45 segundos
 }
 Game::~Game(){}
 
@@ -21,10 +21,10 @@ void Game::run(){
         engine.render();
     }
     if(menu.getSelectedPhase() == 1){
-        world = new City;
+        world = new Phases::City;
         act_world = 1;
     }else if(menu.getSelectedPhase() == 2){
-        world = new Cemitery;
+        world = new Phases::Cemitery;
         act_world = 2;
     }
 
@@ -32,8 +32,8 @@ void Game::run(){
     player1->setPos(world->getSpawnPoint());
     if(menu.getSelectedPlayers() == 2){
         world->addCharacter(player2);
-        player2->setPos({world->getSpawnPoint().x,
-                            world->getSpawnPoint().y-100});
+        player2->setPos(sf::Vector2f(world->getSpawnPoint().x,
+                                     world->getSpawnPoint().y-100 ) );
     }
 
     engine.getWindow()->setView(view);
@@ -46,7 +46,8 @@ void Game::saveGame()
     if(file.is_open())
     {
         file << act_world << std::endl;
-        for(auto itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
+        std::set<Character *>::iterator itr;
+        for(itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
             file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y - 30.f << std::endl;
         if((*itr)->getType() == 0){
             std::cout<<Player::getScore();
@@ -67,29 +68,30 @@ void Game::loadPlayers(){
     if(file.is_open())
     {
         getline(file,line);
-        if(act_world != std::stoi(line))
+        if(act_world != getIntFromString(line))
+        //if(act_world != std::stoi(line))
         {
             std::cerr << "Mundo não condizente com o jogo previamente salvo." << std::endl;
             return;
         }
         while (getline(file,line))
         {
-            int type = std::stoi(line.substr(0, line.find(',') + 1));
+            int type = getIntFromString(line.substr(0, line.find(',') + 1));
             if(type != 0) continue;
 
             line = line.substr(line.find(',') + 1, line.size()); // Pula sub-tipo
 
             line = line.substr(line.find(',') + 1, line.size());
-            float health = std::stoi(line.substr(0, line.find(',') + 1));
+            float health = getIntFromString(line.substr(0, line.find(',') + 1));
 
             line = line.substr(line.find(',') + 1, line.size());
-            float px = std::stof(line.substr(0, line.find(',') + 1));
+            float px = getFloatFromString(line.substr(0, line.find(',') + 1));
             line = line.substr(line.find(',') + 1, line.size());
-            float py = std::stof(line);
+            float py = getFloatFromString(line);
 
             player_count++;
             temp_player = new Player(player_count);
-            temp_player->setPos({px,py});
+            temp_player->setPos(sf::Vector2f(px, py));
             temp_player->setHealth(health);
 
             if(player_count == 1) player1 = temp_player;
@@ -123,9 +125,9 @@ void Game::update(){
             else if(player1->getPos().x <= (view.getCenter().x-view.getSize().x/2)+50  && player2->getPos().x >= (view.getCenter().x+view.getSize().x/2)-50)
                 player1->setCollidingLeft(true);
             if(player1->getPos().x - (view.getCenter().x+((view.getSize().x)/2))  > -50)
-                view.move({1.5,0});
+                view.move(sf::Vector2f(1.5, 0));
             if(player1->getPos().x - (view.getCenter().x+((view.getSize().x)/2))  < -550)
-                view.move({-1.5,0});
+                view.move(sf::Vector2f(-1.5, 0));
             engine.getWindow()->setView(view);
 
             /* Pausa o jogo */
@@ -175,13 +177,13 @@ void Game::spawnRandomEnemy(){
     sf::Vector2f pos = world->getRandomPosition(view);
     if(pos.x != 0 && pos.y != 0){
         if(r == 0){ // Spawn em ambas fases
-            e = new Zombie({pos.x,pos.y-60});
+            e = new Zombie(sf::Vector2f(pos.x, pos.y-60));
         }else if(r == 1){ // Spawn em ambas fases
-            e = new Dressed_Zombie({pos.x,pos.y-60});
+            e = new Dressed_Zombie(sf::Vector2f(pos.x, pos.y-60));
         }else if(r == 2){ // Spawn apenas na fase 2
-            e = new Ghost({pos.x,pos.y-70});
+            e = new Ghost(sf::Vector2f(pos.x, pos.y-70));
         }else if(r == 3){ // Spawn apenas na fase 2
-            e = new Hell_Demon({pos.x,pos.y-70});
+            e = new Hell_Demon(sf::Vector2f(pos.x, pos.y-70));
         }
         world->addCharacter(e);
     }
@@ -190,15 +192,15 @@ void Game::spawnRandomEnemy(){
 
 /* Spawn aleatório de obstáculos */
 void Game::spawnRandomObstacle(){
-    Obstacle* o;
+    Obstacles::Obstacle* o;
     int r = rand()%100;
     sf::Vector2f pos = world->getRandomPosition(view);
     if(pos.x != 0 && pos.y != 0){
         int _size = 5 + rand()%(55-5); // 5 ~ 50
         if(r <= 80){ // Fogo (80% de chance)
-            o = new Fire({pos.x,pos.y-(_size)}, _size);
+            o = new Obstacles::Fire(sf::Vector2f(pos.x, pos.y-(_size)), _size);
         }else if(r > 80){ // Black Hole (20% de chance)
-            o = new Black_Hole({pos.x,pos.y}, _size);
+            o = new Obstacles::Black_Hole(sf::Vector2f(pos.x, pos.y), _size);
         }
         world->addObstacle(o);
     }
@@ -208,16 +210,28 @@ void Game::spawnRandomObstacle(){
 void Game::nextPhase(){
     if(act_world == 1){
         delete world;
-        world = new Cemitery;
+        world = new Phases::Cemitery;
 
         world->addCharacter(player1); // Sempre haverá um jogador por padrão
         player1->setPos(world->getSpawnPoint());
         if(menu.getSelectedPlayers() == 2){
             world->addCharacter(player2);
-            player2->setPos({world->getSpawnPoint().x,
-                             world->getSpawnPoint().y-100});
+            player2->setPos(sf::Vector2f(world->getSpawnPoint().x,
+                                         world->getSpawnPoint().y-100 ) );
         }
     }else{
         engine.getWindow()->close();
     }
+}
+
+const int Game::getIntFromString(const std::string& _str) const {
+    int result;
+    sscanf(_str.c_str(), "%d", &result);
+    return result;
+}
+
+const float Game::getFloatFromString(const std::string& _str) const {
+    float result;
+    sscanf(_str.c_str(), "%f", &result);
+    return result;
 }

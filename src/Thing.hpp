@@ -18,8 +18,8 @@ class Thing : public Entity {
         }
         virtual ~Thing() { }
         virtual void fall(){}
-        virtual const sf::FloatRect getRect() const { return {0,0,0,0}; }
-        virtual const sf::Vector2f getPos() const { return {0,0}; }
+        virtual const sf::FloatRect getRect() const { return sf::FloatRect(0.f, 0.f, 0.f, 0.f); }
+        virtual const sf::Vector2f getPos() const { return sf::Vector2f(0.f, 0.f); }
 
         void setCollidingUp(bool _isColliding){ collidingUp = _isColliding; }
         void setCollidingRight(bool _isColliding){ collidingRight = _isColliding; }

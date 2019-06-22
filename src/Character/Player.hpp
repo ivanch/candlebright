@@ -41,7 +41,7 @@ class Player : public Character {
         virtual void fall();
         virtual void takeDamage(float _damage);
 
-        static unsigned int getScore(){ return score; }
+        static unsigned int getScore() { return score; }
         static void setScore(unsigned int _score){ score = _score; }
 };
 

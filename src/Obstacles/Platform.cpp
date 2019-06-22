@@ -1,6 +1,6 @@
 #include "Platform.hpp"
 
-Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
+Obstacles::Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
     originalPos(pos){
     rect = sf::RectangleShape(size);
     rect.setFillColor(_col);
@@ -12,9 +12,8 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Color _col):
     moving = false;
     type = 0;
 }
-Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
+Obstacles::Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     originalPos(pos){
-    std::cout<<_tex<<std::endl;
     rect = sf::RectangleShape(size);
     if(_tex!=NULL){
     rect.setTexture(_tex);}
@@ -24,7 +23,7 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex):
     texture = _tex;
     type = 0;
 }
-Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
+Obstacles::Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
     originalPos(pos){
     sprite = _spr;
     sprite->setPosition(pos);
@@ -33,56 +32,56 @@ Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _spr):
     moving = false;
     type = 0;
 }
-Platform::~Platform(){}
+Obstacles::Platform::~Platform(){}
 
-void Platform::draw(Engine& engine){
+void Obstacles::Platform::draw(Engine& engine){
     if(sprite != NULL) engine.draw(*sprite);
     else engine.draw(rect);
 }
 
-void Platform::update(){
+void Obstacles::Platform::update(){
     if(moving){
         fmove();
     }
     if(texture != NULL) rect.setTexture(texture);
 }
 
-const sf::FloatRect Platform::getRect() const {
+const sf::FloatRect Obstacles::Platform::getRect() const {
     if(sprite == NULL) return rect.getGlobalBounds();
     else return sprite->getGlobalBounds();
 }
 
-void Platform::setMoveSpeed(sf::Vector2f _vel){
+void Obstacles::Platform::setMoveSpeed(sf::Vector2f _vel){
     vel = _vel;
 }
 
-void Platform::setMove(sf::Vector2f _move){
+void Obstacles::Platform::setMove(sf::Vector2f _move){
     move = _move;
     if(_move != sf::Vector2f(0,0)) moving = true;
 }
 
-void Platform::setMoving(bool _moving){
+void Obstacles::Platform::setMoving(bool _moving){
     moving = _moving;
 }
 
-const sf::Vector2f Platform::getPos() const {
+const sf::Vector2f Obstacles::Platform::getPos() const {
     return rect.getPosition();
 }
 
-void Platform::fmove(){
+void Obstacles::Platform::fmove(){
     sf::Vector2f pos = rect.getPosition();
     if(mRight){
-        rect.move({-vel.x,0});
+        rect.move(sf::Vector2f(-vel.x, 0));
         if(abs(pos.x) < abs(originalPos.x-move.x)) mRight = false;
     }else{
-        rect.move({vel.x,0});
+        rect.move(sf::Vector2f(vel.x, 0));
         if(abs(pos.x) > abs(originalPos.x+move.x)) mRight = true;
     }
     if(mUp){
-        rect.move({0,-vel.y});
+        rect.move(sf::Vector2f(0, -vel.y));
         if(abs(pos.y) < abs(move.y-originalPos.y)) mUp = false;
     }else{
-        rect.move({0,vel.y});
+        rect.move(sf::Vector2f(0, vel.y));
         if(abs(pos.y) > abs(move.y+originalPos.y)) mUp = true;
     }
 }

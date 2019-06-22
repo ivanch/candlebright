@@ -5,7 +5,7 @@
 class AnimManager {
     private:
         sf::Sprite* sprite;
-        sf::Vector2i size;
+        const sf::Vector2i size;
         sf::IntRect rect;
         sf::Vector2f scale;
         bool goingBack;
@@ -14,13 +14,13 @@ class AnimManager {
         std::map<std::string, sf::Texture*> animes; // animes["idle"] -> sf::Texture*
         std::map<std::string, int> modes;
 
-        int count; // Contagem de quantas animações foram feitas
+        unsigned int count; // Contagem de quantas animações foram feitas
         bool locked;
 
         sf::Texture* getTexture(std::string filename);
 
     public:
-        AnimManager(sf::Sprite* _sprite, sf::Vector2i _size = {0,0});
+        AnimManager(sf::Sprite* _sprite, sf::Vector2i _size = sf::Vector2i(0, 0));
         ~AnimManager();
 
         /*  mode = 0: vai e volta
@@ -38,7 +38,7 @@ class AnimManager {
         void setScale(sf::Vector2f _scale);
         void defineRect();
         void setTime(float milliseconds){ delay = milliseconds; };
-        int getStage(){ return (int)rect.left/rect.width; }
-        int getCount(){ return count; }
-        bool isLocked(){ return locked; }
+        const unsigned int getStage() const { return (int)rect.left/rect.width; }
+        const unsigned int getCount() const { return count; }
+        const bool isLocked() const { return locked; }
 };

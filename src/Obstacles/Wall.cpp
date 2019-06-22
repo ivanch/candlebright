@@ -1,6 +1,6 @@
 #include "Wall.hpp"
 
-Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
+Obstacles::Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
     rect = sf::RectangleShape(size);
     rect.setFillColor(_col);
     rect.setPosition(pos);
@@ -8,7 +8,7 @@ Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Color _col){
     texture = NULL;
     type = 0;
 }
-Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
+Obstacles::Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
     rect = sf::RectangleShape(size);
     rect.setTexture(_tex);
     rect.setPosition(pos);
@@ -17,21 +17,17 @@ Wall::Wall(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex){
     texture = NULL;
     type = 0;
 }
-Wall::~Wall(){}
+Obstacles::Wall::~Wall(){}
 
-void Wall::update(){
+void Obstacles::Wall::update(){
     
 }
 
-void Wall::draw(Engine& engine){
+void Obstacles::Wall::draw(Engine& engine){
     if(texture != NULL) rect.setTexture(texture);
     else engine.draw(rect);
 }
 
-const sf::FloatRect Wall::getRect() const {
+const sf::FloatRect Obstacles::Wall::getRect() const {
     return rect.getGlobalBounds();
-}
-
-float Wall::getDamage(){
-    return 0.0;
 }

@@ -7,11 +7,18 @@ class ThingsList {
     public:
         std::list<Thing*> things;
 
-        virtual void add(Thing* _el){
+        void add(Thing* _el){
             things.push_back(_el);
         }
-        virtual void remove(Thing* _el){
+        void remove(Thing* _el){
             things.remove(_el);
+        }
+        void clear(){
+            std::list<Thing*>::iterator itr;
+            for(itr = begin(); itr != end(); ++itr){
+                delete *itr;
+            }
+            things.clear();
         }
 
         std::list<Thing*>::iterator begin(){ return things.begin(); }

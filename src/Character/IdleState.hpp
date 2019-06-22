@@ -8,9 +8,9 @@ class IdleState : public CharacterState {
         IdleState();
         virtual ~IdleState();
 
-        virtual bool idle(Character* _char);
-        virtual bool jumping(Character* _char);
-        virtual bool walking(Character* _char);
-        virtual bool falling(Character* _char);
-        virtual bool attacking(Character* _char);
+        virtual const bool idle(Character* _char);
+        virtual const bool jumping(Character* _char);
+        virtual const bool walking(Character* _char);
+        virtual const bool falling(Character* _char);
+        virtual const bool attacking(Character* _char);
 };

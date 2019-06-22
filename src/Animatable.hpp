@@ -10,7 +10,7 @@ class Animatable : public Thing {
         sf::Clock animClock;
 
     public:
-        Animatable(){ anim = nullptr; }
+        Animatable(){ anim = NULL; }
         virtual ~Animatable(){}
         virtual AnimManager* getAnim(){ return anim; }
 };

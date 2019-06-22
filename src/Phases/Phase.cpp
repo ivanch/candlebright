@@ -3,19 +3,25 @@
 Phase::Phase(): col_mngr(&things){
 
 }
-Phase::~Phase(){}
+Phase::~Phase(){
+    entities.clear();
+    things.clear();
+    characters.clear();
+    obstacles.clear();
+}
 
 void Phase::update(){
     col_mngr.checkCollisions();
-    //for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
-    for(auto itr = entities.begin(); itr != entities.end(); ++itr){
-        (*itr)->update();
+    for(int i = 0; i < entities.size(); i++){
+        entities[i]->update();
     }
 
     std::set<Character*> killBuffer;
     checkAttack(&killBuffer);
     checkObstacles(&killBuffer);
-    for(auto chr = killBuffer.begin(); chr != killBuffer.end(); ++chr){
+
+    std::set<Character *>::iterator chr;
+    for(chr = killBuffer.begin(); chr != killBuffer.end(); ++chr){
         things.remove(*chr);
         characters.remove(*chr);
         if((*chr)->getType() != 0){
@@ -29,11 +35,8 @@ void Phase::update(){
 
 void Phase::drawAll(Engine& engine){
     draw(engine);
-    /*for(auto itr = entities.entity_list.getFirst(); itr != NULL; itr = itr->getNext()){
-        itr->getData()->draw(engine);
-    }*/
-    for(auto itr = entities.begin(); itr != entities.end(); ++itr){
-        (*itr)->draw(engine);
+    for(int i = 0; i < entities.size(); i++){
+        entities[i]->draw(engine);
     }
 }
 
@@ -42,7 +45,8 @@ void Phase::draw(Engine& engine){
 }
 
 void Phase::gravity(){
-    for(auto itr = things.begin(); itr != things.end(); ++itr){
+    std::list<Thing *>::iterator itr;
+    for(itr = things.begin(); itr != things.end(); ++itr){
         Thing* obj1 = *itr;
         if(!obj1->isCollidingDown()){
             obj1->fall();
@@ -50,11 +54,11 @@ void Phase::gravity(){
     }
 }
 
-float Phase::getDistance(sf::Vector2f p1, sf::Vector2f p2){
+const float Phase::getDistance(sf::Vector2f p1, sf::Vector2f p2) const {
     return sqrt(pow(p1.x-p2.x,2.0) + pow(p1.y-p2.y,2.0));
 }
 
-void Phase::loadEnemies(int act_world){
+void Phase::loadEnemies(const int act_world){
     /* Remove todos os Characters */
     while(!characters.characters.empty()){
         entities.remove(*characters.begin());
@@ -69,48 +73,48 @@ void Phase::loadEnemies(int act_world){
     if(file.is_open())
     {
         getline(file,line);
-        if(act_world != std::stoi(line))
+        if(act_world != getIntFromString(line))
         {
             std::cerr << "Mundo não condizente com o jogo já salvo." << std::endl;
             return;
         }
         while (getline(file,line))
         {
-            int type = std::stoi(line.substr(0, line.find(',') + 1));
+            const int type = getIntFromString(line.substr(0, line.find(',') + 1));
             if(type != 1) continue;
 
             line = line.substr(line.find(',') + 1, line.size());
-            int subtype = std::stoi(line.substr(0, line.find(',') + 1));
+            const int subtype = getIntFromString(line.substr(0, line.find(',') + 1));
 
             line = line.substr(line.find(',') + 1, line.size());
-            float health = std::stoi(line.substr(0, line.find(',') + 1));
+            const float health = getIntFromString(line.substr(0, line.find(',') + 1));
 
             line = line.substr(line.find(',') + 1, line.size());
-            float px = std::stof(line.substr(0, line.find(',') + 1));
+            const float px = getFloatFromString(line.substr(0, line.find(',') + 1));
             line = line.substr(line.find(',') + 1, line.size());
-            float py = std::stof(line);
+            const float py = getFloatFromString(line);
 
             if(type == 1) // Inimigo
             {
                 if(subtype == 1)
                 {
-                    enemy = new Zombie({px,py});
+                    enemy = new Zombie(sf::Vector2f(px, py));
                 }
                 else if(subtype == 2)
                 {
-                    enemy = new Dressed_Zombie({px,py});
+                    enemy = new Dressed_Zombie(sf::Vector2f(px, py));
                 }
                 else if(subtype == 3)
                 {
-                    enemy = new Ghost({px,py});
+                    enemy = new Ghost(sf::Vector2f(px, py));
                 }
                 else if(subtype == 4)
                 {
-                    enemy = new Hell_Demon({px,py});
+                    enemy = new Hell_Demon(sf::Vector2f(px, py));
                 }
                 else if(subtype == 5)
                 {
-                    enemy = new Sylathus({px,py});
+                    enemy = new Sylathus(sf::Vector2f(px, py));
                 }
             }
             enemy->setHealth(health);
@@ -120,8 +124,8 @@ void Phase::loadEnemies(int act_world){
     }
 }
 
-sf::Vector2f Phase::getRandomPosition(const sf::View& view){
-    sf::Vector2f pos = {0,0};
+const sf::Vector2f Phase::getRandomPosition(const sf::View& view){
+    sf::Vector2f pos = sf::Vector2f(0.f, 0.f);
 
     float   left    = view.getCenter().x - view.getSize().x/2,
             right   = view.getCenter().x + view.getSize().x/2;
@@ -140,31 +144,38 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         random_x = left + static_cast <float> (rand()) / ( static_cast <float> ( RAND_MAX/(right-left) ));
         random_y = top  + static_cast <float> (rand()) / ( static_cast <float> ( RAND_MAX/(bottom-top) ));
 
-        pos = {random_x, random_y};
+        pos = sf::Vector2f(random_x, random_y);
+
 
         /* Determina melhor Y */
+        std::list<Obstacles::Obstacle *>::iterator plt;
         bool best_y_success = false;
-        float best_distance = -1.0;
-        float best_y = 0.0;
-        for(auto plt = obstacles.begin(); plt != obstacles.end(); ++plt){
+        float best_distance = -1.f;
+        float best_y = 0.f;
+        for(plt = obstacles.begin(); plt != obstacles.end(); ++plt){
             if((*plt)->getType() != 0) continue; // Spawn apenas em cima de plataformas
-            if(random_x < (*plt)->getRect().left && random_x > (*plt)->getRect().left+(*plt)->getRect().width) continue; // random_x fora das bordas da Plataforma
-            float dist = abs(pos.y-(*plt)->getRect().top);
-            if(dist > best_distance || best_distance == -1.0){
+            if(random_x < (*plt)->getRect().left+100 && random_x > (*plt)->getRect().left+(*plt)->getRect().width-100) continue; // random_x fora das bordas da Plataforma
+            float dist = std::abs(pos.y-(*plt)->getRect().top);
+            if(dist < best_distance || best_distance == -1.f){
                 best_y = (*plt)->getRect().top;
                 best_distance = dist;
             }
             best_y_success = true;
         }
-        if(!best_y_success) continue;
+        if(!best_y_success || best_y == 0.f) continue;
         /* Melhor Y determinado */
 
-        pos = {random_x, best_y};
+        
+        
+        pos = sf::Vector2f(random_x, best_y);
+
+
 
         /* Testa posição de outros Obstáculos */
+        std::list<Obstacles::Obstacle *>::iterator obs;
         bool obstacles_test_success = true;
-        for(auto obs = obstacles.begin(); obs != obstacles.end(); ++obs){
-            if((*obs)->getType() == 0 || (*obs)->getType() == 1) continue; // Ignora plataformas
+        for(obs = obstacles.begin(); obs != obstacles.end(); ++obs){
+            if((*obs)->getType() == 0 || (*obs)->getType() == 1) continue; // Ignora plataformas e paredes
             if(getDistance(pos,(*obs)->getPos()) < (*obs)->getRange() + 15.0){
                 obstacles_test_success = false;
                 break;
@@ -173,9 +184,12 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
         if(!obstacles_test_success) continue;
         /* Passou pelo teste de Obstáculos */
 
+
+
         /* Testa posição de Personagens */
+        std::set<Character *>::iterator chr;
         bool char_test_success = true;
-        for(auto chr = characters.begin(); chr != characters.end(); ++chr){
+        for(chr = characters.begin(); chr != characters.end(); ++chr){
             if(getDistance(pos,(*chr)->getPos()) < 100.0){
                 char_test_success = false;
                 break;
@@ -189,24 +203,26 @@ sf::Vector2f Phase::getRandomPosition(const sf::View& view){
 
     if(tries == 1000){
         std::cerr << "Erro ao tentar achar alguma posição aleatória dentro do mapa" << std::endl;
-        return {0,0};
+        return sf::Vector2f(0.f, 0.f);
     }
 
     return pos;
 }
 
 void Phase::checkAttack(std::set<Character*>* killBuffer){
-    for(auto issuer = characters.begin(); issuer != characters.end(); ++issuer){
+    std::set<Character *>::iterator issuer;
+    for(issuer = characters.begin(); issuer != characters.end(); ++issuer){
         if( (*issuer)->getState() == CharacterState::STATE_ATTACKING && 
             (*issuer)->getAttackClock()->getElapsedTime().asMilliseconds() >= (*issuer)->getAttackSpeed()){
-            for(auto damaged = characters.begin(); damaged != characters.end(); ++damaged){
+            std::set<Character *>::iterator damaged;
+            for(damaged = characters.begin(); damaged != characters.end(); ++damaged){
                 /* Exclusões */
                 if(issuer == damaged) continue; // auto-dano
                 if((*issuer)->getType() == (*damaged)->getType()) continue; // Não ataca personagens do mesmo tipo
                 if(getDistance((*issuer)->getPos(), (*damaged)->getPos()) > (*issuer)->getRange()) continue; // Fora do range
 
-                if((*issuer)->getFacing() == Character::FACING_RIGHT && (*damaged)->getPos().x < (*issuer)->getPos().x) continue; // Previnir ataques de costas
-                if((*issuer)->getFacing() == Character::FACING_LEFT  && (*damaged)->getPos().x > (*issuer)->getPos().x) continue; // Previnir ataques de costas
+                if( (*issuer)->isFacingRight() && (*damaged)->getPos().x < (*issuer)->getPos().x) continue; // Previnir ataques de costas
+                if(!(*issuer)->isFacingRight()  && (*damaged)->getPos().x > (*issuer)->getPos().x) continue; // Previnir ataques de costas
                 
                 (*damaged)->takeDamage((*issuer)->getDamage());
 
@@ -220,9 +236,11 @@ void Phase::checkAttack(std::set<Character*>* killBuffer){
 }
 
 void Phase::checkObstacles(std::set<Character*>* killBuffer){
-    for(auto obs = obstacles.begin(); obs != obstacles.end(); ++obs){
+    std::list<Obstacles::Obstacle *>::iterator obs;
+    for(obs = obstacles.begin(); obs != obstacles.end(); ++obs){
         if((*obs)->getAttackClock()->getElapsedTime().asMilliseconds() < (*obs)->getAttackRate()) continue; // Attack rate
-        for(auto chr = characters.begin(); chr != characters.end(); ++chr){
+        std::set<Character *>::iterator chr;
+        for(chr = characters.begin(); chr != characters.end(); ++chr){
             if((*chr)->getType() != 0) continue; // Só afeta players
 
             if((*obs)->getType() == 2){ // Fogo
@@ -245,12 +263,24 @@ void Phase::checkObstacles(std::set<Character*>* killBuffer){
                 }
                 
                 if((*chr)->getPos().x < (*obs)->getPos().x){ // Player a esquerda do buraco
-                    (*chr)->move({3,0});
+                    (*chr)->move(sf::Vector2f(3.f, 0.f));
                 }else{
-                    (*chr)->move({-3,0});
+                    (*chr)->move(sf::Vector2f(-3.f, 0.f));
                 }
             }
         }
         (*obs)->getAttackClock()->restart();
     }
+}
+
+const int Phase::getIntFromString(const std::string& _str) const {
+    int result;
+    sscanf(_str.c_str(), "%d", &result);
+    return result;
+}
+
+const float Phase::getFloatFromString(const std::string& _str) const {
+    float result;
+    sscanf(_str.c_str(), "%f", &result);
+    return result;
 }

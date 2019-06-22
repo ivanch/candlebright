@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "../List/ThingsList.hpp"
 
-#define LIMIT   4
+#define LIMIT   6
 class CollisionManager {
     public:
         CollisionManager(ThingsList* _things);

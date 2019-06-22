@@ -4,7 +4,7 @@
 
 class Hell_Demon : public Enemy {
     public:
-        Hell_Demon(sf::Vector2f pos = {0,0});
+        Hell_Demon(sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
         ~Hell_Demon();
         void setPos(sf::Vector2f newPos);
         void moveRight();
@@ -20,6 +20,4 @@ class Hell_Demon : public Enemy {
         virtual void attack();
 
         virtual short getSubType(){ return 4; }
-    protected:
-        unsigned int score;
 };

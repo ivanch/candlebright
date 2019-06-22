@@ -8,13 +8,13 @@ AttackingState::~AttackingState(){
 
 }
 
-bool AttackingState::idle(Character* _char){
+const bool AttackingState::idle(Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new IdleState());
     return true;
 }
 
-bool AttackingState::falling(Character* _char){
+const bool AttackingState::falling(Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new FallingState());
     return true;

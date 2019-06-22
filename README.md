@@ -2,7 +2,7 @@
 
 ## A fazer
 * [ ] Persistência de objetos (salvar e carregar ranking)
-* [ ] Criar o mapa 1 (cidade)
+* [x] Criar o mapa 1 (cidade)
 * [ ] Criar o mapa 2 (cemitério)
 
 
@@ -33,10 +33,10 @@
 | Classes, objetos | Sim | Todos .hpp e .cpp |
 | Atributos (privados), variáveis e constantes | Sim | Todos .hpp e .cpp |
 | Métodos (com e sem retorno) | Sim |  Todos .hpp e .cpp |
-| Métodos (com retorno *const* e parâmetro *const*) | A fazer | --- |
+| Métodos (com retorno *const* e parâmetro *const*) | Sim | Todos .hpp e .cpp |
 | Construtores (com e sem parâmetros) e destrutores | Sim | Todos .hpp e .cpp |
 | Classe Principal | Sim | `main.cpp` e `Game.hpp/cpp` |
-| Divisão em .h e .cpp | A fazer | --- |
+| Divisão em .h e .cpp | Sim | Todos .hpp e .cpp |
 
 ## Conceitos de relações
 
@@ -44,8 +44,8 @@
 |---|---|---|
 | Associação direcional | Sim | --- |
 | Associação bidirecional | Sim | `Character.hpp` e `CharacterState.hpp` |
-| Agregação via associação | ? | --- |
-| Agregação propriamente dita | ? | --- |
+| Agregação via associação | Sim | --- |
+| Agregação propriamente dita | Sim | --- |
 | Herança elementar | Sim | --- |
 | Herança em diversos níveis | Sim | --- |
 | Herança múltipla | Sim | `Character.hpp` |
@@ -80,16 +80,16 @@
 | Métodos virtuais | Sim | `Character.hpp` |
 | Polimorfismo | Sim | --- |
 | Métodos virtuais puros | Sim | `Entity.hpp` |
-| Coesão e desacoplamento | Supostamente | --- |
+| Coesão e desacoplamento | Sim | --- |
 
 ## Conceitos de operadores estáticos
 
 | Conceito | Uso | Onde |
 |---|---|---|
-| *Namespace* criada pelos autores | A fazer (?) | --- |
+| *Namespace* criada pelos autores | Sim | `BlackHole.hpp`, `Fire.hpp`, `Obstacle.hpp`, `Platform.hpp`, `Wall.hpp`, `Cemitery.hpp`, `City.hpp` |
 | Classes aninhadas | Sim | `LinkedList.hpp` |
-| Atributos estáticos e métodos estáticos | Em parte | Foi utilizado apenas atributo estático dentro de `Enemy.hpp` |
-| Uso extensivo de constante em parâmetro, retorno, método | A fazer | --- |
+| Atributos estáticos e métodos estáticos | Sim | `Player.hpp/cpp` |
+| Uso extensivo de constante em parâmetro, retorno, método | Sim | --- |
 
 ## Conceitos de STL e String OO
 

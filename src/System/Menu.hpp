@@ -15,12 +15,12 @@ class Menu : public Entity
         ~Menu();
 
         virtual void draw(Engine& engine);
-        void moveUp();
-        void moveDown();
         virtual void update(){}
         void update(Engine* engine);
-        bool isEnabled(){ return enabled; }
+        void moveUp();
+        void moveDown();
 
+        const bool isEnabled() const { return enabled; }
         const int getSelectedPhase() const { return world; }
         const int getSelectedPlayers() const { return players; }
 

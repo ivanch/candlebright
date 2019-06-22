@@ -1,7 +1,7 @@
 #include "Character.hpp"
 
 Character::Character(){
-    currentState = nullptr;
+    currentState = NULL;
 }
 
 Character::~Character(){
@@ -9,7 +9,7 @@ Character::~Character(){
 }
 
 bool Character::setState(CharacterState::State _newState){
-    if(currentState != nullptr){
+    if(currentState != NULL){
         if(_newState == currentState->getState()) return true; // Não há necessidade de "renovar" o estado
         if(anim->isLocked()) return false; // Personagem ocupado com uma animação, não sobrepor
         //delete currentState;
@@ -33,7 +33,7 @@ bool Character::setState(CharacterState::State _newState){
 }
 
 const sf::Vector2f Character::Character::getSize() const {
-    return {getRect().width, getRect().height};
+    return sf::Vector2f(getRect().width, getRect().height);
 }
 
 const float Character::getDamage() const {
@@ -76,12 +76,12 @@ void Character::setCharacterState(CharacterState* _newState) {
     currentState = _newState;
 }
 
-void Character::setFacing(Facing _facing) {
-    facing = _facing;
+void Character::setFacingRight(const bool _facingRight) {
+    facingRight = _facingRight;
 }
 
-const short Character::getFacing() const {
-    return facing;
+const bool Character::isFacingRight() const {
+    return facingRight;
 }
 
 void Character::setHealth(float _health) {

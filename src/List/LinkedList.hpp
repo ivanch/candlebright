@@ -34,6 +34,8 @@ class LinkedList
         void clear();
         int getIndex(T* data);
 
+		int getSize() { return size; }
+
         Node<T>* operator [] (int chave);
 
 
@@ -43,6 +45,8 @@ class LinkedList
     private:
         Node<T> *first;
         Node<T> *last;
+
+		int size;
 };
 
 template <class T>
@@ -50,18 +54,13 @@ LinkedList<T>::LinkedList()
 {
 	first = NULL;
 	last = NULL;
+	size = 0;
 }
 
 template <class T>
 LinkedList<T>::~LinkedList()
 {
-	Node<T>* temp = first;
-	while(temp != NULL)
-	{
-		temp = temp->getNext();
-		delete(first);
-		first = temp;
-	}
+	clear();
 }
 
 template <class T>
@@ -78,8 +77,9 @@ void LinkedList<T>::insertBack(T* newData)
         last->setNext(newNode);
         last = newNode;
     }
-    else
-        last = newNode;
+    else last = newNode;
+
+	size++;
 }
 
 template <class T>
@@ -119,6 +119,8 @@ bool LinkedList<T>::removeBack()
 
 		return true;
 	}
+
+	size--;
 }
 
 template <class T>
@@ -137,6 +139,8 @@ void LinkedList<T>::insertFront(T *newData)
    		newNode->next = first;
    		first = newNode;
    	}
+
+	size++;
 }
 
 template <class T>
@@ -155,6 +159,8 @@ bool LinkedList<T>::removeFront()
 
 		return true;
 	}
+
+	size--;
 }
 template <class T>
 void LinkedList<T>::removeNth(T *data){
@@ -183,6 +189,8 @@ void LinkedList<T>::removeNth(T *data){
     Node<T>* temp2 = temp->next->next;
     delete temp->next;
     temp->next = temp2;
+
+	size--;
 }
 template <class T>
 void LinkedList<T>::clear()
@@ -194,6 +202,10 @@ void LinkedList<T>::clear()
 		first = temp;
 		delete(temp);
 	}
+
+	first = NULL;
+	last = NULL;
+	size = 0;
 }
 
 template <class T>
@@ -206,8 +218,7 @@ LinkedList<T>::Node<T>* LinkedList<T>::operator[](int chave)
     return temp;
 }
 template <class T>
-int LinkedList<T>::getIndex(T* data)
-{
+int LinkedList<T>::getIndex(T* data) {
     int index=0;
     Node<T>* n = first;
     if(n->data == data) return 0;

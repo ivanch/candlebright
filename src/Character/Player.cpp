@@ -8,25 +8,24 @@ Player::Player(int _template){
     jumpHeight = 100;
     maxSlideX = 0.001;
     maxSlideY = 100;
-    damage = 5.0;
-    range = 100.0;
+    damage = 5.0f;
+    range = 100.0f;
     attackSpeed = 100;
     finalJumpHeight = 0;
     score = 0;
     dead = false;
 
-    anim = new AnimManager(&pSprite, {30,75});
+    anim = new AnimManager(&pSprite, sf::Vector2i(30, 75));
     anim->addSheet("idle", "sprites/Player/new-idle.png");
     anim->addSheet("walk", "sprites/Player/new-walking.png");
     anim->addSheet("jump", "sprites/Player/new-jumping.png", 4);
     anim->addSheet("attack", "sprites/Player/new-attacking.png", 3);
 
     wSprite = sf::Sprite(*getTexture("sprites/Player/whip.png"));
-    whipSize = 0.0;
+    whipSize = 0.0f;
     whipExpanding = true;
 
     setState(CharacterState::STATE_IDLE);
-    facing = FACING_RIGHT;
 
     type = 0;
 
@@ -57,21 +56,21 @@ void Player::setPos(sf::Vector2f newPos) {
 void Player::moveRight(){
     if(anim->isLocked()) return;
     if(!setState(CharacterState::STATE_WALKING)) return;
-    move({moveSpeed,0});
-    setFacing(Character::FACING_RIGHT);
+    move(sf::Vector2f(moveSpeed, 0));
+    setFacingRight();
 }
 
 void Player::moveLeft(){
     if(anim->isLocked()) return;
     if(!setState(CharacterState::STATE_WALKING)) return;
-    move({-moveSpeed,0});
-    setFacing(Character::FACING_LEFT);
+    move(sf::Vector2f(-moveSpeed, 0));
+    setFacingRight(false);
 }
 
 void Player::jump(){
     velocity.y -= 2.50;
-    if(facing == FACING_RIGHT) move({0.5,-2.5});
-    else move({-0.5,-2.5});
+    if(isFacingRight()) move(sf::Vector2f(0.5, -2.5));
+    else move(sf::Vector2f(-0.5, -2.5));
     setState(CharacterState::STATE_JUMPING);
 }
 
@@ -101,16 +100,12 @@ void Player::update(){
             setState(CharacterState::STATE_IDLE);
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
-        std::cout << pSprite.getPosition().x << ", " << pSprite.getPosition().y << "\n";
-    }
-
     /* Gerencia o estado do jogador */
     if(pSprite.getPosition().y < finalJumpHeight + 15 || collidingLeft || collidingRight){
         setState(CharacterState::STATE_FALLING);
         velocity.y = 0;
     }
-    if(getState() == CharacterState::STATE_JUMPING && (collidingLeft || collidingRight)){
+    if(getState() == CharacterState::STATE_JUMPING && ( (collidingLeft && !isFacingRight()) || ( collidingRight && isFacingRight()))){
         setState(CharacterState::STATE_FALLING);
         velocity.y = 0;
     }else if(getState() == CharacterState::STATE_JUMPING && collidingUp){
@@ -144,10 +139,10 @@ void Player::update(){
                     setState(CharacterState::STATE_FALLING);
                 }
             }
-            if(facing == FACING_RIGHT){
-                anim->setScale({1,1});
+            if(isFacingRight()){
+                anim->setScale(sf::Vector2f(1.f, 1.f));
             }else{
-                anim->setScale({-1,1});
+                anim->setScale(sf::Vector2f(-1.f, 1.f));
             }
             break;
         case CharacterState::STATE_JUMPING:
@@ -155,10 +150,10 @@ void Player::update(){
                 animClock.restart();
                 anim->play("jump");
             }
-            if(facing == FACING_RIGHT){
-                anim->setScale({1,1});
+            if(isFacingRight()){
+                anim->setScale(sf::Vector2f(1.f, 1.f));
             }else{
-                anim->setScale({-1,1});
+                anim->setScale(sf::Vector2f(-1.f, 1.f));
             }
             break;
         case CharacterState::STATE_ATTACKING:
@@ -175,9 +170,9 @@ void Player::update(){
             }
 
             if(anim->isLocked()){
-                if(facing == FACING_RIGHT)
-                    wSprite.setScale({whipSize/range,1});
-                else wSprite.setScale({-whipSize/range,1});
+                if(isFacingRight())
+                    wSprite.setScale(sf::Vector2f(whipSize/range, 1));
+                else wSprite.setScale(sf::Vector2f(-whipSize/range, 1));
                 wSprite.setPosition(pSprite.getPosition().x+5, pSprite.getPosition().y+15);
             }else{ // Acabou animação do ataque
                 anim->stop();
@@ -193,7 +188,7 @@ void Player::update(){
             break;
     }
 
-    healthBar.setPos({getPos().x-25,getPos().y+75});
+    healthBar.setPos(sf::Vector2f(getPos().x-25, getPos().y+75));
     if(Enemy::enemyCount == 1){
         range = 200;
     }
@@ -207,7 +202,7 @@ void Player::draw(Engine& engine) {
 
 void Player::fall(){
     if(getState() != CharacterState::STATE_JUMPING){
-        move({0,2.50});
+        move(sf::Vector2f(0, 2.50));
     }
 }
 
@@ -230,6 +225,5 @@ const sf::Vector2f Player::getPos() const {
 void Player::takeDamage(float _damage){
     health -= damage;
     healthBar.setHealth(health);
-    move({0, -0.1});
-    std::cout << "Levou dano" << std::endl;
+    move(sf::Vector2f(0, -0.1));
 }

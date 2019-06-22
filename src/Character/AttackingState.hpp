@@ -8,6 +8,6 @@ class AttackingState : public CharacterState {
         AttackingState();
         virtual ~AttackingState();
 
-        virtual bool idle(Character* _char);
-        virtual bool falling(Character* _char);
+        virtual const bool idle(Character* _char);
+        virtual const bool falling(Character* _char);
 };

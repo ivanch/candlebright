@@ -1,7 +1,7 @@
 #include "Engine.hpp"
 
 Engine::Engine(){
-    sf::Vector2i centerWindow((sf::VideoMode::getDesktopMode().width / 2) - 445, (sf::VideoMode::getDesktopMode().height / 2) - 350);
+    sf::Vector2i centerWindow((sf::VideoMode::getDesktopMode().width / 2) - 300, (sf::VideoMode::getDesktopMode().height / 2) - 350);
     window.create(sf::VideoMode(600, 400), "Candlebright: Ominous Whip", sf::Style::Titlebar | sf::Style::Close);
     window.setPosition(centerWindow);
     window.setKeyRepeatEnabled(true);

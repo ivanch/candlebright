@@ -7,11 +7,18 @@ class CharacterList {
     public:
         std::set<Character*> characters;
 
-        virtual void add(Character* _el){
+        void add(Character* _el){
             characters.insert(_el);
         }
-        virtual void remove(Character* _el){
+        void remove(Character* _el){
             characters.erase(_el);
+        }
+        void clear(){
+            std::set<Character*>::iterator itr;
+            for(itr = begin(); itr != end(); ++itr){
+                delete *itr;
+            }
+            characters.clear();
         }
         std::set<Character *>::iterator begin(){ return characters.begin(); }
         std::set<Character *>::iterator end(){ return characters.end(); }

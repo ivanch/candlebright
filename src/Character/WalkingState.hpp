@@ -8,8 +8,8 @@ class WalkingState : public CharacterState {
         WalkingState();
         virtual ~WalkingState();
 
-        virtual bool idle(Character* _char);
-        virtual bool jumping(Character* _char);
-        virtual bool falling(Character* _char);
-        virtual bool attacking(Character* _char);
+        virtual const bool idle(Character* _char);
+        virtual const bool jumping(Character* _char);
+        virtual const bool falling(Character* _char);
+        virtual const bool attacking(Character* _char);
 };

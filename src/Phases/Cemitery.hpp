@@ -8,10 +8,14 @@
 #include "../Obstacles/Fire.hpp"
 #include "Phase.hpp"
 
-class Cemitery : public Phase {
-    public:
-        Cemitery();
-        ~Cemitery();
+namespace Phases {
 
-        virtual sf::Vector2f getSpawnPoint();
-};
+    class Cemitery : public Phase {
+        public:
+            Cemitery();
+            ~Cemitery();
+
+            virtual const sf::Vector2f getSpawnPoint() const;
+    };
+
+}

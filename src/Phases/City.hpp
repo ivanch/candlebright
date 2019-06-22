@@ -11,10 +11,14 @@
 #include "../Obstacles/BlackHole.hpp"
 #include "Phase.hpp"
 
-class City : public Phase {
-    public:
-        City();
-        ~City();
-        
-        virtual sf::Vector2f getSpawnPoint();
-};
+namespace Phases {
+
+    class City : public Phase {
+        public:
+            City();
+            ~City();
+            
+            virtual const sf::Vector2f getSpawnPoint() const;
+    };
+
+}

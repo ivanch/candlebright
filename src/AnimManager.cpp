@@ -1,18 +1,18 @@
 #include "AnimManager.hpp"
 
-AnimManager::AnimManager(sf::Sprite* _sprite, sf::Vector2i _size){
+AnimManager::AnimManager(sf::Sprite* _sprite, sf::Vector2i _size): size(_size){
     sprite = _sprite;
-    rect = {0,0,_size.x,_size.y};
-    size = _size;
-    scale = {1,1};
+    rect = sf::IntRect(0, 0, _size.x, _size.y);
+    scale = sf::Vector2f(1.f, 1.f);
     goingBack = false;
     count = 0;
     locked = false;
 
-    sprite->setOrigin({(float)size.x/2, 0.0});
+    sprite->setOrigin(sf::Vector2f((float)size.x/2, 0.f));
 }
 AnimManager::~AnimManager(){
-    for(auto itr = animes.begin(); itr != animes.end(); ++itr){
+    std::map<std::string, sf::Texture *>::iterator itr;
+    for(itr = animes.begin(); itr != animes.end(); ++itr){
         delete (*itr).second;
     }
     animes.clear();
@@ -84,7 +84,7 @@ void AnimManager::defineRect(){
 
 void AnimManager::setScale(sf::Vector2f _scale){
     if(scale == _scale) return;
-    sprite->setOrigin({(float)size.x/2, 0.0});
+    sprite->setOrigin(sf::Vector2f((float)size.x/2, 0.0));
     
     sprite->setScale(_scale);
     scale = _scale;

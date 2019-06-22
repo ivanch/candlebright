@@ -12,7 +12,7 @@ class HealthBar {
         float health;
 
     public:
-        HealthBar(sf::Vector2f pos = {0,0});
+        HealthBar(sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
         ~HealthBar();
 
         void setPos(sf::Vector2f _pos);

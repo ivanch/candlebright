@@ -37,7 +37,7 @@ Menu::Menu(float width, float height)
     }
 
     spriteWhip->setTexture(*textureWhip);
-    spriteWhip->setScale({8,8});
+    spriteWhip->setScale(sf::Vector2f(8.f, 8.f));
     spriteWhip->setPosition(50,75);
 
     addMenuItem(MENU_MAIN, L"Jogar", true, font);

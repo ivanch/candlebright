@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 #include <math.h>
+#include <stdlib.h>
 
 #include "../Character/Player.hpp"
 #include "../Enemies/Zombie.hpp"
@@ -21,6 +22,10 @@
 #include "CollisionManager.hpp"
 
 class Phase : public Entity {
+    private:
+        const int getIntFromString(const std::string& _str) const;
+        const float getFloatFromString(const std::string& _str) const;
+    
     protected:
         sf::Sprite* background;
         EntityList entities;
@@ -29,13 +34,13 @@ class Phase : public Entity {
         ObstaclesList obstacles;
         CollisionManager col_mngr;
 
-        float getDistance(sf::Vector2f p1, sf::Vector2f p2);
+        const float getDistance(sf::Vector2f p1, sf::Vector2f p2) const;
 
     public:
         Phase();
         virtual ~Phase();
 
-        virtual sf::Vector2f getSpawnPoint() = 0;
+        virtual const sf::Vector2f getSpawnPoint() const = 0;
 
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
@@ -44,16 +49,16 @@ class Phase : public Entity {
         void drawAll(Engine& engine);
         void gravity();
 
-        void loadEnemies(int act_world);
+        void loadEnemies(const int act_world);
 
         void addEntity(Entity* _e) { entities.add(_e); }
         void addThing(Thing* _thing) { things.add(_thing); addEntity(static_cast<Entity*>(_thing)); }
         void addCharacter(Character* _char){ characters.add(_char); addThing(static_cast<Thing*>(_char)); }
-        void addObstacle(Obstacle* _obs){ obstacles.add(_obs); addThing(static_cast<Thing*>(_obs)); }
+        void addObstacle(Obstacles::Obstacle* _obs){ obstacles.add(_obs); addThing(static_cast<Thing*>(_obs)); }
 
         CharacterList* getCharList(){ return &characters;}
 
-        sf::Vector2f getRandomPosition(const sf::View& view);
+        const sf::Vector2f getRandomPosition(const sf::View& view);
 
         /* Processa os ataques dos personagens */
         void checkAttack(std::set<Character*>* killBuffer);

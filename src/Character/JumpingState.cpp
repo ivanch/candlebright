@@ -8,13 +8,13 @@ JumpingState::~JumpingState(){
 
 }
 
-bool JumpingState::walking(Character* _char){
+const bool JumpingState::walking(Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new WalkingState());
     return true;
 }
 
-bool JumpingState::falling(Character* _char){
+const bool JumpingState::falling(Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new FallingState());
     return true;

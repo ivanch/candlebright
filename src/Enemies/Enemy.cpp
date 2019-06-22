@@ -2,9 +2,8 @@
 
 unsigned int Enemy::enemyCount = 0;
 
-Enemy::Enemy(){
+Enemy::Enemy(): score(0) {
     enemyCount++;
-    score = 0;
 }
 Enemy::~Enemy(){
     enemyCount--;
@@ -15,6 +14,6 @@ void Enemy::setPos(sf::Vector2f _pos){
     eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Enemy::getPos(){
+const sf::Vector2f Enemy::getPos() const {
     return eSprite.getPosition();
 }

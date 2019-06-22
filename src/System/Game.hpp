@@ -20,7 +20,7 @@ class Game {
         Phase* world;
         sf::View view;
 
-        int act_world;
+        unsigned short act_world;
 
 
         Menu menu;
@@ -30,10 +30,13 @@ class Game {
         sf::Clock timer;
 
         sf::Clock enemySpawnTimer;
-        int enemySpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+        unsigned int enemySpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
 
         sf::Clock obstacleSpawnTimer;
-        int obstacleSpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+        unsigned int obstacleSpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+
+        const int getIntFromString(const std::string& _str) const;
+        const float getFloatFromString(const std::string& _str) const;
 
     public:
         Game();
