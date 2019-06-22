@@ -22,7 +22,7 @@ void Phase::update(){
             entities.remove(*chr); // Continua imprimindo jogadores mortos na tela
             delete *chr;
         }else{
-            (*chr)->death();
+            (*chr)->setDead(true);
         }
     }
 }

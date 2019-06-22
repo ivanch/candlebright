@@ -13,7 +13,7 @@ Player::Player(int _template){
     attackSpeed = 100;
     finalJumpHeight = 0;
     score = 0;
-    isDead = false;
+    dead = false;
 
     anim = new AnimManager(&pSprite, {30,75});
     anim->addSheet("idle", "sprites/Player/new-idle.png");
@@ -35,13 +35,11 @@ Player::Player(int _template){
         key_left = sf::Keyboard::Left;
         key_jump = sf::Keyboard::Up;
         key_attack = sf::Keyboard::Return;
-        setPos({75.0, 600});
     }else{
         key_right = sf::Keyboard::D;
         key_left = sf::Keyboard::A;
         key_jump = sf::Keyboard::W;
         key_attack = sf::Keyboard::Z;
-        setPos({50.0, 600});
     }
 }
 Player::~Player(){}
@@ -78,7 +76,7 @@ void Player::jump(){
 }
 
 void Player::update(){
-    if(isDead) return;
+    if(dead) return;
 
     /* Gerencia os botões apertados */
     if(sf::Keyboard::isKeyPressed(key_right)) {
@@ -90,7 +88,7 @@ void Player::update(){
             velocity.x -= 10;
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
     }else if(sf::Keyboard::isKeyPressed(key_jump) && !collidingUp && collidingDown){
-        if(currentState->getState() != CharacterState::STATE_JUMPING){
+        if(getState() != CharacterState::STATE_JUMPING){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
             if(velocity.y > maxSlideY) velocity.y = maxSlideY;
@@ -103,8 +101,8 @@ void Player::update(){
             setState(CharacterState::STATE_IDLE);
     }
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::LShift)){
-        std::cout << isCollidingLeft() << ", " << isCollidingUp() << ", " << isCollidingDown() << ", " << isCollidingRight() << std::endl;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::M)){
+        std::cout << pSprite.getPosition().x << ", " << pSprite.getPosition().y << "\n";
     }
 
     /* Gerencia o estado do jogador */
@@ -112,17 +110,15 @@ void Player::update(){
         setState(CharacterState::STATE_FALLING);
         velocity.y = 0;
     }
-
-    if(getState() == CharacterState::STATE_FALLING && collidingDown){
-        setState(CharacterState::STATE_IDLE);
-        velocity.y = 0;
-    }
-
     if(getState() == CharacterState::STATE_JUMPING && (collidingLeft || collidingRight)){
         setState(CharacterState::STATE_FALLING);
         velocity.y = 0;
     }else if(getState() == CharacterState::STATE_JUMPING && collidingUp){
         setState(CharacterState::STATE_FALLING);
+        velocity.y = 0;
+    }
+    if(getState() == CharacterState::STATE_FALLING && collidingDown){
+        setState(CharacterState::STATE_IDLE);
         velocity.y = 0;
     }
 
@@ -138,17 +134,8 @@ void Player::update(){
         jump();
     }
 
-    if(pSprite.getPosition().y > 800)
-    {
-        health -= 25;
-        sf::Vector2f respawnPos({50.0,600.0});
-        setPos({respawnPos.x,respawnPos.y});
-        if(health <= 0)
-            std::exit(0);
-    }
-
     /* Gerenciar animações */
-    switch (currentState->getState()){
+    switch (getState()){
         case CharacterState::STATE_WALKING:
             if(animClock.getElapsedTime().asMilliseconds() >= 150){
                 animClock.restart();
@@ -219,7 +206,7 @@ void Player::draw(Engine& engine) {
 }
 
 void Player::fall(){
-    if(currentState->getState() != CharacterState::STATE_JUMPING){
+    if(getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
@@ -245,8 +232,4 @@ void Player::takeDamage(float _damage){
     healthBar.setHealth(health);
     move({0, -0.1});
     std::cout << "Levou dano" << std::endl;
-}
-
-void Player::death(){
-    isDead = true;
 }

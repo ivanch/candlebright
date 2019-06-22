@@ -17,9 +17,10 @@ HealthBar::HealthBar(sf::Vector2f pos){
 HealthBar::~HealthBar(){}
 
 void HealthBar::setHealth(float _health){
+    health = _health;
+    
     float rate = maxHealth/size.x;
     foreground.setSize({_health/rate,size.y});
-    health = _health;
 }
 
 void HealthBar::setMaxHealth(float _health){

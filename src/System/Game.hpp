@@ -19,7 +19,6 @@ class Game {
         Player* player2;
         Phase* world;
         sf::View view;
-        sf::Text enemyCount;
 
         int act_world;
 
@@ -50,4 +49,9 @@ class Game {
         void loadPlayers();
 
         void draw(sf::RenderWindow& window);
+
+        void spawnRandomEnemy();
+        void spawnRandomObstacle();
+
+        void nextPhase();
 };

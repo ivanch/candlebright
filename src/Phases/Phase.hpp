@@ -34,6 +34,9 @@ class Phase : public Entity {
     public:
         Phase();
         virtual ~Phase();
+
+        virtual sf::Vector2f getSpawnPoint() = 0;
+
         void setBackground(sf::Sprite* _bg) { background = _bg; }
         sf::Sprite* getBackground() { return background; }
         void update(); // Atualizar a lista de entidades dentro do mundo

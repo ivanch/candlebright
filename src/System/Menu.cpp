@@ -5,12 +5,20 @@ Menu::Menu(float width, float height)
     {
         std::cerr<<"Erro ao ler fonte"<<std::endl;
     }
+    menuTitle.setFont(font);
+    menuTitle.setCharacterSize(42);
+    menuTitle.setString("Candlebright: Ominous Whip");
+    menuTitle.setOrigin(menuTitle.getGlobalBounds().left + menuTitle.getGlobalBounds().width/2.0f,
+                        menuTitle.getGlobalBounds().top  + menuTitle.getGlobalBounds().height/2.0f);
+    menuTitle.setPosition(300,50);
+    menuTitle.setFillColor(sf::Color::White);
+    menuTitle.setOutlineColor(sf::Color::Black);
+    menuTitle.setOutlineThickness(1);
 
     sf::Texture* textureMenu = new sf::Texture;
     spriteMenu = new sf::Sprite;
     int menu_opt;
     menu_opt=rand()%2;
-    std::cout<<menu_opt;
     if(menu_opt==0){
         if (!textureMenu->loadFromFile("sprites/menubg1.png"))
             std::cerr << "Erro ao ler background..." << std::endl;
@@ -22,14 +30,24 @@ Menu::Menu(float width, float height)
 
     spriteMenu->setTexture(*textureMenu);
 
-    addMenuItem(MENU_MAIN, "Jogar", true, font);
-    addMenuItem(MENU_MAIN, "Sair", false, font);
+    sf::Texture* textureWhip = new sf::Texture;
+    spriteWhip = new sf::Sprite;
+    if(!textureWhip->loadFromFile("sprites/Player/whip.png")){
+        std::cerr << "Erro ao chicote do player..." << std::endl;
+    }
 
-    addMenuItem(MENU_PHASES, "Cidade (1)", true, font);
-    addMenuItem(MENU_PHASES, "Cemiterio (2)", false, font);
+    spriteWhip->setTexture(*textureWhip);
+    spriteWhip->setScale({8,8});
+    spriteWhip->setPosition(50,75);
 
-    addMenuItem(MENU_PLAYERS, "1 Jogador", true, font);
-    addMenuItem(MENU_PLAYERS, "2 Jogadores", false, font);
+    addMenuItem(MENU_MAIN, L"Jogar", true, font);
+    addMenuItem(MENU_MAIN, L"Sair", false, font);
+
+    addMenuItem(MENU_PHASES, L"Cidade (1)", true, font);
+    addMenuItem(MENU_PHASES, L"Cemitério (2)", false, font);
+
+    addMenuItem(MENU_PLAYERS, L"1 Jogador", true, font);
+    addMenuItem(MENU_PLAYERS, L"2 Jogadores", false, font);
 
     enabled = true;
     selectedItem = 0;
@@ -43,17 +61,21 @@ Menu::~Menu()
 
 void Menu::draw(Engine& engine){
     engine.draw(*spriteMenu);
+    engine.draw(*spriteWhip);
     for(int i=0; i<getMenuItems(currentMenu); i++){
         engine.draw(menu_text[currentMenu][i]);
     }
+    engine.draw(menuTitle);
 }
 
 void Menu::moveUp(){
     if(selectedItem -1 >= 0)
     {
-        menu_text[currentMenu][selectedItem].setFillColor(sf::Color::White);
+        menu_text[currentMenu][selectedItem].setFillColor(sf::Color(200,200,200));
+        menu_text[currentMenu][selectedItem].setOutlineThickness(0);
         selectedItem--;
         menu_text[currentMenu][selectedItem].setFillColor(sf::Color::Red);
+        menu_text[currentMenu][selectedItem].setOutlineThickness(2);
      }
 }
 
@@ -61,9 +83,11 @@ void Menu::moveDown(){
 
     if(selectedItem +1 < getMenuItems(currentMenu))
     {
-        menu_text[currentMenu][selectedItem].setFillColor(sf::Color::White);
+        menu_text[currentMenu][selectedItem].setFillColor(sf::Color(200,200,200));
+        menu_text[currentMenu][selectedItem].setOutlineThickness(0);
         selectedItem++;
         menu_text[currentMenu][selectedItem].setFillColor(sf::Color::Red);
+        menu_text[currentMenu][selectedItem].setOutlineThickness(2);
      }
 }
 
@@ -78,14 +102,22 @@ void Menu::update(Engine* engine){
             }else if(event.key.code == sf::Keyboard::Enter){
                 switch (currentMenu){
                     case MENU_MAIN:
-                        if(selectedItem == 0) currentMenu = MENU_PHASES;
-                        else if(selectedItem == 2) engine->getWindow()->close();
+                        if(selectedItem == 0){
+                            currentMenu = MENU_PHASES;
+                            menuTitle.setString("Escolha a fase");
+                            menuTitle.setPosition(400,50);
+                        }
+                        else if(selectedItem == 1){
+                            engine->getWindow()->close();
+                        }
                         selectedItem = 0;
                         break;
                     case MENU_PHASES:
                         if(selectedItem == 0) world = 1;
                         else if(selectedItem == 1) world = 2;
                         currentMenu = MENU_PLAYERS;
+                        menuTitle.setString("Escolha a quantidade de jogadores");
+                        menuTitle.setPosition(275,50);
                         selectedItem = 0;
                         break;
                     case MENU_PLAYERS:
@@ -104,14 +136,14 @@ void Menu::update(Engine* engine){
 }
 
 int Menu::getMenuItems(int _menu){
-    if(_menu == MENU_MAIN) return 3;
+    if(_menu == MENU_MAIN) return 2;
     else if(_menu == MENU_PHASES) return 2;
     else if(_menu == MENU_PLAYERS) return 2;
 
     return -1;
 }
 
-void Menu::addMenuItem(int _menu, std::string _title, bool isPrimary, sf::Font _font){
+void Menu::addMenuItem(int _menu, std::wstring _title, bool isPrimary, sf::Font _font){
     int index = 0;
     for(int i = 0; i < MAX_ITEMS; i++){
         if(menu_text[_menu][i].getFont() == NULL){
@@ -120,7 +152,14 @@ void Menu::addMenuItem(int _menu, std::string _title, bool isPrimary, sf::Font _
         }
     }
     menu_text[_menu][index].setFont(font);
-    menu_text[_menu][index].setFillColor(isPrimary ? sf::Color::Red : sf::Color::White);
+    menu_text[_menu][index].setCharacterSize(36);
+    menu_text[_menu][index].setFillColor(isPrimary ? sf::Color::Red : sf::Color(200,200,200));
+    menu_text[_menu][index].setOutlineColor(sf::Color::Black);
+    menu_text[_menu][index].setOutlineThickness(isPrimary ? 2 : 0);
     menu_text[_menu][index].setString(_title);
-    menu_text[_menu][index].setPosition(sf::Vector2f(600/2 -35, 75 * (index+1)));
+
+    sf::FloatRect textRect = menu_text[_menu][index].getGlobalBounds();
+    menu_text[_menu][index].setOrigin(  textRect.left + textRect.width/2.0f,
+                                        textRect.top  + textRect.height/2.0f);
+    menu_text[_menu][index].setPosition(sf::Vector2f(600/2, 75 + 75 * (index+1)));
 }

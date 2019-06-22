@@ -2,41 +2,41 @@
 
 City::City(){
     Platform* p;
-    p = new Platform({1510,80},{0,733}, new sf::Sprite (*getTexture("sprites/ground.png"))); // Chão
+    p = new Platform({1510,80},{0, 733}, new sf::Sprite (*getTexture("sprites/ground.png"))); // Chão
     addThing(p);
-    p = new Platform({1280,10},{150,625}); // Platforma branca
-    addThing(p);
-    p = new Platform({1280,5},{200,525}, sf::Color::Red); // Platforma vermelha
-    p->setMoving(true);
-    p->setMove({100,0});
-    p->setMoveSpeed({0.5,0});
+    p = new Platform({1150,10},{300, 620}); // Platforma branca
     addThing(p);
 
+
     Obstacle* o;
-    o = new Wall({10,50},{100,700}, sf::Color::Cyan);
-    addObstacle(o);
-    o = new Wall({20,50},{50,500}, sf::Color::Cyan);
-    addObstacle(o);
-    o = new Wall({20,50},{125,450}, sf::Color::Cyan);
+    o = new Wall({50,10},{220,670}, sf::Color::Cyan);
     addObstacle(o);
     o = new Fire({130,675}, 25);
     addObstacle(o);
     o = new Black_Hole({500,650}, 40);
     addObstacle(o);
 
-    Enemy* e;
-    e = new Zombie({150,650});
-    addCharacter(e);
-    e = new Dressed_Zombie({250,550});
-    addCharacter(e);
-    e = new Ghost({50,550});
-    addCharacter(e);
-    e = new Ghost({300,550});
-    addCharacter(e);
-    e = new Hell_Demon({200,350});
-    addCharacter(e);
-    e = new Hell_Demon({400,600});
+    /* Bordas do mapa */
+    o = new Wall({10,800},{0,0}, sf::Color::Black);
+    addObstacle(o);
+    o = new Wall({10,800},{1500,0}, sf::Color::Black);
+    addObstacle(o);
 
+    Enemy* e;
+    e = new Zombie({182,600});
+    addCharacter(e);
+    e = new Hell_Demon({500,540});
+    addCharacter(e);
+    e = new Hell_Demon({550,540});
+    addCharacter(e);
+    e = new Dressed_Zombie({800,540});
+    addCharacter(e);
+    e = new Dressed_Zombie({830,540});
+    addCharacter(e);
+    e = new Hell_Demon({1200,540});
+    addCharacter(e);
+    e = new Dressed_Zombie({1300,540});
+    addCharacter(e);
 
     sf::Texture* backgroundTexture = new sf::Texture;
     background = new sf::Sprite;
@@ -53,3 +53,7 @@ City::City(){
     background_music->run();
 }
 City::~City(){}
+
+sf::Vector2f City::getSpawnPoint(){
+    return {50, 600};
+}

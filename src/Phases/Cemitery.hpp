@@ -12,4 +12,6 @@ class Cemitery : public Phase {
     public:
         Cemitery();
         ~Cemitery();
+
+        virtual sf::Vector2f getSpawnPoint();
 };

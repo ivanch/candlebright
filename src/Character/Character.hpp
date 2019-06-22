@@ -54,7 +54,8 @@ class Character : public Animatable {
 
         virtual void setHealth(float _health);
 
-        virtual void death(){}
+        const bool isDead() const { return dead; }
+        void setDead(bool _dead) { this->dead = _dead; }
 
     protected:
         sf::Vector2f velocity;
@@ -76,4 +77,6 @@ class Character : public Animatable {
         float attackSpeed; // Intervalo entre os ataques em milissegundos
 
         short type;
+
+        bool dead;
 };

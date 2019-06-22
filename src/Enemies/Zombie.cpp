@@ -7,14 +7,15 @@ Zombie::Zombie(sf::Vector2f pos){
     jumpHeight = 80;
     maxSlideX = 0.001;
     maxSlideY = 80;
-    health = 100;
-    damage = 5.0;
-    range = 10.0;
-    attackChance = 0.1 / 60; // Chance de ataques por segundo
-    attackSpeed = 0.5;
     finalJumpHeight = 0;
     type = 1;
     score = 1;
+
+    health = 100;
+    damage = 5.0;
+    range = 50.0;
+    attackChance = 0.25 / 60; // 25%
+    attackSpeed = 250;
 
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
@@ -42,7 +43,7 @@ const sf::FloatRect Zombie::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Zombie::fall(){
-    if(currentState->getState() != CharacterState::STATE_JUMPING){
+    if(getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
@@ -62,6 +63,10 @@ void Zombie::moveLeft(){
 void Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
 
+    if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterState::STATE_WALKING){
+        attack();
+    }
+
     if(getState() == CharacterState::STATE_FALLING && collidingDown){
         setState(CharacterState::STATE_IDLE);
     }
@@ -71,7 +76,7 @@ void Zombie::update(){
         setState(CharacterState::STATE_FALLING);
     }
 
-    if(currentState->getState() == CharacterState::STATE_WALKING){
+    if(getState() == CharacterState::STATE_WALKING){
         if(facing == Facing::FACING_LEFT){
             if(!collidingLeft)
                 moveLeft();
@@ -95,10 +100,10 @@ void Zombie::update(){
         }else{
             anim->setScale({1,1});
         }
-    }
-
-    if(((float) rand()) / (float) RAND_MAX <= attackChance){
-        attack();
+    }else if(getState() == CharacterState::STATE_ATTACKING){
+        if(animClock.getElapsedTime().asMilliseconds() >= 500){
+            setState(CharacterState::STATE_IDLE);
+        }
     }
 
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
@@ -119,5 +124,6 @@ void Zombie::takeDamage(float _damage){
 }
 
 void Zombie::attack(){
-    /* Zumbi não ataca, é mais ou menos um obstáculo */
+    setState(CharacterState::STATE_ATTACKING);
+    animClock.restart();
 }

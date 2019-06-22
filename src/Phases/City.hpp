@@ -15,4 +15,6 @@ class City : public Phase {
     public:
         City();
         ~City();
+        
+        virtual sf::Vector2f getSpawnPoint();
 };

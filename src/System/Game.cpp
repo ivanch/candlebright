@@ -10,15 +10,6 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
 
     enemySpawnDelay = 30; // Spawna um inimigo na tela a cada 30 segundos
     obstacleSpawnDelay = 60; // Spawna um obstáculo a cada 60 segundos
-
-    sf::Font* font = new sf::Font;
-    if(!font->loadFromFile("fonts/ancient.ttf")){
-        std::cerr<<"Erro ao ler fonte"<<std::endl;
-    }
-    enemyCount.setString("Inimigos: 0");
-    enemyCount.setFont(*font);
-    enemyCount.setPosition(player1->getPos());
-    enemyCount.setFillColor(sf::Color::Blue);
 }
 Game::~Game(){}
 
@@ -38,8 +29,11 @@ void Game::run(){
     }
 
     world->addCharacter(player1); // Sempre haverá um jogador por padrão
+    player1->setPos(world->getSpawnPoint());
     if(menu.getSelectedPlayers() == 2){
         world->addCharacter(player2);
+        player2->setPos({world->getSpawnPoint().x,
+                            world->getSpawnPoint().y-100});
     }
 
     engine.getWindow()->setView(view);
@@ -106,7 +100,7 @@ void Game::loadPlayers(){
 }
 void Game::update(){
     while (engine.isWindowOpen()){
-        if(player1->getIsDead())
+        if(player1->isDead())
         {
             std::cout<<Player::getScore();
 
@@ -146,40 +140,11 @@ void Game::update(){
                 world->gravity();
                 world->update(); // Atualiza as entidades do mundo
 
-                /* Spawn aleatório de inimigos */
-                if(enemySpawnTimer.getElapsedTime().asSeconds() >= enemySpawnDelay){
-                    Enemy* e;
-                    int r = rand()%4;
-                    sf::Vector2f pos = world->getRandomPosition(view);
-                    if(pos.x != 0 && pos.y != 0){
-                        if(r == 0){ // Zombie
-                            e = new Zombie({pos.x,pos.y-50});
-                        }else if(r == 1){ // Clothed Zombie
-                            e = new Dressed_Zombie({pos.x,pos.y-50});
-                        }else if(r == 2){ // Ghost
-                            e = new Ghost({pos.x,pos.y-60});
-                        }else if(r == 3){ // Hell Demon
-                            e = new Hell_Demon({pos.x,pos.y-60});
-                        }
-                        world->addCharacter(e);
-                    }
-                    enemySpawnTimer.restart();
-                }
+                if(enemySpawnTimer.getElapsedTime().asSeconds() >= enemySpawnDelay) spawnRandomEnemy();
+                if(obstacleSpawnTimer.getElapsedTime().asSeconds() >= obstacleSpawnDelay) spawnRandomObstacle();
 
-                if(obstacleSpawnTimer.getElapsedTime().asSeconds() >= obstacleSpawnDelay){
-                    Obstacle* o;
-                    int r = rand()%100;
-                    sf::Vector2f pos = world->getRandomPosition(view);
-                    if(pos.x != 0 && pos.y != 0){
-                        int _size = 5 + rand()%(55-5); // 5 ~ 50
-                        if(r <= 80){ // Fogo (80% de chance)
-                            o = new Fire({pos.x,pos.y-(_size)}, _size);
-                        }else if(r > 80){ // Black Hole (20% de chance)
-                            o = new Black_Hole({pos.x,pos.y}, _size);
-                        }
-                        world->addObstacle(o);
-                    }
-                    obstacleSpawnTimer.restart();
+                if(Enemy::enemyCount == 0){
+                    nextPhase();
                 }
             }
 
@@ -198,5 +163,61 @@ void Game::update(){
             world->drawAll(engine); // Desenha todas entidades do mundo
         }
         engine.render();
+    }
+}
+
+/* Spawn aleatório de inimigos */
+void Game::spawnRandomEnemy(){
+    Enemy* e;
+    int r;
+    if(act_world == 1) r = rand()%2;
+    else if(act_world == 2) r = rand()%4;
+    sf::Vector2f pos = world->getRandomPosition(view);
+    if(pos.x != 0 && pos.y != 0){
+        if(r == 0){ // Spawn em ambas fases
+            e = new Zombie({pos.x,pos.y-60});
+        }else if(r == 1){ // Spawn em ambas fases
+            e = new Dressed_Zombie({pos.x,pos.y-60});
+        }else if(r == 2){ // Spawn apenas na fase 2
+            e = new Ghost({pos.x,pos.y-70});
+        }else if(r == 3){ // Spawn apenas na fase 2
+            e = new Hell_Demon({pos.x,pos.y-70});
+        }
+        world->addCharacter(e);
+    }
+    enemySpawnTimer.restart();
+}
+
+/* Spawn aleatório de obstáculos */
+void Game::spawnRandomObstacle(){
+    Obstacle* o;
+    int r = rand()%100;
+    sf::Vector2f pos = world->getRandomPosition(view);
+    if(pos.x != 0 && pos.y != 0){
+        int _size = 5 + rand()%(55-5); // 5 ~ 50
+        if(r <= 80){ // Fogo (80% de chance)
+            o = new Fire({pos.x,pos.y-(_size)}, _size);
+        }else if(r > 80){ // Black Hole (20% de chance)
+            o = new Black_Hole({pos.x,pos.y}, _size);
+        }
+        world->addObstacle(o);
+    }
+    obstacleSpawnTimer.restart();
+}
+
+void Game::nextPhase(){
+    if(act_world == 1){
+        delete world;
+        world = new Cemitery;
+
+        world->addCharacter(player1); // Sempre haverá um jogador por padrão
+        player1->setPos(world->getSpawnPoint());
+        if(menu.getSelectedPlayers() == 2){
+            world->addCharacter(player2);
+            player2->setPos({world->getSpawnPoint().x,
+                             world->getSpawnPoint().y-100});
+        }
+    }else{
+        engine.getWindow()->close();
     }
 }

@@ -4,6 +4,7 @@
 
 #include "../Character/Player.hpp"
 #include "../Character/Character.hpp"
+#include "../Character/Player.hpp"
 
 class Enemy : public Character {
     protected:

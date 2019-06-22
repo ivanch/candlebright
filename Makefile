@@ -24,7 +24,7 @@ debug:
 	$(CC) -c $(CSOURCE) $(LDFLAGS) $(CFLAGS) -ggdb
 	mv *.o $(OBJDIR)/
 	$(CC) $(OBJDIR)/*.o -o $(BINDIR)/$(EXEC)-debug $(LDFLAGS) $(SFML) $(CFLAGS)
-	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug
+	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug --track-origins=yes --leak-check=full
 
 .PHONY: clean
 clean:

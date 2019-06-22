@@ -11,11 +11,11 @@ Hell_Demon::Hell_Demon(sf::Vector2f pos){
     type = 1;
     score = 3;
 
-    health = 100;
+    health = 250;
     damage = 5.0;
-    range = 10.0;
+    range = 75.0;
     attackChance = 0.15 / 60; // 15%
-    attackSpeed = 250;
+    attackSpeed = 150;
 
     setState(CharacterState::STATE_WALKING);
     facing = FACING_RIGHT;
@@ -24,6 +24,9 @@ Hell_Demon::Hell_Demon(sf::Vector2f pos){
     anim->addSheet("walk", "sprites/Hell-Demon/new-hell-beast-idle.png");
     anim->addSheet("attack1", "sprites/Hell-Demon/new-hell-beast-burn.png");
     anim->addSheet("attack2", "sprites/Hell-Demon/new-hell-beast-breath.png", 3);
+
+    healthBar.setSize({50,7});
+    healthBar.setMaxHealth(health);
 }
 Hell_Demon::~Hell_Demon(){}
 
@@ -43,7 +46,7 @@ const sf::FloatRect Hell_Demon::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Hell_Demon::fall(){
-    if(currentState->getState() != CharacterState::STATE_JUMPING){
+    if(getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }

@@ -15,16 +15,15 @@ Cemitery::Cemitery(){
     addObstacle(o);
 
     Enemy* e;
-    e = new Zombie({150,650});
+    e = new Zombie({150,600});
     addCharacter(e);
-    e = new Zombie({200,650});
+    e = new Zombie({200,600});
     addCharacter(e);
-    e = new Zombie({250,650});
+    e = new Zombie({250,600});
     addCharacter(e);
-    e = new Zombie({300,650});
+    e = new Zombie({300,600});
     addCharacter(e);
     e = new Sylathus({500,550});
-    addThing(e);
     addCharacter(e);
 
 
@@ -43,3 +42,7 @@ Cemitery::Cemitery(){
     background_music->run();
 }
 Cemitery::~Cemitery(){}
+
+sf::Vector2f Cemitery::getSpawnPoint(){
+    return {50, 600};
+}

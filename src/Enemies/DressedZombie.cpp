@@ -12,10 +12,10 @@ Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
     score = 2;
 
     health = 150;
-    damage = 5.0;
-    range = 10.0;
-    attackChance = 0.1 / 60; // 10%
-    attackSpeed = 200;
+    damage = 1.5;
+    range = 50.0;
+    attackChance = 0.25 / 60; // 50%
+    attackSpeed = 500;
 
     setState(CharacterState::STATE_IDLE);
     facing = FACING_RIGHT;
@@ -44,7 +44,7 @@ const sf::FloatRect Dressed_Zombie::getRect() const {
     return eSprite.getGlobalBounds();
 }
 void Dressed_Zombie::fall(){
-    if(currentState->getState() != CharacterState::STATE_JUMPING){
+    if(getState() != CharacterState::STATE_JUMPING){
         move({0,2.50});
     }
 }
@@ -64,6 +64,10 @@ void Dressed_Zombie::moveLeft(){
 void Dressed_Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
 
+    if(((float) rand()) / (float) RAND_MAX <= attackChance){
+        attack();
+    }
+
     if( getState() == CharacterState::STATE_FALLING && collidingDown ){
         setState(CharacterState::STATE_IDLE);
     }
@@ -73,7 +77,7 @@ void Dressed_Zombie::update(){
         setState(CharacterState::STATE_FALLING);
     }
 
-    if(currentState->getState() == CharacterState::STATE_WALKING){
+    if(getState() == CharacterState::STATE_WALKING){
         if(facing == Facing::FACING_LEFT){
             if(!collidingLeft)
                 moveLeft();
@@ -97,10 +101,10 @@ void Dressed_Zombie::update(){
         }else{
             anim->setScale({1,1});
         }
-    }
-
-    if(((float) rand()) / (float) RAND_MAX <= attackChance){
-        attack();
+    }else if(getState() == CharacterState::STATE_ATTACKING){
+        if(animClock.getElapsedTime().asMilliseconds() >= 500){
+            setState(CharacterState::STATE_IDLE);
+        }
     }
 
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
@@ -121,5 +125,6 @@ void Dressed_Zombie::takeDamage(float _damage){
 }
 
 void Dressed_Zombie::attack(){
-    /* Outro bichão que não ataca */
+    setState(CharacterState::STATE_ATTACKING);
+    animClock.restart();
 }

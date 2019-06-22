@@ -18,13 +18,10 @@ class Player : public Character {
 
         static unsigned int score ;
 
-
         sf::Keyboard::Key key_right;
         sf::Keyboard::Key key_left;
         sf::Keyboard::Key key_jump;
         sf::Keyboard::Key key_attack;
-
-        bool isDead;
 
     public:
         Player(int _template=-1);
@@ -35,9 +32,6 @@ class Player : public Character {
         void moveLeft();
         void jump();
 
-        bool getIsDead(){ return isDead; }
-        void setIsDead(bool _isDead) { this->isDead = _isDead; }
-
         virtual const sf::Vector2f getPos() const;
         virtual const sf::FloatRect getRect() const;
         virtual void update();
@@ -46,7 +40,6 @@ class Player : public Character {
         virtual void attack();
         virtual void fall();
         virtual void takeDamage(float _damage);
-        virtual void death();
 
         static unsigned int getScore(){ return score; }
         static void setScore(unsigned int _score){ score = _score; }
