@@ -59,7 +59,7 @@ Menu::~Menu()
     //dtor
 }
 
-void Menu::draw(Engine& engine){
+void Menu::draw(Engine& engine) const {
     engine.draw(*spriteMenu);
     engine.draw(*spriteWhip);
     for(int i=0; i<getMenuItems(currentMenu); i++){
@@ -135,7 +135,7 @@ void Menu::update(Engine* engine){
     }
 }
 
-int Menu::getMenuItems(int _menu){
+const int Menu::getMenuItems(int _menu) const {
     if(_menu == MENU_MAIN) return 2;
     else if(_menu == MENU_PHASES) return 2;
     else if(_menu == MENU_PLAYERS) return 2;

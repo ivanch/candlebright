@@ -1,7 +1,7 @@
 #include "DressedZombie.hpp"
 
-Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos) {
-    setPos(pos);
+Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos){
+    setPosition(pos);
     originalPos = pos;
     moveSpeed = 1.5f;
     jumpHeight = 80.0f;
@@ -26,17 +26,17 @@ Dressed_Zombie::Dressed_Zombie(sf::Vector2f pos) {
     healthBar.setSize(sf::Vector2f(40.0f, 5.0f));
     healthBar.setMaxHealth(health);
 }
-Dressed_Zombie::~Dressed_Zombie(){}
+Dressed_Zombie::~Dressed_Zombie(){ }
 
-void Dressed_Zombie::move(sf::Vector2f vec){
-    eSprite.move(vec);
+void Dressed_Zombie::move(const sf::Vector2f& _move){
+    eSprite.move(_move);
 }
 
-void Dressed_Zombie::setPos(sf::Vector2f newPos) {
-    eSprite.setPosition(newPos);
+void Dressed_Zombie::setPosition(sf::Vector2f _pos){
+    eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Dressed_Zombie::getPos() const {
+const sf::Vector2f Dressed_Zombie::getPosition() const {
     return eSprite.getPosition();
 }
 
@@ -109,18 +109,18 @@ void Dressed_Zombie::update(){
 
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
 
-    healthBar.setPos(sf::Vector2f(getPos().x-20, getPos().y+50));
+    healthBar.setPosition(sf::Vector2f(getPosition().x-20, getPosition().y+50));
 }
 
-void Dressed_Zombie::draw(Engine& engine) {
+void Dressed_Zombie::draw(Engine& engine) const  {
     engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Dressed_Zombie::takeDamage(float _damage){
+void Dressed_Zombie::takeDamage(const float& _damage){
     health -= _damage;
     healthBar.setHealth(health);
-    move(sf::Vector2f(0.f, -1.f));
+    move(sf::Vector2f(0.0f, -1.f));
     moveSpeed -= moveSpeed * 0.05;
 }
 

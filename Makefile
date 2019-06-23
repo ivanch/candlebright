@@ -3,7 +3,8 @@ OBJDIR=obj
 BINDIR=bin
 EXEC=jogo
 LDFLAGS = -Lsfml/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lm
-CFLAGS = -Isfml/include -std=c++98 -Wall -pthread 
+CFLAGS = -Isfml/include -std=c++98 -Wall -pthread
+VALFLAGS = --track-origins=yes --leak-check=full
 CSOURCE = $(wildcard src/*.cpp src/*/**.cpp)
 OBJ=$(subst src, obj, $(CSOURCE:.cpp=.o))
 
@@ -24,7 +25,7 @@ debug:
 	$(CC) -c $(CSOURCE) $(LDFLAGS) $(CFLAGS) -ggdb
 	mv *.o $(OBJDIR)/
 	$(CC) $(OBJDIR)/*.o -o $(BINDIR)/$(EXEC)-debug $(LDFLAGS) $(SFML) $(CFLAGS)
-	LD_LIBRARY_PATH=sfml/lib valgrind ./$(BINDIR)/$(EXEC)-debug --track-origins=yes --leak-check=full
+	LD_LIBRARY_PATH=sfml/lib valgrind $(VALFLAGS) ./$(BINDIR)/$(EXEC)-debug
 
 .PHONY: clean
 clean:

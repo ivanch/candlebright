@@ -1,8 +1,8 @@
 #include "Game.hpp"
 
-Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y) {
+Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y){
     window = engine.getWindow();
-    view.reset(sf::FloatRect(0.f, 300.f, 600.f, 500.f));
+    view.reset(sf::FloatRect(0.0f, 300.0f, 600.0f, 500.0f));
     game_paused = false;
 
     player1 = new Player(1);
@@ -11,7 +11,7 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
     enemySpawnDelay = 25; // Spawna um inimigo na tela a cada 25 segundos
     obstacleSpawnDelay = 45; // Spawna um obstáculo a cada 45 segundos
 }
-Game::~Game(){}
+Game::~Game(){ }
 
 void Game::run(){
     while(menu.isEnabled()){ // Roda o menu primeiro...
@@ -29,10 +29,10 @@ void Game::run(){
     }
 
     world->addCharacter(player1); // Sempre haverá um jogador por padrão
-    player1->setPos(world->getSpawnPoint());
+    player1->setPosition(world->getSpawnPoint());
     if(menu.getSelectedPlayers() == 2){
         world->addCharacter(player2);
-        player2->setPos(sf::Vector2f(world->getSpawnPoint().x,
+        player2->setPosition(sf::Vector2f(world->getSpawnPoint().x,
                                      world->getSpawnPoint().y-100 ) );
     }
 
@@ -48,7 +48,7 @@ void Game::saveGame()
         file << act_world << std::endl;
         std::set<Character *>::iterator itr;
         for(itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
-            file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPos().x << ',' << (*itr)->getPos().y - 30.f << std::endl;
+            file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPosition().x << ',' << (*itr)->getPosition().y - 30.0f << std::endl;
         if((*itr)->getType() == 0){
             std::cout<<Player::getScore();
             file << Player::getScore() << std::endl;
@@ -91,7 +91,7 @@ void Game::loadPlayers(){
 
             player_count++;
             temp_player = new Player(player_count);
-            temp_player->setPos(sf::Vector2f(px, py));
+            temp_player->setPosition(sf::Vector2f(px, py));
             temp_player->setHealth(health);
 
             if(player_count == 1) player1 = temp_player;
@@ -120,13 +120,13 @@ void Game::update(){
                 return;
             }
             /* Movimentação do View */
-            if(player1->getPos().x >= (view.getCenter().x+view.getSize().x/2)-50 && player2->getPos().x <= (view.getCenter().x-view.getSize().x/2)+50)
+            if(player1->getPosition().x >= (view.getCenter().x+view.getSize().x/2)-150 && player2->getPosition().x <= (view.getCenter().x-view.getSize().x/2)+150)
                 player1->setCollidingRight(true);
-            else if(player1->getPos().x <= (view.getCenter().x-view.getSize().x/2)+50  && player2->getPos().x >= (view.getCenter().x+view.getSize().x/2)-50)
+            else if(player1->getPosition().x <= (view.getCenter().x-view.getSize().x/2)+150  && player2->getPosition().x >= (view.getCenter().x+view.getSize().x/2)-150)
                 player1->setCollidingLeft(true);
-            if(player1->getPos().x - (view.getCenter().x+((view.getSize().x)/2))  > -50)
+            if(player1->getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -100)
                 view.move(sf::Vector2f(1.5, 0));
-            if(player1->getPos().x - (view.getCenter().x+((view.getSize().x)/2))  < -550)
+            if(player1->getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -500)
                 view.move(sf::Vector2f(-1.5, 0));
             engine.getWindow()->setView(view);
 
@@ -216,11 +216,11 @@ void Game::nextPhase(){
         player1 = new Player(1);
 
         world->addCharacter(player1); // Sempre haverá um jogador por padrão
-        player1->setPos(world->getSpawnPoint());
+        player1->setPosition(world->getSpawnPoint());
         if(menu.getSelectedPlayers() == 2){
             player2 = new Player(2);
             world->addCharacter(player2);
-            player2->setPos(sf::Vector2f(world->getSpawnPoint().x,
+            player2->setPosition(sf::Vector2f(world->getSpawnPoint().x,
                                          world->getSpawnPoint().y-100 ) );
         }
     }else{

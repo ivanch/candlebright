@@ -8,11 +8,11 @@ Character::~Character(){
 
 }
 
-bool Character::setState(CharacterState::State _newState){
+bool Character::setState(const CharacterState::State _newState){
     if(currentState != NULL){
         if(_newState == currentState->getState()) return true; // Não há necessidade de "renovar" o estado
         if(anim->isLocked()) return false; // Personagem ocupado com uma animação, não sobrepor
-        //delete currentState;
+        //delete currentState; -> Movido para respectiva função
     }else{
         currentState = new IdleState();
     }
@@ -44,7 +44,7 @@ const float Character::getAttackSpeed() const {
     return attackSpeed;
 }
 
-sf::Clock* Character::getAttackClock() {
+sf::Clock* Character::getAttackClock(){
     return &attackTimer;
 }
 
@@ -56,27 +56,27 @@ const float Character::getHealth() const {
     return health;
 }
 
-short Character::getType() {
+const short Character::getType() const {
     return type;
 }
 
-short Character::getSubType(){
+const short Character::getSubType() const {
     return 0;
 }
 
-const CharacterState::State Character::getState() {
+const CharacterState::State Character::getState() const {
     return currentState->getState();
 }
 
-const CharacterState* Character::getCharacterState() {
+const CharacterState* Character::getCharacterState() const {
     return currentState;
 }
 
-void Character::setCharacterState(CharacterState* _newState) {
+void Character::setCharacterState(CharacterState* _newState){
     currentState = _newState;
 }
 
-void Character::setFacingRight(const bool _facingRight) {
+void Character::setFacingRight(bool _facingRight){
     facingRight = _facingRight;
 }
 
@@ -84,6 +84,6 @@ const bool Character::isFacingRight() const {
     return facingRight;
 }
 
-void Character::setHealth(float _health) {
+void Character::setHealth(const float& _health){
     health = _health;
 }

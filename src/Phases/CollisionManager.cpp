@@ -5,7 +5,7 @@ CollisionManager::CollisionManager(ThingsList* _things){
 }
 
 void CollisionManager::checkCollisions(){
-    std::list<Thing *>::iterator itr;
+    std::vector<Thing *>::iterator itr;
     for(itr = things->begin(); itr != things->end(); ++itr){
         Thing* thing1 = *itr;
         thing1->setCollidingUp(false);
@@ -13,7 +13,7 @@ void CollisionManager::checkCollisions(){
         thing1->setCollidingLeft(false);
         thing1->setCollidingDown(false);
     }
-    std::list<Thing *>::iterator itr1, itr2;
+    std::vector<Thing *>::iterator itr1, itr2;
     for(itr1 = things->begin(); itr1 != things->end(); ++itr1){
         Thing* thing1 = *itr1;
         for(itr2 = itr1; itr2 != things->end(); ++itr2){

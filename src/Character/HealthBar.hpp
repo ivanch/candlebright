@@ -12,13 +12,13 @@ class HealthBar {
         float health;
 
     public:
-        HealthBar(sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
+        HealthBar(const sf::Vector2f pos = sf::Vector2f(0.0f, 0.0f));
         ~HealthBar();
 
-        void setPos(sf::Vector2f _pos);
-        void setSize(sf::Vector2f _size);
-        void setHealth(float _health);
+        void setPosition(const sf::Vector2f& _pos);
+        void setSize(const sf::Vector2f _size);
+        void setHealth(const float& _health);
         void setMaxHealth(float _health);
 
-        void draw(Engine& engine);
+        void draw(Engine& engine) const;
 };

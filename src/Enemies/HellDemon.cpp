@@ -1,7 +1,7 @@
 #include "HellDemon.hpp"
 
 Hell_Demon::Hell_Demon(sf::Vector2f pos){
-    setPos(pos);
+    setPosition(pos);
     originalPos = pos;
     moveSpeed = 0.25;
     jumpHeight = 80.0f;
@@ -25,20 +25,20 @@ Hell_Demon::Hell_Demon(sf::Vector2f pos){
     anim->addSheet("attack1", "sprites/Hell-Demon/new-hell-beast-burn.png");
     anim->addSheet("attack2", "sprites/Hell-Demon/new-hell-beast-breath.png", 3);
 
-    healthBar.setSize(sf::Vector2f(50.f, 7.f));
+    healthBar.setSize(sf::Vector2f(50.0f, 7.f));
     healthBar.setMaxHealth(health);
 }
-Hell_Demon::~Hell_Demon(){}
+Hell_Demon::~Hell_Demon(){ }
 
-void Hell_Demon::move(sf::Vector2f vec){
-    eSprite.move(vec);
+void Hell_Demon::move(const sf::Vector2f& _move){
+    eSprite.move(_move);
 }
 
-void Hell_Demon::setPos(sf::Vector2f newPos) {
-    eSprite.setPosition(newPos);
+void Hell_Demon::setPosition(sf::Vector2f _pos){
+    eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Hell_Demon::getPos() const {
+const sf::Vector2f Hell_Demon::getPosition() const {
     return eSprite.getPosition();
 }
 
@@ -119,18 +119,18 @@ void Hell_Demon::update(){
 
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
 
-    healthBar.setPos(sf::Vector2f(getPos().x-25, getPos().y+60));
+    healthBar.setPosition(sf::Vector2f(getPosition().x-25, getPosition().y+60));
 }
 
-void Hell_Demon::draw(Engine& engine) {
+void Hell_Demon::draw(Engine& engine) const  {
     engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Hell_Demon::takeDamage(float _damage){
+void Hell_Demon::takeDamage(const float& _damage){
     health -= _damage;
     healthBar.setHealth(health);
-    move(sf::Vector2f(0.f, -1.f));
+    move(sf::Vector2f(0.0f, -1.f));
 }
 
 void Hell_Demon::attack(){

@@ -20,8 +20,8 @@ class Enemy : public Character {
         Enemy();
         virtual ~Enemy();
         virtual void attack() = 0;
-        virtual void setPos(sf::Vector2f _pos);
-        virtual const sf::Vector2f getPos() const;
+        virtual void setPosition(sf::Vector2f _pos);
+        virtual const sf::Vector2f getPosition() const;
 
         static unsigned int enemyCount;
 };

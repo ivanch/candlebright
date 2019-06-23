@@ -18,12 +18,12 @@ class Character : public Animatable {
     public:
         Character();
         virtual ~Character();
-        virtual void move(sf::Vector2f _move) = 0;
-        virtual void takeDamage(float _damage) = 0;
-        virtual void setPos(sf::Vector2f _pos) = 0;
+        virtual void move(const sf::Vector2f& _move) = 0;
+        virtual void takeDamage(const float& _damage) = 0;
+        virtual void setPosition(sf::Vector2f _pos) = 0;
 
         /* Funções de get */
-        virtual const sf::Vector2f getPos() const = 0;
+        virtual const sf::Vector2f getPosition() const = 0;
         virtual const sf::Vector2f getSize() const;
         virtual const float getDamage() const;
         virtual const float getAttackSpeed() const;
@@ -33,24 +33,24 @@ class Character : public Animatable {
 
         /*  0 = Player
             1 = Enemy */
-        virtual short getType();
+        virtual const short getType() const;
         /* Específico para cada "sub-classe" */
-        virtual short getSubType();
+        virtual const short getSubType() const;
 
         /* CharacterState com enum */
-        virtual bool setState(CharacterState::State _newState);
-        virtual const CharacterState::State getState();
+        virtual bool setState(const CharacterState::State _newState);
+        virtual const CharacterState::State getState() const;
         /* CharacterState no âmbito POO */
-        virtual const CharacterState* getCharacterState();
         virtual void setCharacterState(CharacterState* _newState);
+        virtual const CharacterState* getCharacterState() const;
 
-        virtual void setFacingRight(const bool _facingRight = true);
+        virtual void setFacingRight(bool _facingRight = true);
         virtual const bool isFacingRight() const;
 
-        virtual void setHealth(float _health);
+        virtual void setHealth(const float& _health);
 
         const bool isDead() const { return dead; }
-        void setDead(bool _dead) { this->dead = _dead; }
+        void setDead(bool _dead){ this->dead = _dead; }
 
     protected:
         sf::Vector2f velocity;

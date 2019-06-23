@@ -1,7 +1,7 @@
 #include "Ghost.hpp"
 
 Ghost::Ghost(sf::Vector2f pos){
-    setPos(pos);
+    setPosition(pos);
     originalPos = pos;
     moveSpeed = 0.5f;
     jumpHeight = 80.0f;
@@ -24,17 +24,17 @@ Ghost::Ghost(sf::Vector2f pos){
     anim->addSheet("walk", "sprites/Ghost/new-ghost-idle.png");
     anim->addSheet("attack", "sprites/Ghost/new-ghost-shriek.png", 3);
 }
-Ghost::~Ghost(){}
+Ghost::~Ghost(){ }
 
-void Ghost::move(sf::Vector2f vec){
-    eSprite.move(vec);
+void Ghost::move(const sf::Vector2f& _move){
+    eSprite.move(_move);
 }
 
-void Ghost::setPos(sf::Vector2f newPos) {
-    eSprite.setPosition(newPos);
+void Ghost::setPosition(sf::Vector2f _pos){
+    eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Ghost::getPos() const {
+const sf::Vector2f Ghost::getPosition() const {
     return eSprite.getPosition();
 }
 
@@ -105,18 +105,18 @@ void Ghost::update(){
 
     if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
 
-    healthBar.setPos(sf::Vector2f(getPos().x-25, getPos().y+60));
+    healthBar.setPosition(sf::Vector2f(getPosition().x-25, getPosition().y+60));
 }
 
-void Ghost::draw(Engine& engine) {
+void Ghost::draw(Engine& engine) const  {
     engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Ghost::takeDamage(float _damage){
+void Ghost::takeDamage(const float& _damage){
     health -= _damage;
     healthBar.setHealth(health);
-    move(sf::Vector2f(0.f, -1.f));
+    move(sf::Vector2f(0.0f, -1.f));
 }
 
 void Ghost::attack(){

@@ -7,7 +7,6 @@
 
 class Player : public Character {
     private:
-        sf::Vector2f RespawnPos;
         std::string name;
 
         sf::Sprite pSprite;
@@ -24,24 +23,24 @@ class Player : public Character {
         sf::Keyboard::Key key_attack;
 
     public:
-        Player(int _template=-1);
+        Player(const int _template=-1);
         ~Player();
 
-        void setPos(sf::Vector2f newPos);
+        void setPosition(sf::Vector2f _pos);
         void moveRight();
         void moveLeft();
         void jump();
 
-        virtual const sf::Vector2f getPos() const;
+        virtual const sf::Vector2f getPosition() const;
         virtual const sf::FloatRect getRect() const;
         virtual void update();
-        virtual void draw(Engine& engine);
-        virtual void move(sf::Vector2f vec);
+        virtual void draw(Engine& engine) const;
+        virtual void move(const sf::Vector2f& _move);
         virtual void attack();
         virtual void fall();
-        virtual void takeDamage(float _damage);
+        virtual void takeDamage(const float& _damage);
 
-        static unsigned int getScore() { return score; }
+        static unsigned int getScore(){ return score; }
         static void setScore(unsigned int _score){ score = _score; }
 };
 

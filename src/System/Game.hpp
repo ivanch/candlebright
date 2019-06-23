@@ -45,7 +45,7 @@ class Game {
         void run();
         void update();
 
-        sf::View* getView() { return &view; }
+        sf::View* getView(){ return &view; }
         void setView(sf::View _view){ this->view=_view; }
 
         void saveGame();

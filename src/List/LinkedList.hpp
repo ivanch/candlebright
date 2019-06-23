@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <SFML/Graphics.hpp>
 
 template <class T>
 class LinkedList
@@ -34,7 +33,7 @@ class LinkedList
         void clear();
         int getIndex(T* data);
 
-		int getSize() { return size; }
+		int getSize(){ return size; }
 
         Node<T>* operator [] (int chave);
 
@@ -85,7 +84,7 @@ void LinkedList<T>::insertBack(T* newData)
 template <class T>
 bool LinkedList<T>::removeBack()
 {
-	if (first == NULL && last == NULL) {return false;}
+	if (first == NULL && last == NULL){return false;}
 
 	if (first == last)
 	{
@@ -146,7 +145,7 @@ void LinkedList<T>::insertFront(T *newData)
 template <class T>
 bool LinkedList<T>::removeFront()
 {
-	if (first == NULL && last == NULL) {return false;}
+	if (first == NULL && last == NULL){return false;}
 
 	else
 	{
@@ -218,7 +217,7 @@ LinkedList<T>::Node<T>* LinkedList<T>::operator[](int chave)
     return temp;
 }
 template <class T>
-int LinkedList<T>::getIndex(T* data) {
+int LinkedList<T>::getIndex(T* data){
     int index=0;
     Node<T>* n = first;
     if(n->data == data) return 0;

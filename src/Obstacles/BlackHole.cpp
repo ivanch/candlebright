@@ -15,7 +15,7 @@ Obstacles::Black_Hole::Black_Hole(sf::Vector2f pos, float _size){
     attackRate = _size/30 * 50;
     range = oSprite.getGlobalBounds().width + oSprite.getGlobalBounds().width*4;
 }
-Obstacles::Black_Hole::~Black_Hole(){}
+Obstacles::Black_Hole::~Black_Hole(){ }
 
 void Obstacles::Black_Hole::update(){
     if(animClock.getElapsedTime().asMilliseconds() > attackRate + 50){
@@ -25,10 +25,10 @@ void Obstacles::Black_Hole::update(){
     }
 }
 
-void Obstacles::Black_Hole::draw(Engine& engine){
+void Obstacles::Black_Hole::draw(Engine& engine) const {
     engine.draw(oSprite);
 }
 
-const sf::Vector2f Obstacles::Black_Hole::getPos() const {
+const sf::Vector2f Obstacles::Black_Hole::getPosition() const {
     return position;
 }

@@ -10,16 +10,16 @@ class Thing : public Entity {
         bool collidingDown;
     
     public:
-        Thing() {
+        Thing(){
             collidingUp = false;
             collidingRight = false;
             collidingLeft = false;
             collidingDown = false;
         }
-        virtual ~Thing() { }
-        virtual void fall(){}
-        virtual const sf::FloatRect getRect() const { return sf::FloatRect(0.f, 0.f, 0.f, 0.f); }
-        virtual const sf::Vector2f getPos() const { return sf::Vector2f(0.f, 0.f); }
+        virtual ~Thing(){ }
+        virtual void fall(){ }
+        virtual const sf::FloatRect getRect() const { return sf::FloatRect(0.0f, 0.0f, 0.0f, 0.0f); }
+        virtual const sf::Vector2f getPosition() const { return sf::Vector2f(0.0f, 0.0f); }
 
         void setCollidingUp(bool _isColliding){ collidingUp = _isColliding; }
         void setCollidingRight(bool _isColliding){ collidingRight = _isColliding; }

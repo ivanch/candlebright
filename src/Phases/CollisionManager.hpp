@@ -7,7 +7,7 @@
 class CollisionManager {
     public:
         CollisionManager(ThingsList* _things);
-        ~CollisionManager(){}
+        ~CollisionManager(){ }
 
         void checkCollisions();
 

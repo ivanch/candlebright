@@ -1,7 +1,7 @@
 #include "Sylathus.hpp"
 
 Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)){
-    setPos(pos);
+    setPosition(pos);
     originalPos = pos;
     moveSpeed = 2.5f;
     jumpHeight = 80.0f;
@@ -30,17 +30,17 @@ Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)
     healthBar.setSize(sf::Vector2f(200.0f, 10.0f));
     healthBar.setMaxHealth(health);
 }
-Sylathus::~Sylathus(){}
+Sylathus::~Sylathus(){ }
 
-void Sylathus::move(sf::Vector2f vec){
-    eSprite.move(vec);
+void Sylathus::move(const sf::Vector2f& _move){
+    eSprite.move(_move);
 }
 
-void Sylathus::setPos(sf::Vector2f newPos) {
-    eSprite.setPosition(newPos);
+void Sylathus::setPosition(sf::Vector2f _pos){
+    eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Sylathus::getPos() const {
+const sf::Vector2f Sylathus::getPosition() const {
     return eSprite.getPosition();
 }
 
@@ -96,16 +96,16 @@ void Sylathus::update(){
         }
     }
 
-    healthBar.setPos(sf::Vector2f(getPos().x-135, getPos().y+120));
+    healthBar.setPosition(sf::Vector2f(getPosition().x-135, getPosition().y+120));
 }
 
-void Sylathus::draw(Engine& engine) {
+void Sylathus::draw(Engine& engine) const  {
     engine.draw(eSprite);
     if(breathAnim.isLocked()) engine.draw(bSprite);
     healthBar.draw(engine);
 }
 
-void Sylathus::takeDamage(float _damage){
+void Sylathus::takeDamage(const float& _damage){
     health -= _damage;
     healthBar.setHealth(health);
 }

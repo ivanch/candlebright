@@ -34,7 +34,7 @@ class Phase : public Entity {
         ObstaclesList obstacles;
         CollisionManager col_mngr;
 
-        const float getDistance(sf::Vector2f p1, sf::Vector2f p2) const;
+        const float getDistance(const sf::Vector2f& p1, const sf::Vector2f& p2) const;
 
     public:
         Phase();
@@ -42,19 +42,19 @@ class Phase : public Entity {
 
         virtual const sf::Vector2f getSpawnPoint() const = 0;
 
-        void setBackground(sf::Sprite* _bg) { background = _bg; }
-        sf::Sprite* getBackground() { return background; }
+        void setBackground(sf::Sprite* _bg){ background = _bg; }
+        sf::Sprite* getBackground(){ return background; }
         void update(); // Atualizar a lista de entidades dentro do mundo
-        void draw(Engine& engine);
+        void draw(Engine& engine) const;
         void drawAll(Engine& engine);
         void gravity();
 
         void loadEnemies(const int act_world);
 
-        void addEntity(Entity* _e) { entities.add(_e); }
-        void addThing(Thing* _thing) { things.add(_thing); addEntity(static_cast<Entity*>(_thing)); }
-        void addCharacter(Character* _char){ characters.add(_char); addThing(static_cast<Thing*>(_char)); }
-        void addObstacle(Obstacles::Obstacle* _obs){ obstacles.add(_obs); addThing(static_cast<Thing*>(_obs)); }
+        void addEntity(Entity* _e);
+        void addThing(Thing* _thing);
+        void addCharacter(Character* _char);
+        void addObstacle(Obstacles::Obstacle* _obs);
 
         CharacterList* getCharList(){ return &characters;}
 

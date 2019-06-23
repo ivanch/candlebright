@@ -14,7 +14,7 @@ Obstacles::Fire::Fire(sf::Vector2f pos, float _size){
     attackRate = _size/50 * 300;
     range = oSprite.getGlobalBounds().width + oSprite.getGlobalBounds().width*0.05;
 }
-Obstacles::Fire::~Fire(){}
+Obstacles::Fire::~Fire(){ }
 
 void Obstacles::Fire::update(){
     if(animClock.getElapsedTime().asMilliseconds() > 200){
@@ -23,10 +23,10 @@ void Obstacles::Fire::update(){
     }
 }
 
-void Obstacles::Fire::draw(Engine& engine){
+void Obstacles::Fire::draw(Engine& engine) const {
     engine.draw(oSprite);
 }
 
-const sf::Vector2f Obstacles::Fire::getPos() const {
+const sf::Vector2f Obstacles::Fire::getPosition() const {
     return position;
 }

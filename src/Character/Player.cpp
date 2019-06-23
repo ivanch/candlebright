@@ -2,7 +2,7 @@
 
 unsigned int Player::score = 0;
 
-Player::Player(int _template){
+Player::Player(const int _template){
     health = 100;
     moveSpeed = 1.5;
     jumpHeight = 100;
@@ -20,6 +20,7 @@ Player::Player(int _template){
     anim->addSheet("walk", "sprites/Player/new-walking.png");
     anim->addSheet("jump", "sprites/Player/new-jumping.png", 4);
     anim->addSheet("attack", "sprites/Player/new-attacking.png", 3);
+    anim->addSheet("dying", "sprites/Player/new-dying.png", 4);
 
     wSprite = sf::Sprite(*getTexture("sprites/Player/whip.png"));
     whipSize = 0.0f;
@@ -41,16 +42,16 @@ Player::Player(int _template){
         key_attack = sf::Keyboard::Z;
     }
 }
-Player::~Player(){}
+Player::~Player(){ }
 
-void Player::move(sf::Vector2f vec){
-    if(vec.x > 0 && collidingRight) return;
-    if(vec.x < 0 && collidingLeft) return;
-    pSprite.move(vec);
+void Player::move(const sf::Vector2f& _move){
+    if(_move.x > 0 && collidingRight) return;
+    if(_move.x < 0 && collidingLeft) return;
+    pSprite.move(_move);
 }
 
-void Player::setPos(sf::Vector2f newPos) {
-    pSprite.setPosition(newPos);
+void Player::setPosition(sf::Vector2f _pos){
+    pSprite.setPosition(_pos);
 }
 
 void Player::moveRight(){
@@ -75,14 +76,20 @@ void Player::jump(){
 }
 
 void Player::update(){
-    if(dead) return;
+    if(dead){
+        if(animClock.getElapsedTime().asMilliseconds() >= 1000){
+            animClock.restart();
+            anim->play("dying");
+        }
+        return;
+    }
 
     /* Gerencia os botões apertados */
-    if(sf::Keyboard::isKeyPressed(key_right)) {
+    if(sf::Keyboard::isKeyPressed(key_right)){
         if(velocity.x < maxSlideX)
             velocity.x += 10;
         if(velocity.x > maxSlideX) velocity.x = maxSlideX;
-    }else if(sf::Keyboard::isKeyPressed(key_left)) {
+    }else if(sf::Keyboard::isKeyPressed(key_left)){
         if(velocity.x > -maxSlideX)
             velocity.x -= 10;
         if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
@@ -188,13 +195,13 @@ void Player::update(){
             break;
     }
 
-    healthBar.setPos(sf::Vector2f(getPos().x-25, getPos().y+75));
+    healthBar.setPosition(sf::Vector2f(getPosition().x-25, getPosition().y+75));
     if(Enemy::enemyCount == 1){
         range = 200;
     }
 }
 
-void Player::draw(Engine& engine) {
+void Player::draw(Engine& engine) const  {
     engine.draw(pSprite);
     if(whipSize > 0) engine.draw(wSprite);
     healthBar.draw(engine);
@@ -218,11 +225,11 @@ void Player::attack(){
     anim->play("attack", true);
 }
 
-const sf::Vector2f Player::getPos() const {
+const sf::Vector2f Player::getPosition() const {
     return pSprite.getPosition();
 }
 
-void Player::takeDamage(float _damage){
+void Player::takeDamage(const float& _damage){
     health -= damage;
     healthBar.setHealth(health);
     move(sf::Vector2f(0, -0.1));

@@ -4,20 +4,20 @@
 
 class Hell_Demon : public Enemy {
     public:
-        Hell_Demon(sf::Vector2f pos = sf::Vector2f(0.f, 0.f));
+        Hell_Demon(sf::Vector2f pos = sf::Vector2f(0.0f, 0.0f));
         ~Hell_Demon();
-        void setPos(sf::Vector2f newPos);
+        void setPosition(sf::Vector2f _pos);
         void moveRight();
         void moveLeft();
 
-        virtual const sf::Vector2f getPos() const;
+        virtual const sf::Vector2f getPosition() const;
         virtual const sf::FloatRect getRect() const;
-        virtual void takeDamage(float _damage);
+        virtual void takeDamage(const float& _damage);
         virtual void fall();
         virtual void update();
-        virtual void draw(Engine& engine);
-        virtual void move(sf::Vector2f vec);
+        virtual void draw(Engine& engine) const;
+        virtual void move(const sf::Vector2f& _move);
         virtual void attack();
 
-        virtual short getSubType(){ return 4; }
+        virtual const short getSubType() const { return 4; }
 };

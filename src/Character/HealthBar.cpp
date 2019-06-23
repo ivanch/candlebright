@@ -1,6 +1,6 @@
 #include "HealthBar.hpp"
 
-HealthBar::HealthBar(sf::Vector2f pos){
+HealthBar::HealthBar(const sf::Vector2f pos){
     size = sf::Vector2f(50.0f, 5.0f);
     background.setPosition(pos);
     foreground.setPosition(pos);
@@ -11,12 +11,12 @@ HealthBar::HealthBar(sf::Vector2f pos){
     background.setSize(size);
     foreground.setSize(size);
 
-    maxHealth = 100.f;
-    health = 100.f;
+    maxHealth = 100.0f;
+    health = 100.0f;
 }
-HealthBar::~HealthBar(){}
+HealthBar::~HealthBar(){ }
 
-void HealthBar::setHealth(float _health){
+void HealthBar::setHealth(const float& _health){
     health = _health;
     
     float rate = maxHealth/size.x;
@@ -27,12 +27,12 @@ void HealthBar::setMaxHealth(float _health){
     maxHealth = _health;
 }
 
-void HealthBar::setPos(sf::Vector2f _pos){
+void HealthBar::setPosition(const sf::Vector2f& _pos){
     background.setPosition(_pos);
     foreground.setPosition(_pos);
 }
 
-void HealthBar::setSize(sf::Vector2f _size){
+void HealthBar::setSize(const sf::Vector2f _size){
     size = _size;
 
     float rate = maxHealth/size.x;
@@ -40,7 +40,7 @@ void HealthBar::setSize(sf::Vector2f _size){
     background.setSize(sf::Vector2f(health/rate, size.y));
 }
 
-void HealthBar::draw(Engine& engine){
+void HealthBar::draw(Engine& engine) const {
     engine.draw(background);
     engine.draw(foreground);
 }

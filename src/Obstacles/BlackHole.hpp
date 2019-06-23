@@ -12,8 +12,8 @@ namespace Obstacles {
             ~Black_Hole();
 
             virtual void update();
-            virtual void draw(Engine& engine);
-            virtual const sf::Vector2f getPos() const;
+            virtual void draw(Engine& engine) const;
+            virtual const sf::Vector2f getPosition() const;
     };
 
 };

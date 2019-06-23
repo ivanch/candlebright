@@ -8,7 +8,7 @@ class Entity {
         Entity(){}
         virtual ~Entity(){}
         virtual void update() = 0;
-        virtual void draw(Engine& engine) = 0;
+        virtual void draw(Engine& engine) const = 0;
         inline sf::Texture* getTexture(std::string filename){
             sf::Texture* _tex = new sf::Texture;
             if(!_tex->loadFromFile(filename)){

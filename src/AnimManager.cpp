@@ -1,6 +1,6 @@
 #include "AnimManager.hpp"
 
-AnimManager::AnimManager(sf::Sprite* _sprite, sf::Vector2i _size): size(_size){
+AnimManager::AnimManager(sf::Sprite* _sprite, const sf::Vector2i _size): size(_size){
     sprite = _sprite;
     rect = sf::IntRect(0, 0, _size.x, _size.y);
     scale = sf::Vector2f(1.f, 1.f);
@@ -8,7 +8,7 @@ AnimManager::AnimManager(sf::Sprite* _sprite, sf::Vector2i _size): size(_size){
     count = 0;
     locked = false;
 
-    sprite->setOrigin(sf::Vector2f((float)size.x/2, 0.f));
+    sprite->setOrigin(sf::Vector2f((float)size.x/2, 0.0f));
 }
 AnimManager::~AnimManager(){
     std::map<std::string, sf::Texture *>::iterator itr;
@@ -58,7 +58,7 @@ void AnimManager::play(std::string name, bool lock){
     }else{
         try {
             animes.at(name);
-        }catch (const std::out_of_range& oor) {
+        }catch (const std::out_of_range& oor){
             std::cerr << "Out of Range error: " << oor.what() << std::endl;
         }
         if(locked){

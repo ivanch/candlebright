@@ -10,7 +10,7 @@ class Engine {
         Engine();
         ~Engine();
 
-        sf::RenderWindow* getWindow() { return &window; }
+        sf::RenderWindow* getWindow(){ return &window; }
         void draw(const sf::Drawable& drawable);
 
         const bool isWindowOpen() const { return window.isOpen(); }

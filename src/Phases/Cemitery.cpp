@@ -4,48 +4,68 @@ Phases::Cemitery::Cemitery(){
     sf::Sprite* ground2 = new sf::Sprite(*getTexture("sprites/ground2.png"));
 
     Obstacles::Platform* p;
-    p = new Obstacles::Platform(sf::Vector2f(1510.f, 80.f), sf::Vector2f(0.f, 733.f), ground2); // Chão
+    p = new Obstacles::Platform(sf::Vector2f(1510.0f, 80.0f), sf::Vector2f(0.0f, 733.f), ground2); // Chão
     addObstacle(p);
 
     Obstacles::Obstacle* o;
-    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.f), sf::Vector2f(215.f, 670.f), sf::Color::Cyan);
+    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.0f), sf::Vector2f(215.f, 670.0f), sf::Color::Cyan);
     addObstacle(o);
-    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.f), sf::Vector2f(215.f, 700.f), sf::Color::Cyan);
+    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.0f), sf::Vector2f(215.f, 700.0f), sf::Color::Cyan);
     addObstacle(o);
-    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.f), sf::Vector2f(230.f, 600.f), sf::Color::Cyan);
+    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.0f), sf::Vector2f(230.0f, 600.0f), sf::Color::Cyan);
     addObstacle(o);
-    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.f), sf::Vector2f(230.f, 635.f), sf::Color::Cyan);
+    o = new Obstacles::Platform(sf::Vector2f(25.f, 10.0f), sf::Vector2f(230.0f, 635.f), sf::Color::Cyan);
     addObstacle(o);
-    o = new Obstacles::Platform(sf::Vector2f(15.f, 10.f), sf::Vector2f(250.f, 550.f), sf::Color::Cyan);
+    o = new Obstacles::Platform(sf::Vector2f(15.f, 10.0f), sf::Vector2f(250.0f, 550.0f), sf::Color::Cyan);
     addObstacle(o);
 
-    o = new Obstacles::Black_Hole(sf::Vector2f(500.f, 650.f), 40);
+    o = new Obstacles::Black_Hole(sf::Vector2f(500.0f, 650.0f), 40);
     addObstacle(o);
-    o = new Obstacles::Fire(sf::Vector2f(450.f, 650.f), 40);
+    o = new Obstacles::Fire(sf::Vector2f(450.0f, 650.0f), 40);
     addObstacle(o);
 
     /* Bordas do mapa */
-    o = new Obstacles::Wall(sf::Vector2f(10.f, 800.f), sf::Vector2f(0.f, 0.f), sf::Color::Black);
+    o = new Obstacles::Wall(sf::Vector2f(10.0f, 800.0f), sf::Vector2f(0.0f, 0.0f), sf::Color::Black);
     addObstacle(o);
-    o = new Obstacles::Wall(sf::Vector2f(10.f, 800.f), sf::Vector2f(1500.f, 0.f), sf::Color::Black);
+    o = new Obstacles::Wall(sf::Vector2f(10.0f, 800.0f), sf::Vector2f(1500.0f, 0.0f), sf::Color::Black);
     addObstacle(o);
 
     Enemy* e;
-    e = new Zombie(sf::Vector2f(180.f, 600.f));
+    e = new Zombie(sf::Vector2f(180.0f, 600.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(550.f, 540.f));
+    e = new Hell_Demon(sf::Vector2f(550.0f, 540.0f));
     addCharacter(e);
-    e = new Ghost(sf::Vector2f(350.f, 500.f));
+    e = new Hell_Demon(sf::Vector2f(650.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(800.f, 540.f));
+    e = new Ghost(sf::Vector2f(700.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(830.f, 540.f));
+    e = new Ghost(sf::Vector2f(750.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(1200.f, 540.f));
+    e = new Ghost(sf::Vector2f(350.0f, 500.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(1300.f, 540.f));
+    e = new Dressed_Zombie(sf::Vector2f(800.0f, 540.0f));
     addCharacter(e);
-    e = new Sylathus(sf::Vector2f(1500.f, 550.f));
+    e = new Dressed_Zombie(sf::Vector2f(830.0f, 540.0f));
+    addCharacter(e);
+    e = new Hell_Demon(sf::Vector2f(1200.0f, 540.0f));
+    addCharacter(e);
+    e = new Zombie(sf::Vector2f(1300.0f, 600.0f));
+    addCharacter(e);
+    e = new Zombie(sf::Vector2f(1325.f, 600.0f));
+    addCharacter(e);
+    e = new Zombie(sf::Vector2f(1350.0f, 600.0f));
+    addCharacter(e);
+    e = new Zombie(sf::Vector2f(1375.f, 600.0f));
+    addCharacter(e);
+    e = new Zombie(sf::Vector2f(1400.0f, 600.0f));
+    addCharacter(e);
+    e = new Zombie(sf::Vector2f(1450.0f, 600.0f));
+    addCharacter(e);
+    e = new Ghost(sf::Vector2f(1350.0f, 540.0f));
+    addCharacter(e);
+    e = new Ghost(sf::Vector2f(1450.0f, 540.0f));
+    addCharacter(e);
+    e = new Sylathus(sf::Vector2f(1500.0f, 550.0f));
     addCharacter(e);
 
 
@@ -58,7 +78,7 @@ Phases::Cemitery::Cemitery(){
 
     backgroundTexture->setSmooth(true);
     background->setTexture(*backgroundTexture);
-    background->setPosition(sf::Vector2f(0.f, 230.f));
+    background->setPosition(sf::Vector2f(0.0f, 230.0f));
 
     background_music = new Music("songs/cemitery_theme.ogg");
     background_music->run();
@@ -69,5 +89,5 @@ Phases::Cemitery::~Cemitery(){
 }
 
 const sf::Vector2f Phases::Cemitery::getSpawnPoint() const {
-    return sf::Vector2f(50.f, 600.f);
+    return sf::Vector2f(50.0f, 600.0f);
 }

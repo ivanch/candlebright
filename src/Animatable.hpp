@@ -11,6 +11,6 @@ class Animatable : public Thing {
 
     public:
         Animatable(){ anim = NULL; }
-        virtual ~Animatable(){}
+        virtual ~Animatable(){ }
         virtual AnimManager* getAnim(){ return anim; }
 };

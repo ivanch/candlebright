@@ -9,7 +9,6 @@ class AnimManager {
         sf::IntRect rect;
         sf::Vector2f scale;
         bool goingBack;
-        float delay;
         std::string current;
         std::map<std::string, sf::Texture*> animes; // animes["idle"] -> sf::Texture*
         std::map<std::string, int> modes;
@@ -20,7 +19,7 @@ class AnimManager {
         sf::Texture* getTexture(std::string filename);
 
     public:
-        AnimManager(sf::Sprite* _sprite, sf::Vector2i _size = sf::Vector2i(0, 0));
+        AnimManager(sf::Sprite* _sprite, const sf::Vector2i _size = sf::Vector2i(0, 0));
         ~AnimManager();
 
         /*  mode = 0: vai e volta
@@ -37,7 +36,6 @@ class AnimManager {
         
         void setScale(sf::Vector2f _scale);
         void defineRect();
-        void setTime(float milliseconds){ delay = milliseconds; };
         const unsigned int getStage() const { return (int)rect.left/rect.width; }
         const unsigned int getCount() const { return count; }
         const bool isLocked() const { return locked; }

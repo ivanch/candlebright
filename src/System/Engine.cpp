@@ -7,9 +7,9 @@ Engine::Engine(){
     window.setKeyRepeatEnabled(true);
     window.setFramerateLimit(60);
 }
-Engine::~Engine(){}
+Engine::~Engine(){ }
 
-void Engine::draw(const sf::Drawable& drawable) {
+void Engine::draw(const sf::Drawable& drawable){
     window.draw(drawable);
 }
 

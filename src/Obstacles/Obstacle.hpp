@@ -18,20 +18,20 @@ namespace Obstacles {
             sf::Vector2f position;
 
         public:
-            Obstacle(){ damage = 0.0f; }
-            virtual ~Obstacle(){}
+            Obstacle();
+            virtual ~Obstacle();
 
-            virtual const float getRange() const { return range; };
-            virtual const float getDamage() const  { return damage; };
-            virtual const float getAttackRate() const { return attackRate; }
-            virtual sf::Clock* getAttackClock() { return &attackClock; }
+            virtual const float getRange() const;
+            virtual const float getDamage() const;
+            virtual const float getAttackRate() const;
+            virtual sf::Clock* getAttackClock();
             
             /*  0 = Platform
                 1 = Wall
                 2 = Fire
                 3 = Black Hole
             */
-            const short getType() const { return type; }
+            const short getType() const;
 
     };
 

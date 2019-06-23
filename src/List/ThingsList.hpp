@@ -1,22 +1,28 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include "../Thing.hpp"
 
 class ThingsList {
     public:
-        std::list<Thing*> things;
+        std::vector<Thing*> things;
 
         void add(Thing* _el){
             things.push_back(_el);
         }
         void remove(Thing* _el){
-            things.remove(_el);
+            std::vector<Thing*>::iterator itr;
+            for(itr = begin(); itr != end(); ++itr){
+                if(*itr == _el){
+                    things.erase(itr);
+                    break;
+                }
+            }
         }
         void clear(){
             things.clear();
         }
 
-        std::list<Thing*>::iterator begin(){ return things.begin(); }
-        std::list<Thing*>::iterator end(){ return things.end(); }
+        std::vector<Thing*>::iterator begin(){ return things.begin(); }
+        std::vector<Thing*>::iterator end(){ return things.end(); }
 };

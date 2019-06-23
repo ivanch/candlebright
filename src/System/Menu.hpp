@@ -14,8 +14,8 @@ class Menu : public Entity
         Menu(float width, float height);
         ~Menu();
 
-        virtual void draw(Engine& engine);
-        virtual void update(){}
+        virtual void draw(Engine& engine) const;
+        virtual void update(){ }
         void update(Engine* engine);
         void moveUp();
         void moveDown();
@@ -38,7 +38,7 @@ class Menu : public Entity
         int world;
         int players;
 
-        int getMenuItems(int _menu);
+        const int getMenuItems(int _menu) const;
         void addMenuItem(int _menu, std::wstring _title, bool isPrimary, sf::Font _font);
 
         enum {

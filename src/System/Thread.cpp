@@ -1,7 +1,7 @@
 #include "Thread.hpp"
 
-Thread::Thread(){}
-Thread::~Thread(){}
+Thread::Thread(){ }
+Thread::~Thread(){ }
 
 void Thread::yield(){
     sched_yield();
