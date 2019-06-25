@@ -16,4 +16,4 @@ namespace Obstacles {
             virtual const sf::Vector2f getPosition() const;    
     };
 
-}
+};
