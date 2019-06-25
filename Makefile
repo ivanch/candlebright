@@ -18,7 +18,7 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o "$(BINDIR)/$@"
 
 $(OBJDIR)/%.o: src/%.cpp
-	$(CC) $(CFLAGS) -o "$@" -c "$<"
+	$(CC) $(CFLAGS) -o "$@" -c "$<" $(LDFLAGS)
 
 .PHONY: debug
 debug:
@@ -38,3 +38,8 @@ dependencies:
 .PHONY: execute
 execute:
 	LD_LIBRARY_PATH=sfml/lib ./$(BINDIR)/$(EXEC)
+
+compile-older:
+	$(CC) -c $(CSOURCE) src/main.cpp $(CFLAGS)
+	mv *.o $(OBJDIR)/
+	$(CC) $(CFLAGS) $(OBJDIR)/*.o $(LDFLAGS) -o $(BINDIR)/jogo
