@@ -25,28 +25,28 @@ Phases::City::City(){
     o = new Obstacles::Wall(sf::Vector2f(10.0f, 800.0f), sf::Vector2f(1500.0f, 0.0f), sf::Color::Black);
     addObstacle(o);
 
-    Enemy* e;
-    e = new Zombie(sf::Vector2f(182.f, 600.0f));
+    Characters::Enemy* e;
+    e = new Characters::Zombie(sf::Vector2f(182.f, 600.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(500.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(500.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(550.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(550.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(800.0f, 540.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(800.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(830.0f, 540.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(830.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(1000.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(1000.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(1200.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(1200.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(1300.0f, 540.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(1300.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(1300.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(1300.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(1300.0f, 600.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(1300.0f, 600.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(1200.0f, 600.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(1200.0f, 600.0f));
     addCharacter(e);
 
     sf::Texture* backgroundTexture = new sf::Texture;
@@ -60,7 +60,7 @@ Phases::City::City(){
     background->setTexture(*backgroundTexture);
     background->setPosition(sf::Vector2f(0.0f, 300.0f));
 
-    background_music = new Music("songs/city_theme.ogg");
+    background_music = new System::Music("songs/city_theme.ogg");
     background_music->run();
 }
 Phases::City::~City(){

@@ -1,89 +1,89 @@
 #include "Character.hpp"
 
-Character::Character(){
+Characters::Character::Character(){
     currentState = NULL;
 }
 
-Character::~Character(){
+Characters::Character::~Character(){
 
 }
 
-bool Character::setState(const CharacterState::State _newState){
+bool Characters::Character::setState(const CharacterStates::CharacterState::State _newState){
     if(currentState != NULL){
         if(_newState == currentState->getState()) return true; // Não há necessidade de "renovar" o estado
         if(anim->isLocked()) return false; // Personagem ocupado com uma animação, não sobrepor
         //delete currentState; -> Movido para respectiva função
     }else{
-        currentState = new IdleState();
+        currentState = new CharacterStates::IdleState();
     }
     switch (_newState){
-        case CharacterState::STATE_IDLE:
+        case CharacterStates::CharacterState::STATE_IDLE:
             return currentState->idle(this);
-        case CharacterState::STATE_WALKING:
+        case CharacterStates::CharacterState::STATE_WALKING:
             return currentState->walking(this);
-        case CharacterState::STATE_JUMPING:
+        case CharacterStates::CharacterState::STATE_JUMPING:
             return currentState->jumping(this);
-        case CharacterState::STATE_FALLING:
+        case CharacterStates::CharacterState::STATE_FALLING:
             return currentState->falling(this);
-        case CharacterState::STATE_ATTACKING:
+        case CharacterStates::CharacterState::STATE_ATTACKING:
             return currentState->attacking(this);
         default:
             return currentState->idle(this);
     }
 }
 
-const sf::Vector2f Character::Character::getSize() const {
+const sf::Vector2f Characters::Character::getSize() const {
     return sf::Vector2f(getRect().width, getRect().height);
 }
 
-const float Character::getDamage() const {
+const float Characters::Character::getDamage() const {
     return damage;
 }
 
-const float Character::getAttackSpeed() const {
+const float Characters::Character::getAttackSpeed() const {
     return attackSpeed;
 }
 
-sf::Clock* Character::getAttackClock(){
+sf::Clock* Characters::Character::getAttackClock(){
     return &attackTimer;
 }
 
-const float Character::getRange() const {
+const float Characters::Character::getRange() const {
     return range;
 }
 
-const float Character::getHealth() const {
+const float Characters::Character::getHealth() const {
     return health;
 }
 
-const short Character::getType() const {
+const short Characters::Character::getType() const {
     return type;
 }
 
-const short Character::getSubType() const {
+const short Characters::Character::getSubType() const {
     return 0;
 }
 
-const CharacterState::State Character::getState() const {
+const CharacterStates::CharacterState::State Characters::Character::getState() const {
     return currentState->getState();
 }
 
-const CharacterState* Character::getCharacterState() const {
+const CharacterStates::CharacterState* Characters::Character::getCharacterState() const {
     return currentState;
 }
 
-void Character::setCharacterState(CharacterState* _newState){
+void Characters::Character::setCharacterState(CharacterStates::CharacterState* _newState){
     currentState = _newState;
 }
 
-void Character::setFacingRight(bool _facingRight){
+void Characters::Character::setFacingRight(bool _facingRight){
     facingRight = _facingRight;
 }
 
-const bool Character::isFacingRight() const {
+const bool Characters::Character::isFacingRight() const {
     return facingRight;
 }
 
-void Character::setHealth(const float& _health){
+void Characters::Character::setHealth(const float& _health){
     health = _health;
 }

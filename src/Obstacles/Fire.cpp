@@ -23,7 +23,7 @@ void Obstacles::Fire::update(){
     }
 }
 
-void Obstacles::Fire::draw(Engine& engine) const {
+void Obstacles::Fire::draw(System::Engine& engine) const {
     engine.draw(oSprite);
 }
 

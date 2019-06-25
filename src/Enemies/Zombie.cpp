@@ -1,6 +1,6 @@
 #include "Zombie.hpp"
 
-Zombie::Zombie(sf::Vector2f pos){
+Characters::Zombie::Zombie(sf::Vector2f pos){
     setPosition(pos);
     originalPos = pos;
     moveSpeed = 1.5f;
@@ -17,7 +17,7 @@ Zombie::Zombie(sf::Vector2f pos){
     attackChance = 0.25f / 60.0f; // 25%
     attackSpeed = 250.0f;
 
-    setState(CharacterState::STATE_IDLE);
+    setState(CharacterStates::CharacterState::STATE_IDLE);
     setFacingRight();
 
     anim = new AnimManager(&eSprite, sf::Vector2i(20, 50));
@@ -25,58 +25,58 @@ Zombie::Zombie(sf::Vector2f pos){
 
     healthBar.setSize(sf::Vector2f(40.0f, 5));
 }
-Zombie::~Zombie(){ }
+Characters::Zombie::~Zombie(){ }
 
-void Zombie::move(const sf::Vector2f& _move){
+void Characters::Zombie::move(const sf::Vector2f& _move){
     eSprite.move(_move);
 }
 
-void Zombie::setPosition(sf::Vector2f _pos){
+void Characters::Zombie::setPosition(sf::Vector2f _pos){
     eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Zombie::getPosition() const {
+const sf::Vector2f Characters::Zombie::getPosition() const {
     return eSprite.getPosition();
 }
 
-const sf::FloatRect Zombie::getRect() const {
+const sf::FloatRect Characters::Zombie::getRect() const {
     return eSprite.getGlobalBounds();
 }
-void Zombie::fall(){
-    if(getState() != CharacterState::STATE_JUMPING){
+void Characters::Zombie::fall(){
+    if(getState() != CharacterStates::CharacterState::STATE_JUMPING){
         move(sf::Vector2f(0, 2.50));
     }
 }
 
-void Zombie::moveRight(){
+void Characters::Zombie::moveRight(){
     move(sf::Vector2f(moveSpeed, 0));
     setFacingRight();
-    setState(CharacterState::STATE_WALKING);
+    setState(CharacterStates::CharacterState::STATE_WALKING);
 }
 
-void Zombie::moveLeft(){
+void Characters::Zombie::moveLeft(){
     move(sf::Vector2f(-moveSpeed, 0));
     setFacingRight(false);
-    setState(CharacterState::STATE_WALKING);
+    setState(CharacterStates::CharacterState::STATE_WALKING);
 }
 
-void Zombie::update(){
+void Characters::Zombie::update(){
     sf::Vector2f pos = eSprite.getPosition();
 
-    if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterState::STATE_WALKING){
+    if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterStates::CharacterState::STATE_WALKING){
         attack();
     }
 
-    if(getState() == CharacterState::STATE_FALLING && collidingDown){
-        setState(CharacterState::STATE_IDLE);
+    if(getState() == CharacterStates::CharacterState::STATE_FALLING && collidingDown){
+        setState(CharacterStates::CharacterState::STATE_IDLE);
     }
 
-    if(getState() == CharacterState::STATE_JUMPING && collidingUp){
+    if(getState() == CharacterStates::CharacterState::STATE_JUMPING && collidingUp){
         velocity.y = 0;
-        setState(CharacterState::STATE_FALLING);
+        setState(CharacterStates::CharacterState::STATE_FALLING);
     }
 
-    if(getState() == CharacterState::STATE_WALKING){
+    if(getState() == CharacterStates::CharacterState::STATE_WALKING){
         if(!isFacingRight()){
             if(!collidingLeft)
                 moveLeft();
@@ -100,30 +100,30 @@ void Zombie::update(){
         }else{
             anim->setScale(sf::Vector2f(1.f, 1.f));
         }
-    }else if(getState() == CharacterState::STATE_ATTACKING){
+    }else if(getState() == CharacterStates::CharacterState::STATE_ATTACKING){
         if(animClock.getElapsedTime().asMilliseconds() >= 500){
-            setState(CharacterState::STATE_IDLE);
+            setState(CharacterStates::CharacterState::STATE_IDLE);
         }
     }
 
-    if(getState() == CharacterState::STATE_IDLE) setState(CharacterState::STATE_WALKING);
+    if(getState() == CharacterStates::CharacterState::STATE_IDLE) setState(CharacterStates::CharacterState::STATE_WALKING);
 
     healthBar.setPosition(sf::Vector2f(getPosition().x-20, getPosition().y+50));
 }
 
-void Zombie::draw(Engine& engine) const  {
+void Characters::Zombie::draw(System::Engine& engine) const  {
     engine.draw(eSprite);
     healthBar.draw(engine);
 }
 
-void Zombie::takeDamage(const float& _damage){
+void Characters::Zombie::takeDamage(const float& _damage){
     health -= _damage;
     healthBar.setHealth(health);
     move(sf::Vector2f(0.0f, -1.f));
     moveSpeed += moveSpeed * 0.05;
 }
 
-void Zombie::attack(){
-    setState(CharacterState::STATE_ATTACKING);
+void Characters::Zombie::attack(){
+    setState(CharacterStates::CharacterState::STATE_ATTACKING);
     animClock.restart();
 }

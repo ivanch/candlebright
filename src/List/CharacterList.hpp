@@ -3,20 +3,22 @@
 #include <set>
 #include "../Character/Character.hpp"
 
-class CharacterList {
-    public:
-        std::set<Character*> characters;
+namespace Lists {
+    class CharacterList {
+        public:
+            std::set<Characters::Character*> characters;
 
-        void add(Character* _el){
-            characters.insert(_el);
-        }
-        void remove(Character* _el){
-            characters.erase(_el);
-        }
-        void clear(){
-            characters.clear();
-        }
-        std::set<Character *>::iterator begin(){ return characters.begin(); }
-        std::set<Character *>::iterator end(){ return characters.end(); }
+            void add(Characters::Character* _el){
+                characters.insert(_el);
+            }
+            void remove(Characters::Character* _el){
+                characters.erase(_el);
+            }
+            void clear(){
+                characters.clear();
+            }
+            std::set<Characters::Character *>::iterator begin(){ return characters.begin(); }
+            std::set<Characters::Character *>::iterator end(){ return characters.end(); }
 
-};
+    };
+}

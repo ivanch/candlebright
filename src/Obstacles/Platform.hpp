@@ -29,7 +29,7 @@ namespace Obstacles {
             void setMoveSpeed(sf::Vector2f _vel);
             void setmove(const sf::Vector2f& _move);
             void setMoving(bool _moving);
-            virtual void draw(Engine& engine) const;
+            virtual void draw(System::Engine& engine) const;
             virtual void update();
             virtual const sf::FloatRect getRect() const;
             virtual const sf::Vector2f getPosition() const;

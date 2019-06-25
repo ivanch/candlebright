@@ -8,43 +8,45 @@
 #define MAX_MENU        4
 #define MAX_ITEMS       10
 
-class Menu : public Entity
-{
-    public:
-        Menu(float width, float height);
-        ~Menu();
+namespace System {
+    class Menu : public Entity
+    {
+        public:
+            Menu(float width, float height);
+            ~Menu();
 
-        virtual void draw(Engine& engine) const;
-        virtual void update(){ }
-        void update(Engine* engine);
-        void moveUp();
-        void moveDown();
+            virtual void draw(System::Engine& engine) const;
+            virtual void update(){ }
+            void update(Engine* engine);
+            void moveUp();
+            void moveDown();
 
-        const bool isEnabled() const { return enabled; }
-        const int getSelectedPhase() const { return world; }
-        const int getSelectedPlayers() const { return players; }
+            const bool isEnabled() const { return enabled; }
+            const int getSelectedPhase() const { return world; }
+            const int getSelectedPlayers() const { return players; }
 
-    private:
-        sf::Text menu_text[MAX_MENU][MAX_ITEMS];
-        sf::Text menuTitle;
-        sf::Font font;
-        sf::Clock enterClock;
-        sf::Sprite* spriteMenu;
-        sf::Sprite* spriteWhip;
-        int selectedItem;
-        bool enabled;
-        int currentMenu;
+        private:
+            sf::Text menu_text[MAX_MENU][MAX_ITEMS];
+            sf::Text menuTitle;
+            sf::Font font;
+            sf::Clock enterClock;
+            sf::Sprite* spriteMenu;
+            sf::Sprite* spriteWhip;
+            int selectedItem;
+            bool enabled;
+            int currentMenu;
 
-        int world;
-        int players;
+            int world;
+            int players;
 
-        const int getMenuItems(int _menu) const;
-        void addMenuItem(int _menu, std::wstring _title, bool isPrimary, sf::Font _font);
+            const int getMenuItems(int _menu) const;
+            void addMenuItem(int _menu, std::wstring _title, bool isPrimary, sf::Font _font);
 
-        enum {
-            MENU_MAIN,
-            MENU_PHASES,
-            MENU_PLAYERS
-        };
+            enum {
+                MENU_MAIN,
+                MENU_PHASES,
+                MENU_PLAYERS
+            };
 
-};
+    };
+}

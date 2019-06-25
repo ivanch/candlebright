@@ -23,7 +23,7 @@ void Obstacles::Wall::update(){
     if(texture != NULL) rect.setTexture(texture);
 }
 
-void Obstacles::Wall::draw(Engine& engine) const {
+void Obstacles::Wall::draw(System::Engine& engine) const {
     engine.draw(rect);
 }
 

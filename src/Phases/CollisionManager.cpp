@@ -1,6 +1,6 @@
 #include "CollisionManager.hpp"
 
-CollisionManager::CollisionManager(ThingsList* _things){
+CollisionManager::CollisionManager(Lists::ThingsList* _things){
     things = _things;
 }
 

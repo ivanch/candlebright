@@ -1,20 +1,22 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Engine {
-    private:
-        sf::RenderWindow window;
-        sf::View view;
+namespace System {
+    class Engine {
+        private:
+            sf::RenderWindow window;
+            sf::View view;
 
-    public:
-        Engine();
-        ~Engine();
+        public:
+            Engine();
+            ~Engine();
 
-        sf::RenderWindow* getWindow(){ return &window; }
-        void draw(const sf::Drawable& drawable);
+            sf::RenderWindow* getWindow(){ return &window; }
+            void draw(const sf::Drawable& drawable);
 
-        const bool isWindowOpen() const { return window.isOpen(); }
+            const bool isWindowOpen() const { return window.isOpen(); }
 
-        void clearWindow();
-        void render();
-};
+            void clearWindow();
+            void render();
+    };
+}

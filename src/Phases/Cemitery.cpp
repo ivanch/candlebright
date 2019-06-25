@@ -30,42 +30,42 @@ Phases::Cemitery::Cemitery(){
     o = new Obstacles::Wall(sf::Vector2f(10.0f, 800.0f), sf::Vector2f(1500.0f, 0.0f), sf::Color::Black);
     addObstacle(o);
 
-    Enemy* e;
-    e = new Zombie(sf::Vector2f(180.0f, 600.0f));
+    Characters::Enemy* e;
+    e = new Characters::Zombie(sf::Vector2f(180.0f, 600.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(550.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(550.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(650.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(650.0f, 540.0f));
     addCharacter(e);
-    e = new Ghost(sf::Vector2f(700.0f, 540.0f));
+    e = new Characters::Ghost(sf::Vector2f(700.0f, 540.0f));
     addCharacter(e);
-    e = new Ghost(sf::Vector2f(750.0f, 540.0f));
+    e = new Characters::Ghost(sf::Vector2f(750.0f, 540.0f));
     addCharacter(e);
-    e = new Ghost(sf::Vector2f(350.0f, 500.0f));
+    e = new Characters::Ghost(sf::Vector2f(350.0f, 500.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(800.0f, 540.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(800.0f, 540.0f));
     addCharacter(e);
-    e = new Dressed_Zombie(sf::Vector2f(830.0f, 540.0f));
+    e = new Characters::Dressed_Zombie(sf::Vector2f(830.0f, 540.0f));
     addCharacter(e);
-    e = new Hell_Demon(sf::Vector2f(1200.0f, 540.0f));
+    e = new Characters::Hell_Demon(sf::Vector2f(1200.0f, 540.0f));
     addCharacter(e);
-    e = new Zombie(sf::Vector2f(1300.0f, 600.0f));
+    e = new Characters::Zombie(sf::Vector2f(1300.0f, 600.0f));
     addCharacter(e);
-    e = new Zombie(sf::Vector2f(1325.f, 600.0f));
+    e = new Characters::Zombie(sf::Vector2f(1325.f, 600.0f));
     addCharacter(e);
-    e = new Zombie(sf::Vector2f(1350.0f, 600.0f));
+    e = new Characters::Zombie(sf::Vector2f(1350.0f, 600.0f));
     addCharacter(e);
-    e = new Zombie(sf::Vector2f(1375.f, 600.0f));
+    e = new Characters::Zombie(sf::Vector2f(1375.f, 600.0f));
     addCharacter(e);
-    e = new Zombie(sf::Vector2f(1400.0f, 600.0f));
+    e = new Characters::Zombie(sf::Vector2f(1400.0f, 600.0f));
     addCharacter(e);
-    e = new Zombie(sf::Vector2f(1450.0f, 600.0f));
+    e = new Characters::Zombie(sf::Vector2f(1450.0f, 600.0f));
     addCharacter(e);
-    e = new Ghost(sf::Vector2f(1350.0f, 540.0f));
+    e = new Characters::Ghost(sf::Vector2f(1350.0f, 540.0f));
     addCharacter(e);
-    e = new Ghost(sf::Vector2f(1450.0f, 540.0f));
+    e = new Characters::Ghost(sf::Vector2f(1450.0f, 540.0f));
     addCharacter(e);
-    e = new Sylathus(sf::Vector2f(1500.0f, 550.0f));
+    e = new Characters::Sylathus(sf::Vector2f(1500.0f, 550.0f));
     addCharacter(e);
 
 
@@ -80,7 +80,7 @@ Phases::Cemitery::Cemitery(){
     background->setTexture(*backgroundTexture);
     background->setPosition(sf::Vector2f(0.0f, 230.0f));
 
-    background_music = new Music("songs/cemitery_theme.ogg");
+    background_music = new System::Music("songs/cemitery_theme.ogg");
     background_music->run();
 }
 Phases::Cemitery::~Cemitery(){

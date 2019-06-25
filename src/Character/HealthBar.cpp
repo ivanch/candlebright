@@ -40,7 +40,7 @@ void HealthBar::setSize(const sf::Vector2f _size){
     background.setSize(sf::Vector2f(health/rate, size.y));
 }
 
-void HealthBar::draw(Engine& engine) const {
+void HealthBar::draw(System::Engine& engine) const {
     engine.draw(background);
     engine.draw(foreground);
 }

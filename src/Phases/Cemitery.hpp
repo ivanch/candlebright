@@ -13,7 +13,7 @@ namespace Phases {
 
     class Cemitery : public Phase {
         private:
-            Music* background_music;
+            System::Music* background_music;
         
         public:
             Cemitery();

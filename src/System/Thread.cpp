@@ -1,13 +1,13 @@
 #include "Thread.hpp"
 
-Thread::Thread(){ }
-Thread::~Thread(){ }
+System::Thread::Thread(){ }
+System::Thread::~Thread(){ }
 
-void Thread::yield(){
+void System::Thread::yield(){
     sched_yield();
 }
 
-void Thread::start(){
+void System::Thread::start(){
     int status = pthread_attr_init(&threadAttr);
     status = pthread_attr_setscope(&threadAttr, PTHREAD_SCOPE_SYSTEM);
     if(status != 0)
@@ -20,16 +20,16 @@ void Thread::start(){
         std::cerr << "Falha inicialização de thread: Destruição do atributo da thread." << std::endl;
 }
 
-void Thread::join(){
+void System::Thread::join(){
     int status = pthread_join(threadID, NULL);
     if(status != 0)
-        std::cerr << "Falha Thread::join()." << std::endl;
+        std::cerr << "Falha System::Thread::join()." << std::endl;
 }
 
-void* Thread::runThread(void* pThread){
+void* System::Thread::runThread(void* pThread){
     Thread* sThread = static_cast<Thread*>(pThread);
     if(sThread == NULL){
-        std::cerr << "Falha Thread::runThread()." << std::endl;
+        std::cerr << "Falha System::Thread::runThread()." << std::endl;
     }else{
         sThread->run();
     }

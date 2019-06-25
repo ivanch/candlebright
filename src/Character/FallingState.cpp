@@ -1,20 +1,20 @@
 #include "FallingState.hpp"
 
-FallingState::FallingState(): CharacterState(STATE_FALLING){
+CharacterStates::FallingState::FallingState(): CharacterState(STATE_FALLING){
 
 }
 
-FallingState::~FallingState(){
+CharacterStates::FallingState::~FallingState(){
 
 }
 
-const bool FallingState::walking(Character* _char){
+const bool CharacterStates::FallingState::walking(Characters::Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new WalkingState());
     return true;
 }
 
-const bool FallingState::idle(Character* _char){
+const bool CharacterStates::FallingState::idle(Characters::Character* _char){
     delete _char->getCharacterState();
     _char->setCharacterState(new IdleState());
     return true;

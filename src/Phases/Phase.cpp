@@ -14,11 +14,11 @@ void Phase::update(){
     col_mngr.checkCollisions();
     entities["update"];
 
-    std::set<Character*> killBuffer;
+    std::set<Characters::Character*> killBuffer;
     checkAttack(&killBuffer);
     checkObstacles(&killBuffer);
 
-    std::set<Character *>::iterator chr;
+    std::set<Characters::Character *>::iterator chr;
     for(chr = killBuffer.begin(); chr != killBuffer.end(); ++chr){
         things.remove(*chr);
         characters.remove(*chr);
@@ -31,14 +31,14 @@ void Phase::update(){
     }
 }
 
-void Phase::drawAll(Engine& engine){
+void Phase::drawAll(System::Engine& engine){
     draw(engine);
     for(int i = 0; i < entities.size(); i++){
         entities[i]->draw(engine);
     }
 }
 
-void Phase::draw(Engine& engine) const {
+void Phase::draw(System::Engine& engine) const {
     engine.draw(*background);
 }
 
@@ -67,7 +67,7 @@ void Phase::loadEnemies(const int act_world){
     /* Carrega os Inimigos */
     std::string line;
     std::ifstream file("Save/GameSave.txt");
-    Enemy* enemy;
+    Characters::Enemy* enemy;
     if(file.is_open())
     {
         getline(file,line);
@@ -96,23 +96,23 @@ void Phase::loadEnemies(const int act_world){
             {
                 if(subtype == 1)
                 {
-                    enemy = new Zombie(sf::Vector2f(px, py));
+                    enemy = new Characters::Zombie(sf::Vector2f(px, py));
                 }
                 else if(subtype == 2)
                 {
-                    enemy = new Dressed_Zombie(sf::Vector2f(px, py));
+                    enemy = new Characters::Dressed_Zombie(sf::Vector2f(px, py));
                 }
                 else if(subtype == 3)
                 {
-                    enemy = new Ghost(sf::Vector2f(px, py));
+                    enemy = new Characters::Ghost(sf::Vector2f(px, py));
                 }
                 else if(subtype == 4)
                 {
-                    enemy = new Hell_Demon(sf::Vector2f(px, py));
+                    enemy = new Characters::Hell_Demon(sf::Vector2f(px, py));
                 }
                 else if(subtype == 5)
                 {
-                    enemy = new Sylathus(sf::Vector2f(px, py));
+                    enemy = new Characters::Sylathus(sf::Vector2f(px, py));
                 }
             }
             enemy->setHealth(health);
@@ -185,7 +185,7 @@ const sf::Vector2f Phase::getRandomPosition(const sf::View& view){
 
 
         /* Testa posição de Personagens */
-        std::set<Character *>::iterator chr;
+        std::set<Characters::Character *>::iterator chr;
         bool char_test_success = true;
         for(chr = characters.begin(); chr != characters.end(); ++chr){
             if(getDistance(pos,(*chr)->getPosition()) < 100.0){
@@ -207,12 +207,12 @@ const sf::Vector2f Phase::getRandomPosition(const sf::View& view){
     return pos;
 }
 
-void Phase::checkAttack(std::set<Character*>* killBuffer){
-    std::set<Character *>::iterator issuer;
+void Phase::checkAttack(std::set<Characters::Character*>* killBuffer){
+    std::set<Characters::Character *>::iterator issuer;
     for(issuer = characters.begin(); issuer != characters.end(); ++issuer){
-        if( (*issuer)->getState() == CharacterState::STATE_ATTACKING && 
+        if( (*issuer)->getState() == CharacterStates::CharacterState::STATE_ATTACKING && 
             (*issuer)->getAttackClock()->getElapsedTime().asMilliseconds() >= (*issuer)->getAttackSpeed()){
-            std::set<Character *>::iterator damaged;
+            std::set<Characters::Character *>::iterator damaged;
             for(damaged = characters.begin(); damaged != characters.end(); ++damaged){
                 /* Exclusões */
                 if(issuer == damaged) continue; // auto-dano
@@ -233,11 +233,11 @@ void Phase::checkAttack(std::set<Character*>* killBuffer){
     }
 }
 
-void Phase::checkObstacles(std::set<Character*>* killBuffer){
+void Phase::checkObstacles(std::set<Characters::Character*>* killBuffer){
     std::list<Obstacles::Obstacle *>::iterator obs;
     for(obs = obstacles.begin(); obs != obstacles.end(); ++obs){
         if((*obs)->getAttackClock()->getElapsedTime().asMilliseconds() < (*obs)->getAttackRate()) continue; // Attack rate
-        std::set<Character *>::iterator chr;
+        std::set<Characters::Character *>::iterator chr;
         for(chr = characters.begin(); chr != characters.end(); ++chr){
             if((*chr)->getType() != 0) continue; // Só afeta players
 
@@ -271,16 +271,16 @@ void Phase::checkObstacles(std::set<Character*>* killBuffer){
     }
 }
 
-void Phase::addEntity(Entity* _e){
+void Phase::addEntity(System::Entity* _e){
     entities.add(_e);
 }
 
 void Phase::addThing(Thing* _thing){
-    addEntity(static_cast<Entity*>(_thing));
+    addEntity(static_cast<System::Entity*>(_thing));
     things.add(_thing);
 }
 
-void Phase::addCharacter(Character* _char){
+void Phase::addCharacter(Characters::Character* _char){
     addThing(static_cast<Thing*>(_char));
     characters.add(_char);
 }

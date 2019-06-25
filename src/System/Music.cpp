@@ -1,26 +1,26 @@
 #include "Music.hpp"
 
-Music::Music(const std::string filename){
+System::Music::Music(const std::string filename){
     if(!music.openFromFile(filename))
         std::cerr << "Erro ao ler música do arquivo: " << filename << std::endl;
     music.setLoop(true);
     music.setVolume(10.0);
 }
 
-Music::~Music(){ }
+System::Music::~Music(){ }
 
-void Music::play(){
-    start(); // Chama a função Music::run() via polimorfismo
+void System::Music::play(){
+    start(); // Chama a função System::Music::run() via polimorfismo
 }
 
-void Music::run(){
+void System::Music::run(){
     music.play();
 }
 
-void Music::pause(){
+void System::Music::pause(){
     music.pause();
 }
 
-void Music::stop(){
+void System::Music::stop(){
     music.stop();
 }

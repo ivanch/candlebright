@@ -6,7 +6,7 @@
 #define LIMIT   6
 class CollisionManager {
     public:
-        CollisionManager(ThingsList* _things);
+        CollisionManager(Lists::ThingsList* _things);
         ~CollisionManager(){ }
 
         void checkCollisions();
@@ -21,5 +21,5 @@ class CollisionManager {
         /* Lado esquerdo do obj1 com o lado direito do obj2. */
         const bool intersectsLeft(sf::FloatRect obj1, sf::FloatRect obj2) const;
 
-        ThingsList* things;
+        Lists::ThingsList* things;
 };

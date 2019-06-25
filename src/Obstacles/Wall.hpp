@@ -16,7 +16,7 @@ namespace Obstacles {
             Wall(sf::Vector2f size, sf::Vector2f pos, sf::Texture* _tex);
             ~Wall();
             virtual void update();
-            virtual void draw(Engine& engine) const;
+            virtual void draw(System::Engine& engine) const;
             virtual const sf::FloatRect getRect() const;
     };
 

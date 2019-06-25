@@ -32,7 +32,7 @@ Obstacles::Platform::Platform(sf::Vector2f size, sf::Vector2f pos, sf::Sprite* _
 }
 Obstacles::Platform::~Platform(){ }
 
-void Obstacles::Platform::draw(Engine& engine) const {
+void Obstacles::Platform::draw(System::Engine& engine) const {
     if(sprite != NULL) engine.draw(*sprite);
     else engine.draw(rect);
 }

@@ -10,51 +10,53 @@
 #include "Entity.hpp"
 #include "Menu.hpp"
 
-class Game {
-    private:
-        Engine engine;
-        sf::RenderWindow* window;
+namespace System {
+    class Game {
+        private:
+            Engine engine;
+            sf::RenderWindow* window;
 
-        Player* player1;
-        Player* player2;
-        Phase* world;
-        sf::View view;
+            Characters::Player* player1;
+            Characters::Player* player2;
+            Phase* world;
+            sf::View view;
 
-        unsigned short act_world;
+            unsigned short act_world;
 
 
-        Menu menu;
-        bool game_paused;
-        bool menuEnabled;
+            Menu menu;
+            bool game_paused;
+            bool menuEnabled;
 
-        sf::Clock timer;
+            sf::Clock timer;
 
-        sf::Clock enemySpawnTimer;
-        unsigned int enemySpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+            sf::Clock enemySpawnTimer;
+            unsigned int enemySpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
 
-        sf::Clock obstacleSpawnTimer;
-        unsigned int obstacleSpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
+            sf::Clock obstacleSpawnTimer;
+            unsigned int obstacleSpawnDelay; // Delay entre os spawns aleatórios de inimigos em segundos
 
-        const int getIntFromString(const std::string& _str) const;
-        const float getFloatFromString(const std::string& _str) const;
+            const int getIntFromString(const std::string& _str) const;
+            const float getFloatFromString(const std::string& _str) const;
 
-    public:
-        Game();
-        ~Game();
+        public:
+            Game();
+            ~Game();
 
-        void run();
-        void update();
+            void run();
+            void update();
 
-        sf::View* getView(){ return &view; }
-        void setView(sf::View _view){ this->view=_view; }
+            sf::View* getView(){ return &view; }
+            void setView(sf::View _view){ this->view=_view; }
 
-        void saveGame();
-        void loadPlayers();
+            void saveGame();
+            void loadPlayers();
 
-        void draw(sf::RenderWindow& window);
+            void draw(sf::RenderWindow& window);
 
-        void spawnRandomEnemy();
-        void spawnRandomObstacle();
+            void spawnRandomEnemy();
+            void spawnRandomObstacle();
 
-        void nextPhase();
-};
+            void nextPhase();
+    };
+}

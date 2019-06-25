@@ -1,19 +1,19 @@
 #include "Game.hpp"
 
-Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y){
+System::Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize().y){
     window = engine.getWindow();
     view.reset(sf::FloatRect(0.0f, 300.0f, 600.0f, 500.0f));
     game_paused = false;
 
-    player1 = new Player(1);
-    player2 = new Player(2);
+    player1 = new Characters::Player(1);
+    player2 = new Characters::Player(2);
 
     enemySpawnDelay = 5; // Spawna um inimigo na tela a cada 25 segundos
     obstacleSpawnDelay = 45; // Spawna um obstáculo a cada 45 segundos
 }
-Game::~Game(){ }
+System::Game::~Game(){ }
 
-void Game::run(){
+void System::Game::run(){
     while(menu.isEnabled()){ // Roda o menu primeiro...
         engine.clearWindow();
         menu.update(&engine);
@@ -39,14 +39,14 @@ void Game::run(){
     engine.getWindow()->setView(view);
     update(); // Roda o jogo...
 }
-void Game::saveGame()
+void System::Game::saveGame()
 {
     std::ofstream file("Save/GameSave.txt");
 
     if(file.is_open())
     {
         file << act_world << std::endl;
-        std::set<Character *>::iterator itr;
+        std::set<Characters::Character *>::iterator itr;
         for(itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
             file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPosition().x << ',' << (*itr)->getPosition().y - 30.0f << std::endl;
         }
@@ -55,11 +55,11 @@ void Game::saveGame()
     }
     file.close();
 }
-void Game::loadPlayers(){
+void System::Game::loadPlayers(){
     /* Carrega os Players */
     std::string line;
     std::ifstream file("Save/GameSave.txt");
-    Player* temp_player;
+    Characters::Player* temp_player;
     int player_count = 0;
     if(file.is_open())
     {
@@ -86,7 +86,7 @@ void Game::loadPlayers(){
             float py = getFloatFromString(line);
 
             player_count++;
-            temp_player = new Player(player_count);
+            temp_player = new Characters::Player(player_count);
             temp_player->setPosition(sf::Vector2f(px, py));
             temp_player->setHealth(health);
 
@@ -96,14 +96,14 @@ void Game::loadPlayers(){
         }
     }
 }
-void Game::update(){
+void System::Game::update(){
     while (engine.isWindowOpen()){
         if(player1->isDead())
         {
-            std::cout<<Player::getScore();
+            std::cout<<Characters::Player::getScore();
 
             std::ofstream file("Save/Ranking.txt");
-            file << Player::getScore();
+            file << Characters::Player::getScore();
 
         }
         engine.clearWindow();
@@ -141,7 +141,7 @@ void Game::update(){
                 if(enemySpawnTimer.getElapsedTime().asSeconds() >= enemySpawnDelay) spawnRandomEnemy();
                 if(obstacleSpawnTimer.getElapsedTime().asSeconds() >= obstacleSpawnDelay) spawnRandomObstacle();
 
-                if(Enemy::enemyCount == 0){
+                if(Characters::Enemy::enemyCount == 0){
                     nextPhase();
                 }
             }
@@ -165,21 +165,21 @@ void Game::update(){
 }
 
 /* Spawn aleatório de inimigos */
-void Game::spawnRandomEnemy(){
-    Enemy* e;
+void System::Game::spawnRandomEnemy(){
+    Characters::Enemy* e;
     int r;
     if(act_world == 1) r = rand()%2;
     else if(act_world == 2) r = rand()%4;
     sf::Vector2f pos = world->getRandomPosition(view);
     if(pos.x != 0 && pos.y != 0){
         if(r == 0){ // Spawn em ambas fases
-            e = new Zombie(sf::Vector2f(pos.x, pos.y-60));
+            e = new Characters::Zombie(sf::Vector2f(pos.x, pos.y-60));
         }else if(r == 1){ // Spawn em ambas fases
-            e = new Dressed_Zombie(sf::Vector2f(pos.x, pos.y-60));
+            e = new Characters::Dressed_Zombie(sf::Vector2f(pos.x, pos.y-60));
         }else if(r == 2){ // Spawn apenas na fase 2
-            e = new Ghost(sf::Vector2f(pos.x, pos.y-70));
+            e = new Characters::Ghost(sf::Vector2f(pos.x, pos.y-70));
         }else if(r == 3){ // Spawn apenas na fase 2
-            e = new Hell_Demon(sf::Vector2f(pos.x, pos.y-70));
+            e = new Characters::Hell_Demon(sf::Vector2f(pos.x, pos.y-70));
         }
         world->addCharacter(e);
     }
@@ -187,7 +187,7 @@ void Game::spawnRandomEnemy(){
 }
 
 /* Spawn aleatório de obstáculos */
-void Game::spawnRandomObstacle(){
+void System::Game::spawnRandomObstacle(){
     Obstacles::Obstacle* o;
     int r = rand()%100;
     sf::Vector2f pos = world->getRandomPosition(view);
@@ -203,18 +203,18 @@ void Game::spawnRandomObstacle(){
     obstacleSpawnTimer.restart();
 }
 
-void Game::nextPhase(){
+void System::Game::nextPhase(){
     if(act_world == 1){
         delete world;
         world = new Phases::Cemitery;
         act_world = 2;
 
-        player1 = new Player(1);
+        player1 = new Characters::Player(1);
 
         world->addCharacter(player1); // Sempre haverá um jogador por padrão
         player1->setPosition(world->getSpawnPoint());
         if(menu.getSelectedPlayers() == 2){
-            player2 = new Player(2);
+            player2 = new Characters::Player(2);
             world->addCharacter(player2);
             player2->setPosition(sf::Vector2f(world->getSpawnPoint().x,
                                          world->getSpawnPoint().y-100 ) );
@@ -224,13 +224,13 @@ void Game::nextPhase(){
     }
 }
 
-const int Game::getIntFromString(const std::string& _str) const {
+const int System::Game::getIntFromString(const std::string& _str) const {
     int result;
     sscanf(_str.c_str(), "%d", &result);
     return result;
 }
 
-const float Game::getFloatFromString(const std::string& _str) const {
+const float System::Game::getFloatFromString(const std::string& _str) const {
     float result;
     sscanf(_str.c_str(), "%f", &result);
     return result;

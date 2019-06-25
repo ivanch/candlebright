@@ -3,7 +3,7 @@
 int main()
 {
     srand(time(NULL));
-    Game game;
+    System::Game game;
     game.run();
     return 0;
 }

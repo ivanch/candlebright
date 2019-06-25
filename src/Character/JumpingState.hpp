@@ -3,11 +3,13 @@
 #include "CharacterState.hpp"
 #include "Character.hpp"
 
-class JumpingState : public CharacterState {
-    public:
-        JumpingState();
-        virtual ~JumpingState();
+namespace CharacterStates {
+    class JumpingState : public CharacterState {
+        public:
+            JumpingState();
+            virtual ~JumpingState();
 
-        virtual const bool walking(Character* _char);
-        virtual const bool falling(Character* _char);
-};
+            virtual const bool walking(Characters::Character* _char);
+            virtual const bool falling(Characters::Character* _char);
+    };
+}

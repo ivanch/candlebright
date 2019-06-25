@@ -1,6 +1,6 @@
 #include "Sylathus.hpp"
 
-Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)){
+Characters::Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)){
     setPosition(pos);
     originalPos = pos;
     moveSpeed = 2.5f;
@@ -18,7 +18,7 @@ Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)
     attackSpeed = 75.0f;
     preAttack = false;
 
-    setState(CharacterState::STATE_IDLE);
+    setState(CharacterStates::CharacterState::STATE_IDLE);
     setFacingRight(false);
 
     anim = new AnimManager(&eSprite, sf::Vector2i(170, 120));
@@ -30,38 +30,38 @@ Sylathus::Sylathus(sf::Vector2f pos): breathAnim(&bSprite, sf::Vector2i(160, 96)
     healthBar.setSize(sf::Vector2f(200.0f, 10.0f));
     healthBar.setMaxHealth(health);
 }
-Sylathus::~Sylathus(){ }
+Characters::Sylathus::~Sylathus(){ }
 
-void Sylathus::move(const sf::Vector2f& _move){
+void Characters::Sylathus::move(const sf::Vector2f& _move){
     eSprite.move(_move);
 }
 
-void Sylathus::setPosition(sf::Vector2f _pos){
+void Characters::Sylathus::setPosition(sf::Vector2f _pos){
     eSprite.setPosition(_pos);
 }
 
-const sf::Vector2f Sylathus::getPosition() const {
+const sf::Vector2f Characters::Sylathus::getPosition() const {
     return eSprite.getPosition();
 }
 
-const sf::FloatRect Sylathus::getRect() const {
+const sf::FloatRect Characters::Sylathus::getRect() const {
     return eSprite.getGlobalBounds();
 }
 
-void Sylathus::fall(){
+void Characters::Sylathus::fall(){
     // Sylathus não cai!
 }
 
-void Sylathus::moveRight(){
+void Characters::Sylathus::moveRight(){
     move(sf::Vector2f(moveSpeed, 0));
 }
 
-void Sylathus::moveLeft(){
+void Characters::Sylathus::moveLeft(){
     move(sf::Vector2f(-moveSpeed, 0));
 }
 
-void Sylathus::update(){
-    if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterState::STATE_IDLE && preAttack == false){
+void Characters::Sylathus::update(){
+    if(((float) rand()) / (float) RAND_MAX <= attackChance && getState() == CharacterStates::CharacterState::STATE_IDLE && preAttack == false){
         attack();
     }
 
@@ -70,16 +70,16 @@ void Sylathus::update(){
             animClock.restart();
             anim->play("attack");
             if(anim->getCount() == 8){
-                setState(CharacterState::STATE_ATTACKING);
+                setState(CharacterStates::CharacterState::STATE_ATTACKING);
                 preAttack = false;
             }
         }
-    }else if(getState() == CharacterState::STATE_IDLE){
+    }else if(getState() == CharacterStates::CharacterState::STATE_IDLE){
         if(animClock.getElapsedTime().asMilliseconds() >= 150){
             animClock.restart();
             anim->play("idle");
         }
-    }else if(getState() == CharacterState::STATE_ATTACKING){
+    }else if(getState() == CharacterStates::CharacterState::STATE_ATTACKING){
         if(animClock.getElapsedTime().asMilliseconds() >= 150){
             animClock.restart();
             anim->play("attack");
@@ -90,7 +90,7 @@ void Sylathus::update(){
                 }
             }
             if(anim->getCount() >= 20){
-                setState(CharacterState::STATE_IDLE);
+                setState(CharacterStates::CharacterState::STATE_IDLE);
                 breathAnim.stop();
             }
         }
@@ -99,18 +99,18 @@ void Sylathus::update(){
     healthBar.setPosition(sf::Vector2f(getPosition().x-135, getPosition().y+120));
 }
 
-void Sylathus::draw(Engine& engine) const  {
+void Characters::Sylathus::draw(System::Engine& engine) const  {
     engine.draw(eSprite);
     if(breathAnim.isLocked()) engine.draw(bSprite);
     healthBar.draw(engine);
 }
 
-void Sylathus::takeDamage(const float& _damage){
+void Characters::Sylathus::takeDamage(const float& _damage){
     health -= _damage;
     healthBar.setHealth(health);
 }
 
-void Sylathus::attack(){
+void Characters::Sylathus::attack(){
     preAttack = true;
     bSprite.setPosition(eSprite.getPosition().x-50, eSprite.getPosition().y+75);
     attackTimer.restart();

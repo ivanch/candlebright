@@ -25,7 +25,7 @@ void Obstacles::Black_Hole::update(){
     }
 }
 
-void Obstacles::Black_Hole::draw(Engine& engine) const {
+void Obstacles::Black_Hole::draw(System::Engine& engine) const {
     engine.draw(oSprite);
 }
 

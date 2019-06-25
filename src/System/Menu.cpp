@@ -1,5 +1,5 @@
 #include "Menu.hpp"
-Menu::Menu(float width, float height)
+System::Menu::Menu(float width, float height)
 {
     if(!font.loadFromFile("fonts/OldLondon.ttf"))
     {
@@ -54,12 +54,12 @@ Menu::Menu(float width, float height)
     currentMenu = MENU_MAIN;
 
 }
-Menu::~Menu()
+System::Menu::~Menu()
 {
     //dtor
 }
 
-void Menu::draw(Engine& engine) const {
+void System::Menu::draw(System::Engine& engine) const {
     engine.draw(*spriteMenu);
     engine.draw(*spriteWhip);
     for(int i=0; i<getMenuItems(currentMenu); i++){
@@ -68,7 +68,7 @@ void Menu::draw(Engine& engine) const {
     engine.draw(menuTitle);
 }
 
-void Menu::moveUp(){
+void System::Menu::moveUp(){
     if(selectedItem -1 >= 0)
     {
         menu_text[currentMenu][selectedItem].setFillColor(sf::Color(200,200,200));
@@ -79,7 +79,7 @@ void Menu::moveUp(){
      }
 }
 
-void Menu::moveDown(){
+void System::Menu::moveDown(){
 
     if(selectedItem +1 < getMenuItems(currentMenu))
     {
@@ -91,7 +91,7 @@ void Menu::moveDown(){
      }
 }
 
-void Menu::update(Engine* engine){
+void System::Menu::update(Engine* engine){
     sf::Event event;
     while (engine->getWindow()->pollEvent(event)){
         if(event.type == sf::Event::KeyReleased){
@@ -135,7 +135,7 @@ void Menu::update(Engine* engine){
     }
 }
 
-const int Menu::getMenuItems(int _menu) const {
+const int System::Menu::getMenuItems(int _menu) const {
     if(_menu == MENU_MAIN) return 2;
     else if(_menu == MENU_PHASES) return 2;
     else if(_menu == MENU_PLAYERS) return 2;
@@ -143,7 +143,7 @@ const int Menu::getMenuItems(int _menu) const {
     return -1;
 }
 
-void Menu::addMenuItem(int _menu, std::wstring _title, bool isPrimary, sf::Font _font){
+void System::Menu::addMenuItem(int _menu, std::wstring _title, bool isPrimary, sf::Font _font){
     int index = 0;
     for(int i = 0; i < MAX_ITEMS; i++){
         if(menu_text[_menu][i].getFont() == NULL){

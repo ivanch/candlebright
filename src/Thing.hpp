@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "System/Entity.hpp"
 
-class Thing : public Entity {
+class Thing : public System::Entity {
     protected:
         bool collidingUp;
         bool collidingRight;

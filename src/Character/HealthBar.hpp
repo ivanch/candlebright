@@ -20,5 +20,5 @@ class HealthBar {
         void setHealth(const float& _health);
         void setMaxHealth(float _health);
 
-        void draw(Engine& engine) const;
+        void draw(System::Engine& engine) const;
 };
