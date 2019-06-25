@@ -72,16 +72,16 @@ void Obstacles::Platform::fmove(){
     sf::Vector2f pos = rect.getPosition();
     if(mRight){
         rect.move(sf::Vector2f(-vel.x, 0));
-        if(abs(pos.x) < abs(originalPos.x-move.x)) mRight = false;
+        if(std::abs(pos.x) < std::abs(originalPos.x-move.x)) mRight = false;
     }else{
         rect.move(sf::Vector2f(vel.x, 0));
-        if(abs(pos.x) > abs(originalPos.x+move.x)) mRight = true;
+        if(std::abs(pos.x) > std::abs(originalPos.x+move.x)) mRight = true;
     }
     if(mUp){
         rect.move(sf::Vector2f(0, -vel.y));
-        if(abs(pos.y) < abs(move.y-originalPos.y)) mUp = false;
+        if(std::abs(pos.y) < std::abs(move.y-originalPos.y)) mUp = false;
     }else{
         rect.move(sf::Vector2f(0, vel.y));
-        if(abs(pos.y) > abs(move.y+originalPos.y)) mUp = true;
+        if(std::abs(pos.y) > std::abs(move.y+originalPos.y)) mUp = true;
     }
 }

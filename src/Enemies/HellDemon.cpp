@@ -78,13 +78,13 @@ void Characters::Hell_Demon::update(){
                 moveLeft();
             else
                 setFacingRight();
-            if(abs(pos.x) < abs(originalPos.x-5)) setFacingRight();
+            if(std::abs(pos.x) < std::abs(originalPos.x-5)) setFacingRight();
         }else{
             if(!collidingRight)
                 moveRight();
             else
                 setFacingRight(false);
-            if(abs(pos.x) > abs(originalPos.x+5)) setFacingRight(false);
+            if(std::abs(pos.x) > std::abs(originalPos.x+5)) setFacingRight(false);
         }
     }
     if(collidingUp){

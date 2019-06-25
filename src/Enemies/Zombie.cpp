@@ -82,13 +82,13 @@ void Characters::Zombie::update(){
                 moveLeft();
             else
                 setFacingRight();
-            if(abs(pos.x) < abs(originalPos.x-100)) setFacingRight();
+            if(std::abs(pos.x) < std::abs(originalPos.x-100)) setFacingRight();
         }else{
             if(!collidingRight)
                 moveRight();
             else
                 setFacingRight(false);
-            if(abs(pos.x) > abs(originalPos.x+100)) setFacingRight(false);
+            if(std::abs(pos.x) > std::abs(originalPos.x+100)) setFacingRight(false);
         }
 
         if(animClock.getElapsedTime().asMilliseconds() >= 150){

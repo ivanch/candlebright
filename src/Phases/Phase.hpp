@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <fstream>
-#include <math.h>
+#include <cmath>
 #include <stdlib.h>
 
 #include "../Character/Player.hpp"

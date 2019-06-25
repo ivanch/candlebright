@@ -4,7 +4,6 @@
 
 #include "../Character/Player.hpp"
 #include "../Character/Character.hpp"
-#include "../Character/Player.hpp"
 
 namespace Characters {
     class Enemy : public Character {
