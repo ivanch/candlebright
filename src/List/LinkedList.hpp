@@ -186,7 +186,7 @@ void LinkedList<T>::removeNth(T *data){
         return;
     }
     Node<T>* temp2 = temp->next->next;
-    delete temp->next;
+    //delete temp->next;
     temp->next = temp2;
 
 	size--;

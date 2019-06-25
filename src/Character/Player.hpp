@@ -7,8 +7,6 @@
 
 class Player : public Character {
     private:
-        std::string name;
-
         sf::Sprite pSprite;
 
         sf::Sprite wSprite; // Whip Sprite

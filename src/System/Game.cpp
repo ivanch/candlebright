@@ -8,7 +8,7 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
     player1 = new Player(1);
     player2 = new Player(2);
 
-    enemySpawnDelay = 25; // Spawna um inimigo na tela a cada 25 segundos
+    enemySpawnDelay = 5; // Spawna um inimigo na tela a cada 25 segundos
     obstacleSpawnDelay = 45; // Spawna um obstáculo a cada 45 segundos
 }
 Game::~Game(){ }
@@ -33,7 +33,7 @@ void Game::run(){
     if(menu.getSelectedPlayers() == 2){
         world->addCharacter(player2);
         player2->setPosition(sf::Vector2f(world->getSpawnPoint().x,
-                                     world->getSpawnPoint().y-100 ) );
+                                          world->getSpawnPoint().y-100 ) );
     }
 
     engine.getWindow()->setView(view);
@@ -49,10 +49,6 @@ void Game::saveGame()
         std::set<Character *>::iterator itr;
         for(itr = world->getCharList()->begin(); itr != world->getCharList()->end(); ++itr){
             file << (*itr)->getType() << "," << (*itr)->getSubType() << "," << (*itr)->getHealth() << ',' << (*itr)->getPosition().x << ',' << (*itr)->getPosition().y - 30.0f << std::endl;
-        if((*itr)->getType() == 0){
-            std::cout<<Player::getScore();
-            file << Player::getScore() << std::endl;
-        }
         }
         std::cout << "Game Saved" << std::endl;
 
