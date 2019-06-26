@@ -10,7 +10,7 @@ System::Music::Music(const std::string filename){
 System::Music::~Music(){ }
 
 void System::Music::play(){
-    start(); // Chama a função System::Music::run() via polimorfismo
+    start();
 }
 
 void System::Music::run(){

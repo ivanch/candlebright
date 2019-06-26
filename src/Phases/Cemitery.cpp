@@ -1,10 +1,8 @@
 #include "Cemitery.hpp"
 
 Phases::Cemitery::Cemitery(){
-    sf::Sprite* ground2 = new sf::Sprite(*getTexture("sprites/ground2.png"));
-
     Obstacles::Platform* p;
-    p = new Obstacles::Platform(sf::Vector2f(1510.0f, 80.0f), sf::Vector2f(0.0f, 733.f), ground2); // Chão
+    p = new Obstacles::Platform(sf::Vector2f(1510.0f, 80.0f), sf::Vector2f(0.0f, 733.f), getTexture("sprites/ground2.png")); // Chão
     addObstacle(p);
 
     Obstacles::Obstacle* o;

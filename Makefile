@@ -18,7 +18,7 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o "$(BINDIR)/$@"
 
 $(OBJDIR)/%.o: src/%.cpp
-	$(CC) $(CFLAGS) -o "$@" -c "$<" $(LDFLAGS)
+	$(CC) $(CFLAGS) -o "$@" -c "$<"
 
 .PHONY: debug
 debug:

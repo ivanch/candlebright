@@ -8,8 +8,8 @@ System::Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()-
     player1 = new Characters::Player(1);
     player2 = new Characters::Player(2);
 
-    enemySpawnDelay = 5; // Spawna um inimigo na tela a cada 25 segundos
-    obstacleSpawnDelay = 45; // Spawna um obstáculo a cada 45 segundos
+    enemySpawnDelay = 30; // Spawna um inimigo na tela a cada 30 segundos
+    obstacleSpawnDelay = 50; // Spawna um obstáculo a cada 50 segundos
 }
 System::Game::~Game(){ }
 
