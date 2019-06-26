@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
+#include <fstream>
 
 #include "Character.hpp"
 #include "../Enemies/Enemy.hpp"
@@ -39,7 +40,7 @@ namespace Characters {
             virtual void fall();
             virtual void takeDamage(const float& _damage);
 
-            static unsigned int getScore(){ return score; }
+            static unsigned int getScore() { return score; }
             static void setScore(unsigned int _score){ score = _score; }
     };
 

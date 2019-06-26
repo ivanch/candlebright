@@ -23,7 +23,6 @@ namespace System {
 
             unsigned short act_world;
 
-
             Menu menu;
             bool game_paused;
             bool menuEnabled;

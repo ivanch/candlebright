@@ -97,14 +97,6 @@ void System::Game::loadPlayers(){
 }
 void System::Game::update(){
     while (engine.isWindowOpen()){
-        if(player1->isDead())
-        {
-            std::cout<<Characters::Player::getScore();
-
-            std::ofstream file("Save/Ranking.txt");
-            file << Characters::Player::getScore();
-
-        }
         engine.clearWindow();
         if(menu.isEnabled()){
             menu.update(&engine);

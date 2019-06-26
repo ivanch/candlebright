@@ -233,4 +233,20 @@ void Characters::Player::takeDamage(const float& _damage){
     health -= damage;
     healthBar.setHealth(health);
     move(sf::Vector2f(0, -0.1));
+    if(health<=0)
+    {
+        std::string buffer, buffer_read;
+        std::ifstream ifile("Save/Ranking.txt");
+
+        while(ifile.eof())
+        {
+            ifile>>buffer_read;
+            buffer += buffer_read;
+        }
+        ifile.close();
+
+        std::ofstream file("Save/Ranking.txt", std::ios_base::app);
+        file << buffer << Player::getScore()<< '\n';
+        file.close();
+    }
 }
