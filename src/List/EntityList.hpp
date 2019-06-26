@@ -19,7 +19,11 @@ namespace Lists {
                 entity_list.insertBack(_el);
             }
             void remove(System::Entity* _el){
-                entity_list.removeNth(_el);
+                for(int i = 0; i < size(); i++){
+                    if(entity_list[i]->getData() == _el){
+                        entity_list[i]->setData(NULL);
+                    }
+                }
             }
             void clear(){
                 for(int i = 0; i < size(); i++){
@@ -41,7 +45,9 @@ namespace Lists {
                     return;
                 }
                 for(int i = 0; i < size(); i++){
-                    entity_list[i]->getData()->update();
+                    if(entity_list[i]->getData() != NULL){
+                        entity_list[i]->getData()->update();
+                    }
                 }
             }
     };

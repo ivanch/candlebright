@@ -167,11 +167,11 @@ namespace Lists {
 
 		int index = getIndex(data);
 
-	if (first == NULL || index == -1)
-	{
-		return;
-	}
-	Node<T>* temp = first;
+		if (first == NULL || index == -1)
+		{
+			return;
+		}
+		Node<T>* temp = first;
 		if (index == 0)
 		{
 			first = temp->next;

@@ -65,7 +65,6 @@ void System::Game::loadPlayers(){
     {
         getline(file,line);
         if(act_world != getIntFromString(line))
-        //if(act_world != std::stoi(line))
         {
             std::cerr << "Mundo não condizente com o jogo previamente salvo." << std::endl;
             return;
@@ -216,8 +215,8 @@ void System::Game::nextPhase(){
         if(menu.getSelectedPlayers() == 2){
             player2 = new Characters::Player(2);
             world->addCharacter(player2);
-            player2->setPosition(sf::Vector2f(world->getSpawnPoint().x,
-                                         world->getSpawnPoint().y-100 ) );
+            player2->setPosition(sf::Vector2f(  world->getSpawnPoint().x,
+                                                world->getSpawnPoint().y-100 ) );
         }
     }else{
         engine.getWindow()->close();

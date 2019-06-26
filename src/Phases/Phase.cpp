@@ -34,6 +34,7 @@ void Phase::update(){
 void Phase::drawAll(System::Engine& engine){
     draw(engine);
     for(int i = 0; i < entities.size(); i++){
+        if(entities[i] == NULL) continue;
         entities[i]->draw(engine);
     }
 }
@@ -224,7 +225,7 @@ void Phase::checkAttack(std::set<Characters::Character*>* killBuffer){
                 
                 (*damaged)->takeDamage((*issuer)->getDamage());
 
-                if((*damaged)->getHealth() <= 0){ // Não adiciona player na lista pra matar
+                if((*damaged)->getHealth() <= 0){
                     killBuffer->insert(*damaged);
                 }
             }
