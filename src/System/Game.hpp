@@ -20,6 +20,13 @@ class Game {
         Phase* world;
         sf::View view;
 
+        sf::Text text;
+        sf::Font font;
+        sf::Text text_ranks[5];
+
+        bool ranking = false;
+
+
         unsigned short act_world;
 
 

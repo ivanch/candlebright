@@ -10,6 +10,21 @@ Game::Game():   menu(engine.getWindow()->getSize().x,engine.getWindow()->getSize
 
     enemySpawnDelay = 25; // Spawna um inimigo na tela a cada 25 segundos
     obstacleSpawnDelay = 45; // Spawna um obstáculo a cada 45 segundos
+
+    //text={};
+
+    if (!font.loadFromFile("fonts/ancient.ttf"))
+    {
+        std::cerr<<"Erro ao carregar fonte"<<std::endl;
+    }
+    text.setFont(font);
+    text.setCharacterSize(42);
+    text.setString("Ranking\n");
+    text.setPosition(200,350);
+    text.setFillColor(sf::Color::White);
+    text.setOutlineColor(sf::Color::Black);
+    text.setOutlineThickness(1);
+    ranking==false;
 }
 Game::~Game(){ }
 
@@ -102,14 +117,6 @@ void Game::loadPlayers(){
 }
 void Game::update(){
     while (engine.isWindowOpen()){
-        if(player1->isDead())
-        {
-            std::cout<<Player::getScore();
-
-            std::ofstream file("Save/Ranking.txt");
-            file << Player::getScore();
-
-        }
         engine.clearWindow();
         if(menu.isEnabled()){
             menu.update(&engine);
@@ -163,6 +170,19 @@ void Game::update(){
                 timer.restart();
             }
             world->drawAll(engine); // Desenha todas entidades do mundo
+            if(player1->isDead())
+                engine.draw(text);
+            if(player1->isDead() && ranking==false)
+            {
+                std::string buffer;
+                std::ifstream ifile("Save/Ranking.txt");
+                while(getline(ifile,buffer))
+                {
+                    text.setString(text.getString()+ '\n' + buffer);
+                    engine.draw(text);
+                }
+                ranking = true;
+            }
         }
         engine.render();
     }
