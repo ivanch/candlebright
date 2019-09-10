@@ -111,9 +111,9 @@ void System::Game::update(){
                 player1->setCollidingRight(true);
             else if(player1->getPosition().x <= (view.getCenter().x-view.getSize().x/2)+150  && player2->getPosition().x >= (view.getCenter().x+view.getSize().x/2)-150)
                 player1->setCollidingLeft(true);
-            if(player1->getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -100)
+            if(player1->getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  > -50)
                 view.move(sf::Vector2f(1.5, 0));
-            if(player1->getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -500)
+            if(player1->getPosition().x - (view.getCenter().x+((view.getSize().x)/2))  < -550)
                 view.move(sf::Vector2f(-1.5, 0));
             engine.getWindow()->setView(view);
 
