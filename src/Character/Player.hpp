@@ -21,6 +21,7 @@ namespace Characters {
             sf::Keyboard::Key key_left;
             sf::Keyboard::Key key_jump;
             sf::Keyboard::Key key_attack;
+            sf::Keyboard::Key key_sprint;
 
         public:
             Player(const int _template=-1);

@@ -25,3 +25,7 @@ const bool CharacterStates::CharacterState::falling(Characters::Character* _char
 const bool CharacterStates::CharacterState::attacking(Characters::Character* _char){
     return false;
 }
+
+const bool CharacterStates::CharacterState::running(Characters::Character* _char){
+    return false;
+}

@@ -27,6 +27,8 @@ bool Characters::Character::setState(const CharacterStates::CharacterState::Stat
             return currentState->falling(this);
         case CharacterStates::CharacterState::STATE_ATTACKING:
             return currentState->attacking(this);
+        case CharacterStates::CharacterState::STATE_RUNNING:
+            return currentState->running(this);
         default:
             return currentState->idle(this);
     }

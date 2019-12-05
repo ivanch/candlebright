@@ -31,3 +31,9 @@ const bool CharacterStates::WalkingState::attacking(Characters::Character* _char
     _char->setCharacterState(new AttackingState());
     return true;
 }
+
+const bool CharacterStates::WalkingState::running(Characters::Character* _char){
+    delete _char->getCharacterState();
+    _char->setCharacterState(new RunningState());
+    return true;
+}

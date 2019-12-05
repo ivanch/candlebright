@@ -15,7 +15,8 @@ namespace CharacterStates {
                 STATE_WALKING,      //  1
                 STATE_JUMPING,      //  2
                 STATE_FALLING,      //  3
-                STATE_ATTACKING     //  4
+                STATE_ATTACKING,    //  4
+                STATE_RUNNING       //  5
             };
 
             CharacterState(State _state);
@@ -26,6 +27,7 @@ namespace CharacterStates {
             virtual const bool jumping(Characters::Character* _char);
             virtual const bool falling(Characters::Character* _char);
             virtual const bool attacking(Characters::Character* _char);
+            virtual const bool running(Characters::Character* _char);
 
             const State getState() const { return state; }
         

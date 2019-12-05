@@ -35,11 +35,13 @@ Characters::Player::Player(const int _template){
         key_left = sf::Keyboard::Left;
         key_jump = sf::Keyboard::Up;
         key_attack = sf::Keyboard::Return;
+        key_sprint = sf::Keyboard::RShift;
     }else{
         key_right = sf::Keyboard::D;
         key_left = sf::Keyboard::A;
         key_jump = sf::Keyboard::W;
         key_attack = sf::Keyboard::Z;
+        key_sprint = sf::Keyboard::LShift;
     }
 }
 Characters::Player::~Player(){ }
@@ -88,16 +90,23 @@ void Characters::Player::update(){
     if(sf::Keyboard::isKeyPressed(key_right)){
         if(velocity.x < maxSlideX)
             velocity.x += 10;
-        if(velocity.x > maxSlideX) velocity.x = maxSlideX;
+        
+        if(velocity.x > maxSlideX)
+            velocity.x = maxSlideX;
     }else if(sf::Keyboard::isKeyPressed(key_left)){
         if(velocity.x > -maxSlideX)
             velocity.x -= 10;
-        if(velocity.x < -maxSlideX) velocity.x = -maxSlideX;
+                
+        if(velocity.x < -maxSlideX)
+            velocity.x = -maxSlideX;
     }else if(sf::Keyboard::isKeyPressed(key_jump) && !collidingUp && collidingDown){
         if(getState() != CharacterStates::CharacterState::STATE_JUMPING){
             if(velocity.y < maxSlideY)
                 velocity.y += jumpHeight;
-            if(velocity.y > maxSlideY) velocity.y = maxSlideY;
+            
+            if(velocity.y > maxSlideY)
+                velocity.y = maxSlideY;
+            
             finalJumpHeight = (pSprite.getPosition().y) - jumpHeight;
         }
     }else if(sf::Keyboard::isKeyPressed(key_attack)){
@@ -136,6 +145,11 @@ void Characters::Player::update(){
         jump();
     }
 
+    if( sf::Keyboard::isKeyPressed(key_sprint) && 
+        (sf::Keyboard::isKeyPressed(key_left) || sf::Keyboard::isKeyPressed(key_right)) ){
+        setState(CharacterStates::CharacterState::STATE_RUNNING);
+    }
+
     /* Gerenciar animações */
     switch (getState()){
         case CharacterStates::CharacterState::STATE_WALKING:
@@ -146,6 +160,29 @@ void Characters::Player::update(){
                     setState(CharacterStates::CharacterState::STATE_FALLING);
                 }
             }
+
+            moveSpeed = 1.5;
+
+            if(isFacingRight()){
+                anim->setScale(sf::Vector2f(1.f, 1.f));
+            }else{
+                anim->setScale(sf::Vector2f(-1.f, 1.f));
+            }
+            break;
+        case CharacterStates::CharacterState::STATE_RUNNING:
+            if(animClock.getElapsedTime().asMilliseconds() >= 50){
+                animClock.restart();
+                anim->play("walk");
+                if(!anim->isLocked()){
+                    setState(CharacterStates::CharacterState::STATE_FALLING);
+                }
+            }
+            
+            moveSpeed = 7.5;
+
+            if(!sf::Keyboard::isKeyPressed(key_sprint))
+                setState(CharacterStates::CharacterState::STATE_WALKING);
+
             if(isFacingRight()){
                 anim->setScale(sf::Vector2f(1.f, 1.f));
             }else{

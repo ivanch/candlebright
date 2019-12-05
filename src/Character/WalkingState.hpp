@@ -13,5 +13,6 @@ namespace CharacterStates {
             virtual const bool jumping(Characters::Character* _char);
             virtual const bool falling(Characters::Character* _char);
             virtual const bool attacking(Characters::Character* _char);
+            virtual const bool running(Characters::Character* _char);
     };
 }

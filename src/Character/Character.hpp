@@ -13,6 +13,7 @@
 #include "JumpingState.hpp"
 #include "FallingState.hpp"
 #include "AttackingState.hpp"
+#include "RunningState.hpp"
 
 namespace Characters {
     class Character : public Animatable {
